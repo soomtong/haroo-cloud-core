@@ -1,0 +1,22 @@
+{
+  "name": "haroo-kit",
+  "version": "0.0.1",
+  "homepage": "https://github.com/soomtong/haroo-kit",
+  "authors": [
+    "soomtong <soomtong@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ember": "~1.9.0",
+    "semantic": "~1.2.0",
+    "ember-data": "~0.0.14"
+  }
+}

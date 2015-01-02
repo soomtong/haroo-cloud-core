@@ -1,0 +1,30 @@
+{
+  "name": "haroo-api",
+  "version": "0.0.1",
+  "description": "haroo cloud api serivce",
+  "main": "app.js",
+  "scripts": {
+    "test": "./node_modules/nodeunit/bin/nodeunit"
+  },
+  "keywords": [
+    "rest"
+  ],
+  "author": "soomtong@gmail.com",
+  "license": "Apache License",
+  "dependencies": {
+    "restify": "^2.8.4",
+    "socket.io": "^1.2.1"
+  },
+  "devDependencies": {},
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haroo-studio/haroo-api"
+  },
+  "bugs": {
+    "url": "https://github.com/haroo-studio/haroo-api/issues"
+  },
+  "homepage": "https://github.com/haroo-studio/haroo-api"
+}
