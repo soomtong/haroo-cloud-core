@@ -1,5 +1,3 @@
-"use strict";
-
 var path = require('path');
 
 var SERVICE_NAME = 'harookit';

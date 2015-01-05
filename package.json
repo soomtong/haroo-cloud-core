@@ -15,7 +15,10 @@
     "restify": "^2.8.4",
     "socket.io": "^1.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "supertest": "^0.15.0"
+  },
   "directories": {
     "test": "test"
   },

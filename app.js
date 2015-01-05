@@ -1,17 +1,13 @@
-"use strict";
+var app = {
+    port: 3031,
+    mode: process.env.NODE_ENV || 'development',
+    route: require('./lib/route')
+};
 
-var mode = process.env.NODE_ENV || 'development';
-
-var config = require('./config').get({mode: mode});
-var harookit = require('./lib');
-
-harookit.initialize.check();
-
-// todo: cluster mode and singleton server instance
-harookit.initDatabase(config, function (database) {
-    var server = harookit.createServer(config, database);
-
-    server.listen(config.server.port, function() {
+app.route(app.mode, function (server) {
+    server.listen(app.port, function serverStarted() {
         console.log('%s listening at %s', server.name, server.url);
     });
 });
+
+module.exports = app;
