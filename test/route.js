@@ -4,11 +4,64 @@ var app = require('../app');
 var assert = require("assert");
 
 describe('Route', function () {
-    it('there are app mode', function () {
-        assert.ok(app.node_env == 'development' || app.node_env == 'production');
+    describe('Middleware', function () {
+        it('i18next bind to default', function (done) {
+            var result = {
+                msg: require('../locales/dev/translation.json').app.lang.testMsg
+            };
+
+            app.route(app.node_env, function (server) {
+                supertest(server)
+                    .get('/i18n')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.equal(res.body.msg, result.msg);
+                        done();
+                    });
+            });
+        });
+
+        it('i18next bind to `en`', function (done) {
+            var result = {
+                msg: require('../locales/en/translation.json').app.lang.testMsg
+            };
+
+            app.route(app.node_env, function (server) {
+                supertest(server)
+                    .get('/i18n-en')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.deepEqual(res.body.msg, result.msg);
+                        done();
+                    });
+            });
+        });
+
+        it('i18next should bind to `en` by request header', function (done) {
+            var result = {
+                msg: require('../locales/en/translation.json').app.lang.testMsg
+            };
+
+            app.route(app.node_env, function (server) {
+                supertest(server)
+                    .get('/i18n-en')
+                    .set('Accept-Language','en-US')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.deepEqual(res.body.msg, result.msg);
+                        done();
+                    });
+            });
+        });
+
     });
-    it('test route for testing', function () {
+
+    it('test route for testing', function (done) {
         var result = {msg: 'hi'};
+
         app.route(app.node_env, function (server) {
             supertest(server)
                 .get('/testing')
@@ -16,7 +69,21 @@ describe('Route', function () {
                 .expect(200)
                 .end(function (err, res) {
                     assert.deepEqual(res.body, result);
+                    done();
                 });
         });
     });
+
+    it('just access denying', function (done) {
+        var result = {};
+
+        app.route(app.node_env, function (server) {
+            supertest(server)
+                .get('/access_deny')
+                .end(function (err, res) {
+                    assert.ok(true);
+                    done();
+                })
+        })
+    })
 });

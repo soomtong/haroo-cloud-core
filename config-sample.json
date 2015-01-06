@@ -1,4 +1,12 @@
 {
+  "app": {
+    "production": {
+      "lang": "en"
+    },
+    "development": {
+      "lang": "en"
+    }
+  },
   "server": {
     "production": {
       "port": 3031

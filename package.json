@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
-    "postinstall" : "node ./lib/init.js"
+    "postinstall": "node ./lib/init.js"
   },
   "keywords": [
     "rest"
@@ -13,6 +13,7 @@
   "author": "soomtong@gmail.com",
   "license": "Apache License",
   "dependencies": {
+    "i18next": "^1.7.8",
     "restify": "^2.8.4",
     "socket.io": "^1.2.1"
   },

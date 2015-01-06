@@ -1,0 +1,16 @@
+{
+  "app": {
+    "lang": {
+      "testMsg": "hi this is i18n for `en`"
+    },
+    "company": {
+      "name": "my company"
+    }
+  },
+  "attr": {
+    "placeholder": "translated placeholder",
+    "title": "translated title"
+  },
+  "add": "add",
+  "sprintf": "Hello %s, %s, %s and %s"
+}

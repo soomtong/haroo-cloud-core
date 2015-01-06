@@ -1,5 +1,7 @@
 require('./lib/init')();
 
+//todo: bind global exception
+
 var app = {
     node_env: process.env.NODE_ENV || 'development',
     route: require('./lib/route'),
