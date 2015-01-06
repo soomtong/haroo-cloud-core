@@ -5,11 +5,11 @@ var assert = require("assert");
 
 describe('Route', function () {
     it('there are app mode', function () {
-        assert.ok(app.mode == 'development' || app.mode == 'production');
+        assert.ok(app.node_env == 'development' || app.node_env == 'production');
     });
     it('test route for testing', function () {
         var result = {msg: 'hi'};
-        app.route(app.mode, function (server) {
+        app.route(app.node_env, function (server) {
             supertest(server)
                 .get('/testing')
                 .expect('Content-Type', /json/)

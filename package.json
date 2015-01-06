@@ -4,7 +4,8 @@
   "description": "haroo cloud api serivce",
   "main": "app.js",
   "scripts": {
-    "test": "./node_modules/nodeunit/bin/nodeunit"
+    "test": "./node_modules/mocha/bin/mocha",
+    "postinstall" : "node ./lib/init.js"
   },
   "keywords": [
     "rest"

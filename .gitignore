@@ -78,3 +78,5 @@ crashlytics.properties
 crashlytics-build.properties
 
 
+# Custom
+config.json

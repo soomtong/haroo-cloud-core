@@ -1,12 +1,16 @@
+require('./lib/init')();
+
 var app = {
-    port: 3031,
-    mode: process.env.NODE_ENV || 'development',
-    route: require('./lib/route')
+    node_env: process.env.NODE_ENV || 'development',
+    route: require('./lib/route'),
+    config: require('./lib/config')
 };
 
-app.route(app.mode, function (server) {
-    server.listen(app.port, function serverStarted() {
-        console.log('%s listening at %s', server.name, server.url);
+app.route(app.node_env, function (server) {
+    var config = app.config({mode: app.node_env});
+
+    server.listen(config.server.port, function serverStarted() {
+        //console.log('%s listening at %s', server.name, server.url);
     });
 });
 

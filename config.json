@@ -1,0 +1,22 @@
+{
+  "server": {
+    "production": {
+      "port": 3031
+    },
+    "development": {
+      "port": 3031
+    },
+    "testing": {
+      "host": "127.0.0.1",
+      "port": 3031
+    }
+  },
+  "database" : {
+    "production": {
+    },
+    "development": {
+    },
+    "testing": {
+    }
+  }
+}
