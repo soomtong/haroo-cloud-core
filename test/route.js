@@ -59,6 +59,61 @@ describe('Route', function () {
 
     });
 
+    describe('Version specified', function () {
+        it('default version route', function (done) {
+            var result = {
+                msg: "version: 2.x.x"
+            };
+
+            app.route(app.node_env, function (server) {
+                supertest(server)
+                    .get('/version')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.deepEqual(res.body.msg, result.msg);
+                        done();
+                    });
+            });
+        });
+
+        it('specified version 1 route', function (done) {
+            var result = {
+                msg: "version: 1.x.x"
+            };
+
+            app.route(app.node_env, function (server) {
+                supertest(server)
+                    .get('/version')
+                    .set('Accept-Version','~1')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.deepEqual(res.body.msg, result.msg);
+                        done();
+                    });
+            });
+        });
+
+        it('specified version 2 route', function (done) {
+            var result = {
+                msg: "version: 2.x.x"
+            };
+
+            app.route(app.node_env, function (server) {
+                supertest(server)
+                    .get('/version')
+                    .set('Accept-Version','~2')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.deepEqual(res.body.msg, result.msg);
+                        done();
+                    });
+            });
+        });
+    });
+
     it('test route for testing', function (done) {
         var result = {msg: 'hi'};
 
