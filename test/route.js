@@ -1,7 +1,7 @@
+var assert = require("assert");
+
 var supertest = require('supertest');
 var app = require('../app');
-
-var assert = require("assert");
 
 describe('Route', function () {
     describe('Middleware', function () {
