@@ -7,7 +7,7 @@ describe('Route', function () {
     describe('Middleware', function () {
         it('i18next bind to default', function (done) {
             var result = {
-                msg: require('../locales/dev/translation.json').app.lang.testMsg
+                msg: require('../locales/ko/translation.json').app.lang.testMsg
             };
 
             app.route(app.node_env, function (server) {

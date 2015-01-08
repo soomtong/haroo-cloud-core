@@ -1,0 +1,16 @@
+{
+  "app": {
+    "lang": {
+      "testMsg": "여기는 `한글` 용 i18n 입니다."
+    },
+    "company": {
+      "name": "my company"
+    }
+  },
+  "attr": {
+    "placeholder": "translated placeholder",
+    "title": "translated title"
+  },
+  "add": "add",
+  "sprintf": "Hello %s, %s, %s and %s"
+}
