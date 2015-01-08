@@ -13,6 +13,7 @@
   "author": "soomtong@gmail.com",
   "license": "Apache License",
   "dependencies": {
+    "bunyan": "^1.2.3",
     "i18next": "^1.7.8",
     "restify": "^2.8.4",
     "socket.io": "^1.2.1"
