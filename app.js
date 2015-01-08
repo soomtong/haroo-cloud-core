@@ -1,14 +1,14 @@
-require('./lib/init')();
+require('./lib/setup')();
 
 //todo: bind global exception
 
 var app = {
     node_env: process.env.NODE_ENV || 'development',
-    route: require('./lib/route'),
+    init: require('./lib/init'),
     config: require('./lib/config')
 };
 
-app.route(app.node_env, function (server) {
+app.init(app.node_env, function (server) {
     var config = app.config({mode: app.node_env});
 
     server.listen(config.server.port, function serverStarted() {

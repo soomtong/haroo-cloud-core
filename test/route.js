@@ -10,7 +10,7 @@ describe('Route', function () {
                 msg: require('../locales/ko/translation.json').app.lang.testMsg
             };
 
-            app.route(app.node_env, function (server) {
+            app.init(app.node_env, function (server) {
                 supertest(server)
                     .get('/i18n')
                     .expect('Content-Type', /json/)
@@ -27,7 +27,7 @@ describe('Route', function () {
                 msg: require('../locales/en/translation.json').app.lang.testMsg
             };
 
-            app.route(app.node_env, function (server) {
+            app.init(app.node_env, function (server) {
                 supertest(server)
                     .get('/i18n-en')
                     .expect('Content-Type', /json/)
@@ -44,7 +44,7 @@ describe('Route', function () {
                 msg: require('../locales/en/translation.json').app.lang.testMsg
             };
 
-            app.route(app.node_env, function (server) {
+            app.init(app.node_env, function (server) {
                 supertest(server)
                     .get('/i18n-en')
                     .set('Accept-Language','en-US')
@@ -65,7 +65,7 @@ describe('Route', function () {
                 msg: "version: 2.x.x"
             };
 
-            app.route(app.node_env, function (server) {
+            app.init(app.node_env, function (server) {
                 supertest(server)
                     .get('/version')
                     .expect('Content-Type', /json/)
@@ -82,7 +82,7 @@ describe('Route', function () {
                 msg: "version: 1.x.x"
             };
 
-            app.route(app.node_env, function (server) {
+            app.init(app.node_env, function (server) {
                 supertest(server)
                     .get('/version')
                     .set('Accept-Version','~1')
@@ -100,7 +100,7 @@ describe('Route', function () {
                 msg: "version: 2.x.x"
             };
 
-            app.route(app.node_env, function (server) {
+            app.init(app.node_env, function (server) {
                 supertest(server)
                     .get('/version')
                     .set('Accept-Version','~2')
@@ -117,7 +117,7 @@ describe('Route', function () {
     it('test route for testing', function (done) {
         var result = {msg: 'hi'};
 
-        app.route(app.node_env, function (server) {
+        app.init(app.node_env, function (server) {
             supertest(server)
                 .get('/testing')
                 .expect('Content-Type', /json/)
@@ -132,7 +132,7 @@ describe('Route', function () {
     it('just access denying', function (done) {
         var result = {};
 
-        app.route(app.node_env, function (server) {
+        app.init(app.node_env, function (server) {
             supertest(server)
                 .get('/access_deny')
                 .end(function (err, res) {

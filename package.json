@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
-    "postinstall": "node ./lib/init.js"
+    "postinstall": "node ./lib/setup.js"
   },
   "keywords": [
     "rest"
