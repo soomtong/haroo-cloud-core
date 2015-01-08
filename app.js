@@ -4,7 +4,7 @@ require('./lib/setup')();
 
 var app = {
     node_env: process.env.NODE_ENV || 'development',
-    init: require('./lib/init'),
+    init: require('./lib/route'),
     config: require('./lib/config')
 };
 
