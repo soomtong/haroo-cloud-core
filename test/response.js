@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-var response = require('../lib/response');
+var response = require('../core/response');
 
 describe('Response', function () {
     it('simple response check', function () {

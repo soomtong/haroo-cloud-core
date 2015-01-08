@@ -9,7 +9,7 @@ describe('Application', function () {
     });
 
     describe('Check configuration', function () {
-        var config = require('../lib/config');
+        var config = require('../core/config');
 
         it('should exist config.js file', function (done) {
             var configFile = 'config.json';

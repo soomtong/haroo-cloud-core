@@ -1,9 +1,9 @@
-require('./lib/setup')();
+require('./core/setup')();
 
 var app = {
     node_env: process.env.NODE_ENV || 'development',
-    init: require('./lib/route'),
-    config: require('./lib/config')
+    init: require('./core/route'),
+    config: require('./core/config')
 };
 
 app.init(app.node_env, function (server) {
@@ -19,10 +19,17 @@ app.init(app.node_env, function (server) {
     server.on('after', restify.auditLogger({
         log: bunyan.createLogger({
             name: 'haroo-api',
-            streams: [
-                {level: 'info', path: 'log/info.log'},
-                {level: 'error', path: 'log/error.log'}
-            ]
+            streams: [{
+                level: 'info',
+                path: 'logs/info.log',
+                type: 'rotating-file',
+                period: '1d'
+            }, {
+                level: 'error',
+                path: 'logs/error.log',
+                type: 'rotating-file',
+                period: '1d'
+            }]
         })
     }));
 

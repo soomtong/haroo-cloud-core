@@ -23,7 +23,6 @@
     "supertest": "^0.15.0"
   },
   "directories": {
-    "test": "test"
   },
   "repository": {
     "type": "git",
