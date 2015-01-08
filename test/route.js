@@ -79,13 +79,31 @@ describe('Route', function () {
 
         it('specified version 1 route', function (done) {
             var result = {
-                msg: "version: 1.x.x"
+                msg: "version: 1.0.x"
             };
 
             app.init(app.node_env, function (server) {
                 supertest(server)
                     .get('/version')
-                    .set('Accept-Version','~1')
+                    .set('Accept-Version','~1.0')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.deepEqual(res.body.msg, result.msg);
+                        done();
+                    });
+            });
+        });
+
+        it('specified version 1.2.3 route', function (done) {
+            var result = {
+                msg: "version: 1.2.3"
+            };
+
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .get('/version')
+                    .set('Accept-Version','1.2.3')
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
@@ -128,6 +146,63 @@ describe('Route', function () {
                 });
         });
     });
+
+    it('test parameter route for testing', function (done) {
+        var result = {msg: 'hi', params: {name: 'hello'}};
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/testing/hello')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.deepEqual(res.body, result);
+                    done();
+                });
+        });
+    });
+
+    it('test custom parameter with no X-Access-Host', function (done) {
+        var result = {
+            msg: 'custom param in route',
+            data: {
+                ip: '127.0.0.1'
+            }};
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/test-no-header-locals')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.deepEqual(res.body, result);
+                    done();
+                });
+        });
+    });
+
+    it('test custom parameter with X-Access-Host', function (done) {
+        var result = {
+            msg: 'custom param in route',
+            data: {
+                ip: '127.0.0.1',
+                host: 'test local machine'
+            }
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/test-with-header-locals')
+                .set('X-Access-Host', 'test local machine')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.deepEqual(res.body, result);
+                    done();
+                });
+        });
+    });
+
 
     it('just access denying', function (done) {
         var result = {};
