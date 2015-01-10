@@ -30,7 +30,7 @@ exports.callCounterForIPs = function (req, res, next) {
         }
         //console.log('count call for ip', apiCallCounterForIPs);
     }
-    return next();
+    next();
 };
 
 exports.callCounterForToken = function (req, res, next) {
@@ -49,7 +49,7 @@ exports.callCounterForToken = function (req, res, next) {
         }
         //console.log('count call for token', apiCallCounterForToken);
     }
-    return next();
+    next();
 };
 
 
@@ -58,7 +58,7 @@ exports.accessHost = function (req, res, next) {
     var host = res.accessHost = req.header('x-access-host');
     var ip = res.accessIP = getHostIp(req.header('host'));
 
-    return next();
+    next();
 };
 
 // block unknown
@@ -67,19 +67,17 @@ exports.accessToken = function (req, res, next) {
 
     if (!token) throw "no token, that's blocked";
 
-    return next();
+    next();
 };
 
 // select database info
 exports.getCoreDatabase = function (mode) {
     var config = require('./config');
-    var couchServer = config({mode: mode}).database;
+    var server = config({mode: mode}).database;
 
     return function (req, res, next) {
-        var database = couchServer.server[0];
+        res.coreDatabase = server.couch[0];
 
-        res.coreDatabase = database.host;
-
-        return next();
+        next();
     };
 };

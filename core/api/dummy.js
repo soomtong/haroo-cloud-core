@@ -3,7 +3,7 @@ var i18n = require('i18next');
 exports.testSimple = function (req, res, next) {
     res.json({msg: "hi"});
 
-    return next();
+    next();
 };
 
 exports.testSimpleWithParam = function (req, res, next) {
@@ -13,13 +13,13 @@ exports.testSimpleWithParam = function (req, res, next) {
 
     res.json({msg: "hi", params: params});
 
-    return next();
+    next();
 };
 
 exports.testI18N = function (req, res, next) {
     res.json({msg: i18n.t('app.lang.testMsg')});
 
-    return next();
+    next();
 };
 
 exports.testEnForce = function (req, res, next) {
@@ -28,25 +28,25 @@ exports.testEnForce = function (req, res, next) {
         res.json({msg: t('app.lang.testMsg')});
     });
 
-    return next();
+    next();
 };
 
 exports.testVersion1 = function (req, res, next) {
     res.json({msg: "version: 1.0.x"})
 
-    return next();
+    next();
 };
 
 exports.testVersion1_2_3 = function (req, res, next) {
     res.json({msg: "version: 1.2.3"})
 
-    return next();
+    next();
 };
 
 exports.testVersion2 = function (req, res, next) {
     res.json({msg: "version: 2.x.x"})
 
-    return next();
+    next();
 };
 
 exports.testCustomParams = function (req, res, next) {
@@ -57,5 +57,5 @@ exports.testCustomParams = function (req, res, next) {
 
     res.json({msg: "custom param in route", data: params});
 
-    return next();
+    next();
 };

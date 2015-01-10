@@ -100,7 +100,7 @@ function route(mode, callback) {
         // just for only introduce
         res.send('login');
 
-        return next();
+        next();
     });
 
     districtMiddleware(mode);
@@ -108,7 +108,7 @@ function route(mode, callback) {
     server.get('/access_deny', function (req, res, next) {
         res.json({msg: "hi"});
 
-        return next();
+        next();
     });
 
 

@@ -7,8 +7,11 @@
       "name": "my company from dev"
     }
   },
-  "attr": {
-    "placeholder": "translated placeholder",
+  "account": {
+    "create": {
+      "done": "created account",
+      "fail": "creation failed"
+    },
     "title": "translated title"
   },
   "add": "add",

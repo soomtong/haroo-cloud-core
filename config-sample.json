@@ -21,15 +21,21 @@
   },
   "database" : {
     "production": {
-      "server": [
+      "couch": [
         {"host": "db1.localhost", "auth": ["id","pw"]},
         {"host": "db2.localhost", "auth": ["id2","pw2"]}
+      ],
+      "mongo": [
+        {"host": "mongo.localhost", "auth": ["m","1"]}
       ]
     },
     "development": {
-      "server": [
+      "couch": [
         {"host": "db1.localhost", "auth": ["id","pw"]},
         {"host": "db2.localhost", "auth": ["id2","pw2"]}
+      ],
+      "mongo": [
+        {"host": "mongo.localhost", "auth": ["m","1"]}
       ]
     },
     "testing": {

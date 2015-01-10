@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
-    "postinstall": "node ./lib/setup.js"
+    "postinstall": "node ./core/setup.js"
   },
   "keywords": [
     "rest"
@@ -13,8 +13,12 @@
   "author": "soomtong@gmail.com",
   "license": "Apache License",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "bunyan": "^1.2.3",
+    "crypto": "0.0.3",
     "i18next": "^1.7.8",
+    "mongoose": "^3.8.21",
+    "init-user": "git://github.com/haroo-studio/init-user.git",
     "node-restify-validation": "^0.1.2",
     "restify": "^2.8.4",
     "socket.io": "^1.2.1"

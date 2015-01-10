@@ -3,5 +3,5 @@ exports.home = function (req, res, next) {
     // just for only introduce
     res.send('<h1>Index of Api service</h1>');
 
-    return next();
+    next();
 };
