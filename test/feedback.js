@@ -8,10 +8,8 @@ describe('Feedback Module', function () {
             message: 'OK: hello world',
             data: {name: 'haroo-cloud-core'},
             isResult: true,
-            output: {
-                statusCode: 200,
-                meta: {error: 'OK', message: 'hello world'}
-            }
+            statusCode: 200,
+            meta: {error: 'OK', message: 'hello world'}
         };
         var result = feedback.create(200, 'hello world', {name: 'haroo-cloud-core'});
 
@@ -23,10 +21,8 @@ describe('Feedback Module', function () {
             message: 'OK: hello world',
             data: null,
             isResult: true,
-            output: {
-                statusCode: 200,
-                meta: {error: 'OK', message: 'hello world'}
-            }
+            statusCode: 200,
+            meta: {error: 'OK', message: 'hello world'}
         };
         var result = feedback.create(200, 'hello world');
 

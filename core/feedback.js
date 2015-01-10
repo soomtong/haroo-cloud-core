@@ -4,27 +4,25 @@ var feedback = {};
 
 feedback.init = function (result, statusCode, message) {
     result.isResult = true;
-    result.output = {
-        statusCode: statusCode,
-        meta: {
-            error: http.STATUS_CODES[statusCode] || 'Unknown'
-        }
+    result.statusCode = statusCode;
+    result.meta = {
+        error: http.STATUS_CODES[statusCode] || 'Unknown'
     };
 
     if (statusCode === 500) {
-        result.output.meta.message = 'An internal server error occurred';
+        result.meta.message = 'An internal server error occurred';
     } else if (result.message) {
-        result.output.meta.message = result.message;
+        result.meta.message = result.message;
     }
 
     if (!message && !result.message) {
-        message = result.output.meta.error;
+        message = result.meta.error;
     } else if (result.message) {
         message = result.message;
     }
 
     if (message) {
-        result.message = (result.output.meta.error + (result.message ? ': ' + result.message : ''));
+        result.message = (result.meta.error + (result.message ? ': ' + result.message : ''));
     }
 
     return result;
