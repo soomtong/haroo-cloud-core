@@ -16,6 +16,7 @@ describe('Route', function () {
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
+                        assert.ok(!err, err);
                         assert.equal(res.body.msg, result.msg);
                         done();
                     });
@@ -33,6 +34,7 @@ describe('Route', function () {
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
+                        assert.ok(!err, err);
                         assert.deepEqual(res.body.msg, result.msg);
                         done();
                     });
@@ -51,6 +53,7 @@ describe('Route', function () {
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
+                        assert.ok(!err, err);
                         assert.deepEqual(res.body.msg, result.msg);
                         done();
                     });
@@ -71,6 +74,7 @@ describe('Route', function () {
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
+                        assert.ok(!err, err);
                         assert.deepEqual(res.body.msg, result.msg);
                         done();
                     });
@@ -89,6 +93,7 @@ describe('Route', function () {
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
+                        assert.ok(!err, err);
                         assert.deepEqual(res.body.msg, result.msg);
                         done();
                     });
@@ -107,6 +112,7 @@ describe('Route', function () {
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
+                        assert.ok(!err, err);
                         assert.deepEqual(res.body.msg, result.msg);
                         done();
                     });
@@ -125,6 +131,7 @@ describe('Route', function () {
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
+                        assert.ok(!err, err);
                         assert.deepEqual(res.body.msg, result.msg);
                         done();
                     });
@@ -141,6 +148,7 @@ describe('Route', function () {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
+                    assert.ok(!err, err);
                     assert.deepEqual(res.body, result);
                     done();
                 });
@@ -175,6 +183,7 @@ describe('Route', function () {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
+                    assert.ok(!err, err);
                     assert.deepEqual(res.body, result);
                     done();
                 });
@@ -197,6 +206,7 @@ describe('Route', function () {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
+                    assert.ok(!err, err);
                     assert.deepEqual(res.body, result);
                     done();
                 });
@@ -211,6 +221,7 @@ describe('Route', function () {
             supertest(server)
                 .get('/access_deny')
                 .end(function (err, res) {
+                    assert.ok(!err, err);
                     assert.ok(true);
                     done();
                 })

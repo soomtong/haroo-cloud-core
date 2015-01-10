@@ -21,6 +21,10 @@
   },
   "database" : {
     "production": {
+      "server": [
+        {"host": "db1.localhost", "auth": ["id","pw"]},
+        {"host": "db2.localhost", "auth": ["id2","pw2"]}
+      ]
     },
     "development": {
       "server": [

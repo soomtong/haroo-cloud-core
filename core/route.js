@@ -35,11 +35,6 @@ function globalMiddleware(mode) {
 function commonMiddleware(mode) {
 // set host name to res.locals for all client
     server.use(middleware.accessHost);
-    server.use(function (req, res, next) {
-        // bind user database for document
-        res.accessDatabase = 'db1.haroopress.com';
-        next();
-    });
     server.use(restify.queryParser());
     server.use(restify.bodyParser());
     server.use(restifyValidation.validationPlugin({}));
@@ -98,7 +93,7 @@ function route(mode, callback) {
     server.post({ path: '/account/create', validation: {
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
-    }}, account.createAccount);
+    }}, middleware.getCoreDatabase(mode), account.createAccount);
 
     server.get({ path: '/login', validation: {}}, function (req, res, next) {
         // some static html page for api.haroocloud.com

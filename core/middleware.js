@@ -28,9 +28,9 @@ exports.callCounterForIPs = function (req, res, next) {
                 updateAt: now
             }
         }
-        console.log('count call for ip', apiCallCounterForIPs);
+        //console.log('count call for ip', apiCallCounterForIPs);
     }
-    next();
+    return next();
 };
 
 exports.callCounterForToken = function (req, res, next) {
@@ -47,9 +47,9 @@ exports.callCounterForToken = function (req, res, next) {
                 updateAt: now
             }
         }
-        console.log('count call for token', apiCallCounterForToken);
+        //console.log('count call for token', apiCallCounterForToken);
     }
-    next();
+    return next();
 };
 
 
@@ -58,15 +58,28 @@ exports.accessHost = function (req, res, next) {
     var host = res.accessHost = req.header('x-access-host');
     var ip = res.accessIP = getHostIp(req.header('host'));
 
-    next();
+    return next();
 };
 
 // block unknown
-/*
 exports.accessToken = function (req, res, next) {
     var token = res.accessToken = req.header('x-access-token');
-    if (!token) return res.send(Code.token.blocked);
 
-    next();
+    if (!token) throw "no token, that's blocked";
+
+    return next();
 };
-*/
+
+// select database info
+exports.getCoreDatabase = function (mode) {
+    var config = require('./config');
+    var couchServer = config({mode: mode}).database;
+
+    return function (req, res, next) {
+        var database = couchServer.server[0];
+
+        res.coreDatabase = database.host;
+
+        return next();
+    };
+};

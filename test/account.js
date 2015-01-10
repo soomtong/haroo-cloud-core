@@ -15,7 +15,13 @@ describe('Account', function () {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
+                    //if (err) throw err;
+                    //if (err) return done(err);
+
+                    assert.ok(!err, err);
                     //assert.deepEqual(res.body, result);
+
+                    console.log(res.body);
                     done();
                 });
         });
