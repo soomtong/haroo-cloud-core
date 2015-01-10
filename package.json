@@ -17,9 +17,10 @@
     "bunyan": "^1.2.3",
     "crypto": "0.0.3",
     "i18next": "^1.7.8",
-    "mongoose": "^3.8.21",
     "init-user": "git://github.com/haroo-studio/init-user.git",
+    "mongoose": "^3.8.21",
     "node-restify-validation": "^0.1.2",
+    "node-uuid": "^1.4.2",
     "restify": "^2.8.4",
     "socket.io": "^1.2.1"
   },

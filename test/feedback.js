@@ -1,6 +1,6 @@
 var assert = require("assert");
 
-var feedback = require('../core/feedback');
+var feedback = require('../core/lib/feedback');
 
 describe('Feedback Module', function () {
     it('simple response check', function () {

@@ -1,7 +1,11 @@
 var assert = require("assert");
+var i18n = require('i18next');
 
 var supertest = require('supertest');
 var app = require('../app');
+
+//todo: set app mode
+//app.node_env = 'testing';
 
 describe('Account', function () {
 
@@ -57,16 +61,24 @@ describe('Account', function () {
 
     it('create account by email, password and optional nickname', function (done) {
         var result = {
-            message: 'OK: created account',
+            message: 'OK: '+i18n.t('account.create.done'),
             data: {
-                email: 'test@email.net',
-                password: 'new_password',
-                accessIP: '127.0.0.1',
-                database: 'db1.haroopress.com'
+                "access_token": "e8e58304-dd29-4c03-8791-673e96a7f34e",
+                "db_host": "db1.haroopress.com",
+                "email": "test@email.net",
+                "haroo_id": "b090e563d9c725ea48933efdeaa348fb4",
+                "login_expire": "1422208905667",
+                "profile": {
+                    "gender": "",
+                    "location": "",
+                    "picture": "",
+                    "website": ""
+                }, "tokens": []
+
             },
             isResult: true,
             statusCode: 200,
-            meta: {error: 'OK', message: 'created account'}
+            meta: {error: 'OK', message: i18n.t('account.create.done')}
         };
 
         app.init(app.node_env, function (server) {
@@ -77,7 +89,10 @@ describe('Account', function () {
                 .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
-                    assert.deepEqual(res.body, result);
+                    //assert.deepEqual(res.body, result);
+                    assert.deepEqual(res.body.data.db_host, result.data.db_host);
+                    assert.deepEqual(res.body.data.haroo_id, result.data.haroo_id);
+                    //assert.deepEqual(res.body.message, result.message);
 
                     done();
                 });

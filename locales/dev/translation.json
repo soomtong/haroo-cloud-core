@@ -9,11 +9,18 @@
   },
   "account": {
     "create": {
-      "done": "created account",
-      "fail": "creation failed"
+      "done": "done",
+      "fail": "failed",
+      "exist": "already exist"
     },
     "title": "translated title"
   },
-  "add": "add",
+  "token": {
+    "create": {
+      "done": "done",
+      "fail": "failed",
+      "exist": "already exist"
+    }
+  },
   "sprintf": "Hello %s, %s, %s and %s"
 }

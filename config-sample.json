@@ -22,23 +22,29 @@
   "database" : {
     "production": {
       "couch": [
-        {"host": "db1.localhost", "auth": ["id","pw"]},
-        {"host": "db2.localhost", "auth": ["id2","pw2"]}
+        {"host": "db1.localhost", "port": "80", "auth": ["id","pw"]},
+        {"host": "db2.localhost", "port": "80", "auth": ["id2","pw2"]}
       ],
       "mongo": [
-        {"host": "mongo.localhost", "auth": ["m","1"]}
+        {"host": "mongo.localhost", "port": "80", "auth": ["m","1"]}
       ]
     },
     "development": {
       "couch": [
-        {"host": "db1.localhost", "auth": ["id","pw"]},
-        {"host": "db2.localhost", "auth": ["id2","pw2"]}
+        {"host": "db1.localhost", "port": "80", "auth": ["id","pw"]},
+        {"host": "db2.localhost", "port": "80", "auth": ["id2","pw2"]}
       ],
       "mongo": [
-        {"host": "mongo.localhost", "auth": ["m","1"]}
+        {"host": "mongo.localhost", "port": "80", "auth": ["m","1"]}
       ]
     },
     "testing": {
+      "couch": [
+        {"host": "localhost", "port": "80", "auth": ["a","1"]}
+      ],
+      "mongo": [
+        {"host": "localhost", "port": "80", "auth": ["m","1"]}
+      ]
     }
   }
 }
