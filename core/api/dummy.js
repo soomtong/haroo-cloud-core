@@ -55,8 +55,6 @@ exports.testCustomParams = function (req, res, next) {
         ip: res.accessIP
     };
 
-    req.log.debug({params: req.params}, 'Hello there %s', 'foo');
-
     res.json({msg: "custom param in route", data: params});
 
     return next();

@@ -15,7 +15,7 @@ function getHostIp(host) {
 }
 
 exports.callCounterForIPs = function (req, res, next) {
-    var ip = req['ip'];
+    var ip = getHostIp(req.header('host'));
 
     if (ip) {
         var now = Date.now();
@@ -28,7 +28,7 @@ exports.callCounterForIPs = function (req, res, next) {
                 updateAt: now
             }
         }
-        //console.log(apiCallCounterForIPs);
+        console.log('count call for ip', apiCallCounterForIPs);
     }
     next();
 };
@@ -47,7 +47,7 @@ exports.callCounterForToken = function (req, res, next) {
                 updateAt: now
             }
         }
-        //console.log(apiCallCounterForToken);
+        console.log('count call for token', apiCallCounterForToken);
     }
     next();
 };

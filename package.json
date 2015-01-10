@@ -15,6 +15,7 @@
   "dependencies": {
     "bunyan": "^1.2.3",
     "i18next": "^1.7.8",
+    "node-restify-validation": "^0.1.2",
     "restify": "^2.8.4",
     "socket.io": "^1.2.1"
   },
@@ -22,8 +23,7 @@
     "mocha": "^2.1.0",
     "supertest": "^0.15.0"
   },
-  "directories": {
-  },
+  "directories": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/haroo-studio/haroo-api"

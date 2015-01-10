@@ -1,8 +1,9 @@
 var fs = require('fs');
 var assert = require("assert");
 
+var app = require('../app');
+
 describe('Application', function () {
-    var app = require('../app');
 
     it('there are app mode', function () {
         assert.ok(app.node_env == 'development' || app.node_env == 'production');

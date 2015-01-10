@@ -1,8 +1,8 @@
 var http = require('http');
 
-var response = {};
+var feedback = {};
 
-response.init = function (result, statusCode, message) {
+feedback.init = function (result, statusCode, message) {
     result.isResult = true;
     result.output = {
         statusCode: statusCode,
@@ -31,7 +31,7 @@ response.init = function (result, statusCode, message) {
 };
 
 exports.wrap = function (result, statusCode, message) {
-    return (result.isResult ? result : response.init(result, statusCode || 200, message));
+    return (result.isResult ? result : feedback.init(result, statusCode || 200, message));
 };
 
 exports.create = function (statusCode, message, data) {
@@ -40,7 +40,7 @@ exports.create = function (statusCode, message, data) {
         data: data || null
     };
 
-    response.init(result, statusCode);
+    feedback.init(result, statusCode);
 
     return result;
 };
