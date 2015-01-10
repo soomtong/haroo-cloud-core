@@ -34,7 +34,7 @@ function globalMiddleware(mode) {
 
 function commonMiddleware(mode) {
 // set host name to res.locals for all client
-    server.use(middleware.accessHost);
+    server.use(middleware.accessClient);
     server.use(restify.queryParser());
     server.use(restify.bodyParser());
     server.use(restifyValidation.validationPlugin({}));

@@ -6,15 +6,16 @@ var util = require('./util');
 var HOUR = 3600000;
 var DAY = HOUR * 24;
 
-exports.initHarooID = function (email, databaseHost) {
-    var nameToken = databaseHost || "database1";
+exports.initHarooID = function (email, database) {
+    var nameToken = database.host || "database1";
+    var prefix = database.prefix;
 
-    return InitAccount.initHarooID(email, nameToken);
+    return InitAccount.initHarooID(email, nameToken, prefix);
 };
 
 exports.initAccountDatabase = function (haroo_id, couch) {
-    if (haroo_id) throw new Error('no haroo id assigned');
-    
+    if (!haroo_id) throw new Error('no haroo id assigned');
+
     var InitUserDB = new InitAccount.initUserDB(couch.host, couch.port, couch.auth[0], couch.auth[1]);
 
     InitUserDB.createNewAccount(haroo_id, function (err, res) {

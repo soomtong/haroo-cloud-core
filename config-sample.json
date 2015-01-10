@@ -22,8 +22,8 @@
   "database" : {
     "production": {
       "couch": [
-        {"host": "db1.localhost", "port": "80", "auth": ["id","pw"]},
-        {"host": "db2.localhost", "port": "80", "auth": ["id2","pw2"]}
+        {"host": "db1.localhost", "port": "80", "prefix": "b", "auth": ["id","pw"]},
+        {"host": "db2.localhost", "port": "80", "prefix": "b", "auth": ["id2","pw2"]}
       ],
       "mongo": [
         {"host": "mongo.localhost", "port": "80", "auth": ["m","1"]}
@@ -31,8 +31,8 @@
     },
     "development": {
       "couch": [
-        {"host": "db1.localhost", "port": "80", "auth": ["id","pw"]},
-        {"host": "db2.localhost", "port": "80", "auth": ["id2","pw2"]}
+        {"host": "db1.localhost", "port": "80", "prefix": "b", "auth": ["id","pw"]},
+        {"host": "db2.localhost", "port": "80", "prefix": "b", "auth": ["id2","pw2"]}
       ],
       "mongo": [
         {"host": "mongo.localhost", "port": "80", "auth": ["m","1"]}

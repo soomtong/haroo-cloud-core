@@ -54,7 +54,7 @@ exports.callCounterForToken = function (req, res, next) {
 
 
 // tracking host name
-exports.accessHost = function (req, res, next) {
+exports.accessClient = function (req, res, next) {
     var host = res.accessHost = req.header('x-access-host');
     var ip = res.accessIP = getHostIp(req.header('host'));
 

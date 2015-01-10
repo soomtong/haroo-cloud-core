@@ -84,6 +84,7 @@ describe('Account', function () {
         app.init(app.node_env, function (server) {
             supertest(server)
                 .post('/account/create')
+                .set('x-access-host', 'supertest')
                 .send({email: 'test@email.net', password: 'new_password'})
                 .expect('Content-Type', /json/)
                 .expect(200)

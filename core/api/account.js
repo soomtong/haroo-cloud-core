@@ -30,10 +30,21 @@ exports.createAccount = function (req, res, next) {
         }
 
         // make new account
+        var haroo_id = common.initHarooID(params.email, res.coreDatabase);
+
+        if (!haroo_id) {
+            //throw new Error('no exist haroo id!');
+            msg = i18n.t('account.create.fail');
+            result = feedback.done(msg, params);
+
+            res.json(result);
+            return;
+        }
+
         var user = new Account({
             email: params.email,
             password: params.password,
-            haroo_id: common.initHarooID(params.email, params.database),
+            haroo_id: haroo_id,
             join_from: params.joinFrom,
             db_host: params.database,
             created_at: Date.now(),
@@ -43,7 +54,7 @@ exports.createAccount = function (req, res, next) {
         });
 
         // init couch collection for account
-        common.initAccountDatabase(user.haroo_id, res.coreDatabase);
+        common.initAccountDatabase(haroo_id, res.coreDatabase);
 
         // save account to mongo
         user.save(function (err) {
@@ -60,7 +71,7 @@ exports.createAccount = function (req, res, next) {
                 access_ip: params.accessIP,
                 access_host: params.accessHost,
                 access_token: common.getAccessToken(),
-                haroo_id: user.haroo_id,
+                haroo_id: haroo_id,
                 login_expire: common.getLoginExpireDate(),
                 created_at: Date.now()
             });
