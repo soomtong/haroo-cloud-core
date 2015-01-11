@@ -25,8 +25,7 @@ exports.createAccount = function (req, res, next) {
             msg = i18n.t('account.create.exist');
             result = feedback.done(msg, params);
 
-            res.json(result);
-            return;
+            return res.json(result);
         }
 
         // make new account
@@ -37,8 +36,7 @@ exports.createAccount = function (req, res, next) {
             msg = i18n.t('account.create.fail');
             result = feedback.done(msg, params);
 
-            res.json(result);
-            return;
+            return res.json(result);
         }
 
         var user = new Account({
@@ -62,8 +60,7 @@ exports.createAccount = function (req, res, next) {
                 msg = i18n.t('account.create.fail');
                 result = feedback.done(msg, err);
 
-                res.json(result);
-                return;
+                return res.json(result);
             }
 
             // make new account token
@@ -81,8 +78,7 @@ exports.createAccount = function (req, res, next) {
                     msg = i18n.t('token.create.fail');
                     result = feedback.done(msg, err);
 
-                    res.json(result);
-                    return;
+                    return res.json(result);
                 }
                 //AccountLog.signUp({email: params['email']});
 
@@ -96,5 +92,42 @@ exports.createAccount = function (req, res, next) {
             });
         });
     });
+    next();
+};
+
+// login
+exports.readAccount = function (req, res, next) {
+    var params = {
+        email: req.params['email'],
+        password: req.params['password'],
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, client, result;
+
+    Account.findOne({email: params.email}, function (err, user) {
+        if (!user) {
+            msg = i18n.t('account.read.fail');
+            result = feedback.done(msg, params);
+
+            return res.json(result);
+        }
+        user.comparePassword(params.password, function (err, isMatch) {
+            if (isMatch) {
+                msg = i18n.t('account.read.done');
+                client = common.setDataToClient(user);
+                result = feedback.done(msg, client);
+
+                res.json(result);
+            } else {
+                msg = i18n.t('account.read.mismatch');
+                result = feedback.done(msg, params);
+
+                res.json(result);
+            }
+        });
+    });
+
     next();
 };

@@ -93,6 +93,10 @@ function route(mode, callback) {
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
     }}, middleware.getCoreDatabase(mode), account.createAccount);
+    server.post({ path: '/account/login', validation: {
+        email: { isRequired: true, isEmail: true },
+        password: { isRequired: true }
+    }}, account.readAccount);
 
     server.get({ path: '/login', validation: {}}, function (req, res, next) {
         // some static html page for api.haroocloud.com

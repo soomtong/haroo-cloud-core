@@ -9,22 +9,6 @@ app.node_env = 'testing';
 
 describe('Account', function () {
 
-    var Account = require('../core/models/account');
-    var AccountToken = require('../core/models/accountToken');
-
-    var temp = true;    // for now, temporary account initialize
-
-    beforeEach(function(done){
-        if (temp) {
-            Account.remove({}, function (err, result) {
-                console.log('remove account data',result);
-                done();
-            });
-        } else {
-            done();
-        }
-    });
-
     it('create account by with no email', function (done) {
         /*
         var result = {
@@ -112,6 +96,21 @@ describe('Account', function () {
         });
     });
 
+    var temp = true;    // for now, temporary account initialize
+
+    before(function(done){
+        var Account = require('../core/models/account');
+        var AccountToken = require('../core/models/accountToken');
+
+        if (temp) {
+            Account.remove({}, function (err, result) {
+                done();
+            });
+        } else {
+            done();
+        }
+    });
+
     it('create account by email, password and optional nickname', function (done) {
         var result = {
             message: 'OK: '+i18n.t('account.create.done'),
@@ -152,4 +151,68 @@ describe('Account', function () {
                 });
         });
     });
+
+    it('login fail by invalid email or invalid password', function (done) {
+        var result = {
+            message: 'OK: '+i18n.t('account.read.mismatch'),
+            data: {
+                email: 'test@email.net',
+                password: 'wrong_password',
+                accessHost: 'supertest',
+                accessIP: '127.0.0.1'
+            },
+            isResult: true,
+            statusCode: 200,
+            meta: {error: 'OK', message: 'none exist'}
+        };
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/account/login')
+                .set('x-access-host', 'supertest')
+                .send({email: 'test@email.net', password: 'wrong_password'})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+                    done();
+                });
+        });
+    });
+
+    it('login success by email, password', function (done) {
+        var result = {
+            message: 'OK: done',
+            data: {
+                email: 'test@email.net',
+                haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                profile: {
+                    nickname: '',
+                    gender: '',
+                    location: '',
+                    website: '',
+                    picture: ''
+                },
+                db_host: 'db1.haroopress.com',
+                tokens: []
+            },
+            isResult: true,
+            statusCode: 200,
+            meta: {error: 'OK', message: 'done'}
+        };
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/account/login')
+                .set('x-access-host', 'supertest')
+                .send({email: 'test@email.net', password: 'new_password'})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+                    done();
+                });
+        });
+    });
+
 });

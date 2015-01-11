@@ -13,7 +13,11 @@
       "fail": "failed",
       "exist": "already exist"
     },
-    "title": "translated title"
+    "read": {
+      "done": "done",
+      "fail": "failed",
+      "mismatch": "none exist"
+    }
   },
   "token": {
     "create": {
