@@ -5,6 +5,8 @@ var i18n = require('i18next');
 var config = require('./config');
 var middleware = require('./middleware');
 
+var feedback = require('./lib/feedback');
+
 var dummyTest = require('./api/dummy');
 var staticPage = require('./api/static');
 
@@ -37,16 +39,30 @@ function commonMiddleware(mode) {
     server.use(middleware.accessClient);
     server.use(restify.queryParser());
     server.use(restify.bodyParser());
-    server.use(restifyValidation.validationPlugin({}));
+    server.use(restifyValidation.validationPlugin({
+        //errorHandler: middleware.validationError
+        // shit, can't set custom res.status by standard features, need a hack. let's do it later.
+        // todo: hack restifyValidation errorhandler
+    }));
+    /*
+    patch this and update this middleware
+    var handle = function (errors, req, res, options, next) {
+        if (options.errorHandler) {
+            return options.errorHandler(errors, res);   // for custom res.status
+        } else {
+            return res.send(400, {
+                status: 'validation failed',
+                errors: errors
+            });
+        }
+    }
+    */
 }
-
 function districtMiddleware(mode) {
 // todo: access deny middleware
 }
-
 function route(mode, callback) {
     var app = config({mode: mode}).app;
-
     i18n.init({
         lng: app.lang,
         useCookie: false,

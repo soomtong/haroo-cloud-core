@@ -4,12 +4,46 @@ var i18n = require('i18next');
 var supertest = require('supertest');
 var app = require('../app');
 
-//todo: set app mode
-//app.node_env = 'testing';
+// assign testing mode
+app.node_env = 'testing';
 
 describe('Account', function () {
 
+    var Account = require('../core/models/account');
+    var AccountToken = require('../core/models/accountToken');
+
+    var temp = true;    // for now, temporary account initialize
+
+    beforeEach(function(done){
+        if (temp) {
+            Account.remove({}, function (err, result) {
+                console.log('remove account data',result);
+                done();
+            });
+        } else {
+            done();
+        }
+    });
+
     it('create account by with no email', function (done) {
+        /*
+        var result = {
+            "data": [
+                {
+                    "code": "MISSING",
+                    "field": "email",
+                    "message": "Field is required"
+                }
+            ],
+            "isResult": true,
+            "message": "Unprocessable Entity: validation failed",
+            "meta": {
+                "error": "Unprocessable Entity",
+                "message": "validation failed"
+            },
+            "statusCode": 422
+        };
+        */
         var result = {
             status: 'validation failed',
             errors: [{
@@ -35,6 +69,25 @@ describe('Account', function () {
     });
 
     it('create account by with no password', function (done) {
+        /*
+        var result = {
+            "data": [
+                {
+                    "code": "MISSING",
+                    "field": "password",
+                    "message": "Field is required"
+                }
+            ],
+            "isResult": true,
+            "message": "Unprocessable Entity: validation failed",
+            "meta": {
+                "error": "Unprocessable Entity",
+                "message": "validation failed"
+            },
+            "statusCode": 422
+        };
+        */
+
         var result = {
             status: 'validation failed',
             errors: [{

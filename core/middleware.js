@@ -81,3 +81,10 @@ exports.getCoreDatabase = function (mode) {
         next();
     };
 };
+
+// request validation error handler
+exports.validationError = function (errors) {
+    var feedback = require('./lib/feedback');
+
+    return feedback.badData("validation failed", errors);
+};

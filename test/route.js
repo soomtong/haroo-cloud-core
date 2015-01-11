@@ -3,11 +3,14 @@ var assert = require("assert");
 var supertest = require('supertest');
 var app = require('../app');
 
+// assign testing mode
+app.node_env = 'testing';
+
 describe('Route', function () {
     describe('Middleware', function () {
         it('i18next bind to default', function (done) {
             var result = {
-                msg: require('../locales/ko/translation.json').app.lang.testMsg
+                msg: require('../locales/dev/translation.json').app.lang.testMsg
             };
 
             app.init(app.node_env, function (server) {

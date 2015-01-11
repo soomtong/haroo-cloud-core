@@ -3,10 +3,13 @@ var assert = require("assert");
 
 var app = require('../app');
 
+// assign testing mode
+app.node_env = 'testing';
+
 describe('Application', function () {
 
     it('there are app mode', function () {
-        assert.ok(app.node_env == 'development' || app.node_env == 'production');
+        assert.ok(app.node_env == 'testing' || app.node_env == 'development' || app.node_env == 'production');
     });
 
     describe('Check configuration', function () {
