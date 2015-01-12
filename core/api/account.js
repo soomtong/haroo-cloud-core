@@ -162,10 +162,13 @@ exports.mailingResetPassword = function (req, res, next) {
         existAccount.save();
 
         // send mail
-        if (false && params.serviceMailer.delegate) {
+        if (params.serviceMailer.delegate) {
             sendmail.sendPasswordResetMailByDelegate(existAccount.email,
                 {link: params.serviceHost + '/account/update-password/' + randomToken},
-                params.serviceMailer.delegate);
+                params.serviceMailer.delegate,
+            function (result) {
+                //
+            });
         } else {
             // todo: custom mailer
             //sendmail.sendPasswordResetMail();

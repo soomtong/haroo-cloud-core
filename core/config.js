@@ -13,6 +13,12 @@ var server = function serverConfig(option) {
     return config[option.mode];
 };
 
+var mailer = function mailerConfig(option) {
+    var config = require('../config')['mailer'];
+
+    return config[option.mode];
+};
+
 var database = function databaseConfig(option) {
     var config = require('../config')['database'];
 
@@ -25,6 +31,7 @@ module.exports = function getConfiguration(option) {
         root: SERVICE_FOLDER,
         app: app(option),
         server: server(option),
+        mailer: mailer(option),
         database: database(option)
     };
 };

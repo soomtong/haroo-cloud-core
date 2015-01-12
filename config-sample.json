@@ -12,46 +12,40 @@
   },
   "server": {
     "production": {
-      "host": "hostname.com",
-      "secure": true,
-      "port": 3000
+      "host": "hostname.com", "secure": true, "port": 3000
     },
     "development": {
-      "host": "localhost",
-      "secure": false,
-      "port": 3001
+      "host": "localhost", "secure": false, "port": 3001
     },
     "testing": {
-      "host": "127.0.0.1",
-      "secure": false,
-      "port": 3002
+      "host": "127.0.0.1", "secure": false, "port": 3002
     }
   },
   "database" : {
     "production": {
       "couch": [
-        {"host": "db1.localhost", "port": "80", "prefix": "b", "auth": ["id","pw"]},
-        {"host": "db2.localhost", "port": "80", "prefix": "b", "auth": ["id2","pw2"]}
+        {"host": "db1.localhost", "port": 80, "prefix": "b", "auth": ["id","pw"]},
+        {"host": "db2.localhost", "port": 80, "prefix": "b", "auth": ["id2","pw2"]}
       ],
       "mongo": [
-        {"host": "mongo.localhost", "port": "80", "auth": ["m","1"]}
+        {"host": "mongo.localhost", "port": 80, "auth": ["m","1"]}
       ]
     },
     "development": {
       "couch": [
-        {"host": "db1.localhost", "port": "80", "prefix": "b", "auth": ["id","pw"]},
-        {"host": "db2.localhost", "port": "80", "prefix": "b", "auth": ["id2","pw2"]}
+        {"host": "db1.localhost", "port": 80, "prefix": "b", "auth": ["id","pw"]},
+        {"host": "db2.localhost", "port": 80, "prefix": "b", "auth": ["id2","pw2"]}
       ],
       "mongo": [
-        {"host": "mongo.localhost", "port": "80", "auth": ["m","1"]}
+        {"host": "mongo.localhost", "port": 80, "auth": ["m","1"]}
       ]
     },
     "testing": {
       "couch": [
-        {"host": "localhost", "port": "80", "auth": ["a","1"]}
+        {"host": "localhost", "port": 80, "auth": ["a","1"]}
       ],
       "mongo": [
-        {"host": "localhost", "port": "80", "auth": ["m","1"]}
+        {"host": "localhost", "port": 80, "auth": ["m","1"]}
       ]
     }
   },
@@ -81,16 +75,7 @@
       }
     },
     "testing": {
-      "host": "sendmail.localhost", "auth": ["m", "1"],
-      "delegate": {
-        "service": "gmail",
-        "auth": {
-          "user": "m",
-          "pass": "1"
-        },
-        "bcc": "@mail.net",
-        "reply": "Haroo Cloud Service<service@your-service.com>"
-      }
+      "host": "sendmail.localhost", "auth": ["m", "1"]
     }
   }
 }

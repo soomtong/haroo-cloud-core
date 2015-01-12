@@ -215,4 +215,39 @@ describe('Account', function () {
         });
     });
 
+    it('send mail to this account user for password reset', function (done) {
+        var result = {
+            message: 'OK: done',
+            data: {
+                email: 'test@email.net',
+                haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                profile: {
+                    nickname: '',
+                    gender: '',
+                    location: '',
+                    website: '',
+                    picture: ''
+                },
+                db_host: 'db1.haroopress.com',
+                tokens: []
+            },
+            isResult: true,
+            statusCode: 200,
+            meta: {error: 'OK', message: 'done'}
+        };
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/account/forgot_password')
+                .set('x-access-host', 'supertest')
+                .send({email: 'test@email.net'})
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    //assert.ok(!err, err);
+                    //assert.deepEqual(res.body, result);
+                    done();
+                });
+        });
+    });
+
 });

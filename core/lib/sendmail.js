@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer');
 var emailTemplates = require('swig-email-templates');
 
-exports.sendPasswordResetMailByDelegate = function (address, context, emailToken) {
+exports.sendPasswordResetMailByDelegate = function (address, context, emailToken, callback) {
     var smtpTransport = nodemailer.createTransport(emailToken);
 
     emailTemplates({root: __dirname + "/templates"}, function (error, render) {
@@ -17,9 +17,11 @@ exports.sendPasswordResetMailByDelegate = function (address, context, emailToken
             email.html = html;
             smtpTransport.sendMail(email, function (error, info) {
                 if (error) {
-                    console.log(error);
+                    //console.log(error);
+                    callback(error);
                 } else {
-                    console.log("Message sent: " + info.response);
+                    //console.log("Message sent: " + info.response);
+                    callback(info);
                 }
 
                 // if you don't want to use this transport object anymore, uncomment following line
