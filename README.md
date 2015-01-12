@@ -31,5 +31,7 @@ npm start
 ### Account
 
 `POST` /account/create
+
 `POST` /account/read
+
 `POST` /account/forgot-password
