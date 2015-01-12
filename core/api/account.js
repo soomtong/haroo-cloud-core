@@ -53,43 +53,51 @@ exports.createAccount = function (req, res, next) {
         });
 
         // init couch collection for account
-        common.initAccountDatabase(haroo_id, res.coreDatabase);
-
-        // save account to mongo
-        user.save(function (err) {
+        common.initAccountDatabase(haroo_id, res.coreDatabase, function (err, response) {
             if (err) {
+                //throw new Error('fail make new account with couch database');
                 msg = i18n.t('account.create.fail');
                 result = feedback.done(msg, err);
 
                 return res.json(result);
             }
 
-            // make new account token
-            var token = new AccountToken({
-                access_ip: params.accessIP,
-                access_host: params.accessHost,
-                access_token: common.getAccessToken(),
-                haroo_id: haroo_id,
-                login_expire: common.getLoginExpireDate(),
-                created_at: Date.now()
-            });
-
-            token.save(function (err) {
+            // save account to mongo
+            user.save(function (err) {
                 if (err) {
-                    msg = i18n.t('token.create.fail');
+                    msg = i18n.t('account.create.fail');
                     result = feedback.done(msg, err);
 
                     return res.json(result);
                 }
-                //AccountLog.signUp({email: params['email']});
 
-                // done right
-                msg = i18n.t('account.create.done');
-                client = common.setDataToClient(user, token);
+                // make new account token
+                var token = new AccountToken({
+                    access_ip: params.accessIP,
+                    access_host: params.accessHost,
+                    access_token: common.getAccessToken(),
+                    haroo_id: haroo_id,
+                    login_expire: common.getLoginExpireDate(),
+                    created_at: Date.now()
+                });
 
-                result = feedback.done(msg, client);
+                token.save(function (err) {
+                    if (err) {
+                        msg = i18n.t('token.create.fail');
+                        result = feedback.done(msg, err);
 
-                res.json(result);
+                        return res.json(result);
+                    }
+                    //AccountLog.signUp({email: params['email']});
+
+                    // done right
+                    msg = i18n.t('account.create.done');
+                    client = common.setDataToClient(user, token);
+
+                    result = feedback.done(msg, client);
+
+                    res.json(result);
+                });
             });
         });
     });

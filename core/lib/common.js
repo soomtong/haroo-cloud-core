@@ -13,15 +13,13 @@ exports.initHarooID = function (email, database) {
     return InitAccount.initHarooID(email, nameToken, prefix);
 };
 
-exports.initAccountDatabase = function (haroo_id, couch) {
+exports.initAccountDatabase = function (haroo_id, couch, callback) {
     if (!haroo_id) throw new Error('no haroo id assigned');
 
     var InitUserDB = new InitAccount.initUserDB(couch.host, couch.port, couch.auth[0], couch.auth[1]);
 
     InitUserDB.createNewAccount(haroo_id, function (err, res) {
-        if (err) {
-            throw new Error('fail make new account with couch database');
-        }
+        callback(err, res);
     });
 };
 

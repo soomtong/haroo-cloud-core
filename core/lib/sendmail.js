@@ -13,15 +13,13 @@ exports.sendPasswordResetMailByDelegate = function (address, context, emailToken
         };
 
         render('password_reset_email.html', context, function (error, html) {
-            console.log(html);
             email.html = html;
+
             smtpTransport.sendMail(email, function (error, info) {
                 if (error) {
-                    //console.log(error);
-                    callback(error);
+                    callback && callback(error);
                 } else {
-                    //console.log("Message sent: " + info.response);
-                    callback(info);
+                    callback && callback(info);
                 }
 
                 // if you don't want to use this transport object anymore, uncomment following line

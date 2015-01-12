@@ -215,7 +215,7 @@ describe('Account', function () {
         });
     });
 
-    it('send mail to this account user for password reset', function (done) {
+    it("send mail to this account user for password reset but don't send mail actually", function (done) {
         var result = {
             message: 'OK: done',
             data: {
@@ -243,8 +243,8 @@ describe('Account', function () {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
-                    //assert.ok(!err, err);
-                    //assert.deepEqual(res.body, result);
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
                     done();
                 });
         });

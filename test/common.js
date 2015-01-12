@@ -16,25 +16,30 @@ describe('Common Module', function () {
         assert.deepEqual(validHarooID, common.initHarooID(email, database));
     });
 
-    it('copy new couch collection to new account', function () {
+    it('copy new couch collection to new account', function (done) {
         var database = app.config({mode: 'testing'})['database']['couch'][0];
         var email = "test@email.net";
         var validHarooID = common.initHarooID(email, database);
 
-        common.initAccountDatabase(validHarooID, database);
+        common.initAccountDatabase(validHarooID, database, function (err, res) {
+            assert.ok(res.ok);
+            done();
+        });
     });
 });
 
 describe('ThirdParty Module', function () {
     it('send mail using nodemailer', function (done) {
-        console.log(app.config({mode: 'development'}));
+        this.timeout(5000);
+
         var mailer = app.config({mode: 'development'})['mailer'];
         var email = "soomtong@gmail.com";
+        var param = {link: 'http://localhost/account/update-password/no_exist'};
 
-        sendmail.sendPasswordResetMailByDelegate(email, {link: 'http://localhost/account/update-password/no_exist'}, mailer.delegate,
-        function (result) {
-            console.log(result);
-            done();
-        });
+        sendmail.sendPasswordResetMailByDelegate(email, param, mailer.delegate,
+            function (result) {
+                assert.equal(result.response.slice(0, 3), '250');
+                done();
+            });
     });
 });
