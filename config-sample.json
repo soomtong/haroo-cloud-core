@@ -12,14 +12,19 @@
   },
   "server": {
     "production": {
-      "port": 3031
+      "host": "hostname.com",
+      "secure": true,
+      "port": 3000
     },
     "development": {
-      "port": 3031
+      "host": "localhost",
+      "secure": false,
+      "port": 3001
     },
     "testing": {
       "host": "127.0.0.1",
-      "port": 3031
+      "secure": false,
+      "port": 3002
     }
   },
   "database" : {
@@ -48,6 +53,44 @@
       "mongo": [
         {"host": "localhost", "port": "80", "auth": ["m","1"]}
       ]
+    }
+  },
+  "mailer" : {
+    "production": {
+      "host": "sendmail.localhost", "auth": ["m", "1"],
+      "delegate": {
+        "service": "gmail",
+        "auth": {
+          "user": "m",
+          "pass": "1"
+        },
+        "bcc": "test@gmail.com",
+        "reply": "Haroo Cloud Service<service@your-service.com>"
+      }
+    },
+    "development": {
+      "host": "sendmail.localhost", "auth": ["m", "1"],
+      "delegate": {
+        "service": "gmail",
+        "auth": {
+          "user": "m",
+          "pass": "1"
+        },
+        "bcc": "qc@mail.net",
+        "reply": "Haroo Cloud Service<service@your-service.com>"
+      }
+    },
+    "testing": {
+      "host": "sendmail.localhost", "auth": ["m", "1"],
+      "delegate": {
+        "service": "gmail",
+        "auth": {
+          "user": "m",
+          "pass": "1"
+        },
+        "bcc": "@mail.net",
+        "reply": "Haroo Cloud Service<service@your-service.com>"
+      }
     }
   }
 }

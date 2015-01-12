@@ -17,6 +17,10 @@
       "done": "done",
       "fail": "failed",
       "mismatch": "none exist"
+    },
+    "forgotPassword": {
+      "done": "done",
+      "fail": "can't find information"
     }
   },
   "token": {

@@ -72,15 +72,18 @@ function route(mode, callback) {
 
     globalMiddleware(mode);
 
+    // dummy testing
     server.get('/testing/', dummyTest.testSimple);
     server.get('/testing/:name', dummyTest.testSimpleWithParam);
     server.get('/i18n', dummyTest.testI18N);
     server.get('/i18n-en', dummyTest.testEnForce);
 
+    // version specified api for only feature test
     server.get({ path: '/version', version: '1.0.1'}, dummyTest.testVersion1);
     server.get({ path: '/version', version: '1.2.3'}, dummyTest.testVersion1_2_3);
     server.get({ path: '/version', version: '2.0.1'}, dummyTest.testVersion2);
 
+    // haroo cloud api document page
     server.get('/', staticPage.home);
 
     commonMiddleware(mode);
@@ -97,14 +100,9 @@ function route(mode, callback) {
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
     }}, account.readAccount);
-
-    server.get({ path: '/login', validation: {}}, function (req, res, next) {
-        // some static html page for api.haroocloud.com
-        // just for only introduce
-        res.send('login');
-
-        next();
-    });
+    server.post({ path: '/account/forgot_password', validation: {
+        email: { isRequired: true, isEmail: true }
+    }}, middleware.getCoreMailer(mode), account.mailingResetPassword);
 
     districtMiddleware(mode);
 

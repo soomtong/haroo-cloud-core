@@ -73,10 +73,24 @@ exports.accessToken = function (req, res, next) {
 // select database info
 exports.getCoreDatabase = function (mode) {
     var config = require('./config');
-    var server = config({mode: mode}).database;
+    var server = config({mode: mode})['database'];
 
     return function (req, res, next) {
         res.coreDatabase = server.couch[0];
+
+        next();
+    };
+};
+
+// select mail server info
+exports.getCoreMailer = function (mode) {
+    var config = require('./config');
+    var mailer = config({mode: mode})['mailer'];
+    var server = config({mode: mode})['server'];
+
+    return function (req, res, next) {
+        res.coreMailer = mailer;
+        res.coreHost = server.secure ? 'https://' : 'http://' + server.host + server.port ? server.port : '';
 
         next();
     };

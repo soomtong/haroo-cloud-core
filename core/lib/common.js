@@ -29,8 +29,16 @@ exports.getAccessToken = function () {
     return uuid.v4();
 };
 
+exports.getRandomToken = function () {
+    return uuid.v1();
+};
+
 exports.getLoginExpireDate = function () {
-    return Date.now() + ( 15 * DAY );
+    return Date.now() + ( 15 * Number(DAY) );
+};
+
+exports.getPasswordResetExpire = function () {
+    return Date.now() + Number(DAY);
 };
 
 exports.setDataToClient = function (userData, tokenData) {

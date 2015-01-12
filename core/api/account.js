@@ -2,6 +2,7 @@ var i18n = require('i18next');
 
 var feedback = require('../lib/feedback');
 var common = require('../lib/common');
+var sendmail = require('../lib/sendmail');
 
 var Account = require('../models/account');
 var AccountToken = require('../models/accountToken');
@@ -127,6 +128,57 @@ exports.readAccount = function (req, res, next) {
                 res.json(result);
             }
         });
+    });
+
+    next();
+};
+
+// mailing for forgot password account
+exports.mailingResetPassword = function (req, res, next) {
+    var params = {
+        email: req.params['email'],
+        password: req.params['password'],
+        serviceMailer: res.coreMailer,
+        serviceHost: res.coreHost,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, client, result;
+
+    Account.findOne({email: params.email}, function (err, existAccount) {
+        if (err || !existAccount || !existAccount.email) {
+            msg = i18n.t('account.forgotPassword.fail');
+            result = feedback.done(msg, params);
+
+            return res.json(result);
+        }
+
+        var randomToken = common.getRandomToken();
+        var expired = common.getPasswordResetExpire();
+
+        existAccount.reset_password_token = randomToken;
+        existAccount.reset_password_token_expire = expired;
+        existAccount.save();
+
+        // send mail
+        if (false && params.serviceMailer.delegate) {
+            sendmail.sendPasswordResetMailByDelegate(existAccount.email,
+                {link: params.serviceHost + '/account/update-password/' + randomToken},
+                params.serviceMailer.delegate);
+        } else {
+            // todo: custom mailer
+            //sendmail.sendPasswordResetMail();
+            console.log('\n=== send mail to account for password reset!\n');
+        }
+
+        //AccountLog.resetPasswordMail({email: params['email']});
+
+        msg = i18n.t('account.forgotPassword.done');
+        client = common.setDataToClient(existAccount);
+        result = feedback.done(msg, client);
+
+        res.json(result);
     });
 
     next();
