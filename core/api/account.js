@@ -194,3 +194,112 @@ exports.mailingResetPassword = function (req, res, next) {
 
     next();
 };
+
+// validate token
+exports.validateToken = function (req, res) {
+    var params = {
+        keepToken: req.params['keep'],
+        accessToken: res.accessToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, client, result;
+
+    // keep or remove or validate only
+    switch (params.keepToken) {
+        case '1':
+            AccountToken.findOne({access_token: params.accessToken, access_host: params.accessHost}, function (err, existToken) {
+                if (err || !existToken) {
+                    msg = i18n.t('token.read.notExist');
+                    result = feedback.done(msg, params);
+
+                    return res.json(result);
+                }
+
+                if (common.isThisTokenExpired(existToken)) {
+                    msg = i18n.t('token.read.expired');
+                    result = feedback.done(msg, params);
+
+                    return res.json(result);
+                } else {
+                    // keep this token once more
+                    existToken.login_expire = common.getLoginExpireDate();
+                    existToken.save(function (err, token) {
+                        if (err) {
+                            msg = i18n.t('token.keep.fail');
+                            result = feedback.done(msg, params);
+
+                            return res.json(result);
+                        }
+
+                        msg = i18n.t('token.keep.done');
+                        result = feedback.done(msg, params);
+
+                        //AccountLog.checkToken({token: params.accessToken});
+                        return res.json(result);
+                    });
+                }
+            });
+
+            break;
+        case '0':
+            AccountToken.findOne({access_token: params.accessToken, access_host: params.accessHost}, function (err, existToken) {
+                if (err || !existToken) {
+                    msg = i18n.t('token.read.notExist');
+                    result = feedback.done(msg, params);
+
+                    return res.json(result);
+                }
+
+                if (common.isThisTokenExpired(existToken)) {
+                    msg = i18n.t('token.read.expired');
+                    result = feedback.done(msg, params);
+
+                    return res.json(result);
+                } else {
+                    // remove token information
+                    existToken.remove(function (err, token) {
+                        if (err) {
+                            msg = i18n.t('token.delete.fail');
+                            result = feedback.done(msg, params);
+
+                            return res.json(result);
+                        }
+
+                        // done right
+                        msg = i18n.t('token.delete.done');
+                        result = feedback.done(msg, params);
+
+                        //AccountLog.checkToken({token: params.accessToken});
+                        return res.json(result);
+                    });
+                }
+            });
+
+            break;
+        default :
+            AccountToken.findOne({access_token: params.accessToken, access_host: params.accessHost}, function (err, existToken) {
+                if (err || !existToken) {
+                    msg = i18n.t('token.read.notExist');
+                    result = feedback.done(msg, params);
+
+                    return res.json(result);
+                }
+
+                if (common.isThisTokenExpired(existToken)) {
+                    msg = i18n.t('token.read.expired');
+                    result = feedback.done(msg, params);
+
+                    return res.json(result);
+                } else {
+                    // reading right
+                    msg = i18n.t('token.read.done');
+                    result = feedback.done(msg, params);
+
+                    //AccountLog.checkToken({token: params.accessToken});
+                    return res.json(result);
+                }
+            });
+    }
+};

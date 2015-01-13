@@ -32,7 +32,16 @@
     "read": {
       "done": "done",
       "fail": "failed",
+      "expired": "token expired",
       "notExist": "access deny"
+    },
+    "keep": {
+      "done": "kept one more",
+      "fail": "failed"
+    },
+    "delete": {
+      "done": "done",
+      "fail": "failed"
     }
   },
   "sprintf": "Hello %s, %s, %s and %s"

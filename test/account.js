@@ -250,4 +250,12 @@ describe('Account', function () {
         });
     });
 
+    it("validate token for non exist", function (done) {
+        // check not exist token or no params
+    });
+
+    it("validate token for keep", function (done) {
+        // compare token
+    });
+
 });

@@ -110,6 +110,9 @@ function route(mode, callback) {
     server.get('/access-deny', dummyTest.noAccessToken);
     server.post('/access-no-header-token', dummyTest.noAccessToken);
 
+    // for token
+    server.post('/token/validate', account.validateToken);
+
 
 
     callback(server);

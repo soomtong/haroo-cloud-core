@@ -39,6 +39,10 @@ exports.getPasswordResetExpire = function () {
     return Date.now() + Number(DAY);
 };
 
+exports.isThisTokenExpired = function (tokenData) {
+    return tokenData.login_expire < Date.now();
+};
+
 exports.setDataToClient = function (userData, tokenData) {
     var result = {};
 

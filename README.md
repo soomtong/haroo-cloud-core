@@ -30,8 +30,15 @@ npm start
 
 ### Account
 
+#### No Access Token Required
+
 `POST` /account/create
 
 `POST` /account/read
 
 `POST` /account/forgot-password
+
+#### Access Token Required in Request Header with `X-Access-Token`
+
+
+
