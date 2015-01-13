@@ -126,11 +126,15 @@ function route(mode, callback) {
     });
 
     // for users
-    server.post({
-        path: '/user/:haroo_id/info', validation: {
-            haroo_id: {isRequired: true}
-        }
-    }, account.getValidateToken, account.accountInfo);
+    server.post({ path: '/user/:haroo_id/info', validation: {
+        haroo_id: { isRequired: true }
+    }}, account.getValidateToken, account.accountInfo);
+    server.post({ path: '/user/:haroo_id/change_password', validation: {
+        haroo_id: { isRequired: true },
+        email: { isRequired: true, isEmail: true },
+        password: { isRequired: true }
+    }}, account.getValidateToken, account.updatePassword);
+
 
 
     callback(server);

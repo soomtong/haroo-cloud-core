@@ -71,7 +71,6 @@ exports.notAcceptable = function (message, data) {
     return exports.create(406, message, data);
 };
 
-
 exports.proxyAuthRequired = function (message, data) {
     return exports.create(407, message, data);
 };

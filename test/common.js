@@ -37,9 +37,7 @@ describe('ThirdParty Module', function () {
         var param = {link: 'http://localhost/account/update-password/no_exist'};
 
         // just for convenience
-        var togo = false;
-
-        if (togo) {
+        if (false) {
             sendmail.sendPasswordResetMailByDelegate(email, param, mailer.delegate,
                 function (result) {
                     assert.equal(result.response.slice(0, 3), '250');

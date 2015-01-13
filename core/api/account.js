@@ -99,9 +99,9 @@ exports.createAccount = function (req, res, next) {
             user.save(function (err) {
                 if (err) {
                     msg = i18n.t('account.create.fail');
-                    result = feedback.done(msg, err);
+                    result = feedback.badImplementation(msg, err);
 
-                    return res.json(result);
+                    return res.json(result.statusCode, result);
                 }
 
                 // make new account token
@@ -117,9 +117,9 @@ exports.createAccount = function (req, res, next) {
                 token.save(function (err) {
                     if (err) {
                         msg = i18n.t('token.create.fail');
-                        result = feedback.done(msg, err);
+                        result = feedback.badImplementation(msg, err);
 
-                        return res.json(result);
+                        return res.json(result.statusCode, result);
                     }
                     //AccountLog.signUp({email: params['email']});
 
@@ -261,9 +261,9 @@ exports.validateToken = function (req, res, next) {
                     existToken.save(function (err, token) {
                         if (err) {
                             msg = i18n.t('token.keep.fail');
-                            result = feedback.done(msg, params);
+                            result = feedback.badImplementation(msg, params);
 
-                            return res.json(result);
+                            return res.json(result.statusCode, result);
                         }
 
                         msg = i18n.t('token.keep.done');
@@ -295,9 +295,9 @@ exports.validateToken = function (req, res, next) {
                     existToken.remove(function (err, token) {
                         if (err) {
                             msg = i18n.t('token.delete.fail');
-                            result = feedback.done(msg, params);
+                            result = feedback.badImplementation(msg, params);
 
-                            return res.json(result);
+                            return res.json(result.statusCode, result);
                         }
 
                         // done right
@@ -353,6 +353,7 @@ exports.accountInfo = function (req, res, next) {
     Account.findOne({haroo_id: params.haroo_id}, function (err, existUser) {
         if (err || !existUser) {
             msg = i18n.t('user.info.fail');
+            params.clientToken = undefined; // clear token info
             result = feedback.badRequest(msg, params);
 
             return res.json(result.statusCode, result);
@@ -365,6 +366,51 @@ exports.accountInfo = function (req, res, next) {
 
         //AccountLog.accessHarooID({haroo_id: params['haroo_id']});
         return res.json(result);
+    });
+
+    next();
+};
+
+// update user password
+exports.updatePassword = function (req, res, next) {
+    var params = {
+        haroo_id: req.params['haroo_id'],
+        email: req.params['email'],
+        password: req.params['password'],
+        clientToken: res.clientToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, client, result;
+
+    Account.findOne({haroo_id: params['haroo_id'], email: params['email']}, function (err, updateUser) {
+        if (err || !updateUser) {
+            msg = i18n.t('user.info.fail');
+            params.clientToken = undefined; // clear token info
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        // update this new password
+        updateUser.password = params['password'];
+        updateUser.save(function (err) {
+            if (err) {
+                msg = i18n.t('user.updatePassword.fail');
+                result = feedback.badImplementation(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+
+            // done right
+            msg = i18n.t('user.updatePassword.done');
+            client = common.setDataToClient(updateUser, params.clientToken);
+            result = feedback.done(msg, client);
+
+            //AccountLog.changePassword({email: params['email']});
+            return res.json(result);
+        });
     });
 
     next();

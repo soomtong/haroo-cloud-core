@@ -111,7 +111,7 @@ describe('Account', function () {
         }
     });
 
-    var accessToken, harooID;   // for internal use only
+    var dummyAccount;       // for internal use only
 
     it('create account by email, password and optional nickname', function (done) {
         var result = {
@@ -150,8 +150,8 @@ describe('Account', function () {
                     //assert.deepEqual(res.body.message, result.message);
 
                     // set new token for test only
-                    accessToken = res.body.data.access_token;
-                    harooID = res.body.data.haroo_id;
+                    dummyAccount = res.body.data;
+                    dummyAccount.profile.nickname = "";
 
                     done();
                 });
@@ -300,7 +300,7 @@ describe('Account', function () {
             supertest(server)
                 .post('/token/validate')
                 .set('x-access-host', 'supertest')
-                .set('x-access-token', accessToken)
+                .set('x-access-token', dummyAccount.access_token)
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
@@ -324,7 +324,7 @@ describe('Account', function () {
             supertest(server)
                 .post('/spec/version')
                 .set('x-access-host', 'supertest')
-                .set('x-access-token', accessToken)
+                .set('x-access-token', dummyAccount.access_token)
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
@@ -347,7 +347,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + harooID + '/info')
+                    .post('/user/' + dummyAccount.haroo_id + '/info')
                     .set('x-access-host', 'supertest')
                     .expect('Content-Type', /json/)
                     .expect(400)
@@ -371,9 +371,9 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + harooID + '/info')
+                    .post('/user/' + dummyAccount.haroo_id + '/info')
                     .set('x-access-host', 'supertest')
-                    .set('x-access-token', accessToken)
+                    .set('x-access-token', dummyAccount.access_token)
                     .expect('Content-Type', /json/)
                     .expect(401)
                     .end(function (err, res) {
@@ -384,25 +384,39 @@ describe('Account', function () {
             })
         });
 
+        it('get user account info by invalid harooID', function (done) {
+            var result = {
+                message: 'Bad Request: access deny',
+                data: {
+                    haroo_id: 'invalidHarooID',
+                    accessToken: dummyAccount.access_token,
+                    accessHost: 'supertest',
+                    accessIP: '127.0.0.1'
+                },
+                isResult: true,
+                statusCode: 400,
+                meta: {error: 'Bad Request', message: 'access deny'}
+            };
+
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/user/' + "invalidHarooID" + '/info')
+                    .set('x-access-host', 'supertest')
+                    .set('x-access-token', dummyAccount.access_token)
+                    .expect('Content-Type', /json/)
+                    .expect(400)
+                    .end(function (err, res) {
+                        assert.ok(!err, err);
+                        assert.deepEqual(res.body, result);
+                        done();
+                    });
+            })
+        });
+
         it('get user account info by access token', function (done) {
             var result = {
                 message: 'OK: done',
-                data: {
-                    email: 'test@email.net',
-                    haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
-                    profile: {
-                        nickname: '',
-                        gender: '',
-                        location: '',
-                        website: '',
-                        picture: ''
-                    },
-                    db_host: 'db1.haroopress.com',
-                    access_host: 'supertest',
-                    access_token: '0e34e369-3cec-4327-ae0a-b73bd225685a',
-                    login_expire: '1422455621786',
-                    tokens: []
-                },
+                data: dummyAccount,
                 isResult: true,
                 statusCode: 200,
                 meta: {error: 'OK', message: 'done'}
@@ -410,19 +424,73 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + harooID + '/info')
+                    .post('/user/' + dummyAccount.haroo_id + '/info')
                     .set('x-access-host', 'supertest')
-                    .set('x-access-token', accessToken)
+                    .set('x-access-token', dummyAccount.access_token)
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
                         assert.ok(!err, err);
-                        assert.equal(res.body.haroo_id, result.haroo_id);
-                        assert.notEqual(res.body.data.access_token, result.data.access_token);
-                        assert.notEqual(res.body.data.login_expire, result.data.login_expire);
+                        assert.deepEqual(res.body, result);
                         done();
                     });
             })
+        });
+
+        it('update user password by invalid email, password', function (done) {
+            var result = {
+                message: 'Bad Request: failed',
+                data: {
+                    haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                    email: 'invalid@email.net',
+                    password: 'anotherPassword',
+                    accessHost: 'supertest',
+                    accessIP: '127.0.0.1'
+                },
+                isResult: true,
+                statusCode: 400,
+                meta: {error: 'Bad Request', message: 'failed'}
+            };
+
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/user/' + dummyAccount.haroo_id + '/change_password')
+                    .set('x-access-host', 'supertest')
+                    .set('x-access-token', dummyAccount.access_token)
+                    .send({email: 'invalid@email.net', password: 'anotherPassword'})
+                    .expect('Content-Type', /json/)
+                    .expect(400)
+                    .end(function (err, res) {
+                        assert.ok(!err, err);
+                        assert.deepEqual(res.body, result);
+                        done();
+                    });
+            });
+        });
+
+        it('update user password by email, password and should valid access token', function (done) {
+            var result = {
+                message: 'OK: done',
+                data: dummyAccount,
+                isResult: true,
+                statusCode: 200,
+                meta: {error: 'OK', message: 'done'}
+            };
+
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/user/' + dummyAccount.haroo_id + '/change_password')
+                    .set('x-access-host', 'supertest')
+                    .set('x-access-token', dummyAccount.access_token)
+                    .send({email: 'test@email.net', password: 'anotherPassword'})
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.ok(!err, err);
+                        assert.deepEqual(res.body, result);
+                        done();
+                    });
+            });
         });
     });
 });
