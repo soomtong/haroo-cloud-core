@@ -1,21 +1,15 @@
+var i18n = require('i18next');
+var feedback = require('./lib/feedback');
+
+var config = require('./config');
+var util = require('./lib/util');
+
+// todo: upgrade to session, just for test now
 var apiCallCounterForIPs = [];
 var apiCallCounterForToken = [];
 
-// ref. Express, https://github.com/strongloop/express/blob/master/lib/request.js#L380
-function getHostIp(host) {
-    // IPv6 literal support
-    var offset = host[0] === '['
-        ? host.indexOf(']') + 1
-        : 0;
-    var index = host.indexOf(':', offset);
-
-    return ~index
-        ? host.substring(0, index)
-        : host;
-}
-
 exports.callCounterForIPs = function (req, res, next) {
-    var ip = getHostIp(req.header('host'));
+    var ip = util.getHostIp(req.header('host'));
 
     if (ip) {
         var now = Date.now();
@@ -52,11 +46,10 @@ exports.callCounterForToken = function (req, res, next) {
     next();
 };
 
-
 // tracking host name
 exports.accessClient = function (req, res, next) {
     var host = res.accessHost = req.header('x-access-host');
-    var ip = res.accessIP = getHostIp(req.header('host'));
+    var ip = res.accessIP = util.getHostIp(req.header('host'));
 
     next();
 };
@@ -65,14 +58,19 @@ exports.accessClient = function (req, res, next) {
 exports.accessToken = function (req, res, next) {
     var token = res.accessToken = req.header('x-access-token');
 
-    if (!token) throw "no token, that's blocked";
+    //if (!token) throw "no token, that's blocked";
+    if (!token) {
+        var msg = i18n.t('token.read.notExist');
+        var result = feedback.forbidden(msg);
+
+        return res.json(result.statusCode, result);
+    }
 
     next();
 };
 
 // select database info
 exports.getCoreDatabase = function (mode) {
-    var config = require('./config');
     var server = config({mode: mode})['database'];
 
     return function (req, res, next) {
@@ -84,7 +82,6 @@ exports.getCoreDatabase = function (mode) {
 
 // select mail server info
 exports.getCoreMailer = function (mode) {
-    var config = require('./config');
     var mailer = config({mode: mode})['mailer'];
     var server = config({mode: mode})['server'];
 
@@ -98,7 +95,5 @@ exports.getCoreMailer = function (mode) {
 
 // request validation error handler
 exports.validationError = function (errors) {
-    var feedback = require('./lib/feedback');
-
     return feedback.badData("validation failed", errors);
 };

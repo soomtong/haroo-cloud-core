@@ -218,16 +218,44 @@ describe('Route', function () {
 
 
     it('just access denying', function (done) {
-        var result = {};
+        var result = {
+            message: 'Forbidden: access deny',
+            data: null,
+            isResult: true,
+            statusCode: 403,
+            meta: {error: 'Forbidden', message: 'access deny'}
+        };
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/access_deny')
+                .get('/access-deny')
+                .expect(403)
                 .end(function (err, res) {
                     assert.ok(!err, err);
-                    assert.ok(true);
+                    assert.deepEqual(res.body, result);
                     done();
                 })
         })
-    })
+    });
+
+    it('districted access token deny with X-Access-Token', function (done) {
+        var result = {
+            message: 'Forbidden: access deny',
+            data: null,
+            isResult: true,
+            statusCode: 403,
+            meta: {error: 'Forbidden', message: 'access deny'}
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/access-no-header-token')
+                .expect(403)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+                    done();
+                })
+        })
+    });
 });

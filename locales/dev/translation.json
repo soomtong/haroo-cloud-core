@@ -28,6 +28,11 @@
       "done": "done",
       "fail": "failed",
       "exist": "already exist"
+    },
+    "read": {
+      "done": "done",
+      "fail": "failed",
+      "notExist": "access deny"
     }
   },
   "sprintf": "Hello %s, %s, %s and %s"

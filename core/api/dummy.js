@@ -59,3 +59,9 @@ exports.testCustomParams = function (req, res, next) {
 
     next();
 };
+
+exports.noAccessToken = function (req, res, next) {
+    res.json({msg: "should be forbidden"});
+
+    next();
+};

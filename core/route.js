@@ -59,8 +59,9 @@ function commonMiddleware(mode) {
     */
 }
 function districtMiddleware(mode) {
-// todo: access deny middleware
+    server.use(middleware.accessToken);
 }
+
 function route(mode, callback) {
     var app = config({mode: mode}).app;
     i18n.init({
@@ -106,11 +107,9 @@ function route(mode, callback) {
 
     districtMiddleware(mode);
 
-    server.get('/access_deny', function (req, res, next) {
-        res.json({msg: "hi"});
+    server.get('/access-deny', dummyTest.noAccessToken);
+    server.post('/access-no-header-token', dummyTest.noAccessToken);
 
-        next();
-    });
 
 
     callback(server);
