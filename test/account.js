@@ -111,7 +111,7 @@ describe('Account', function () {
         }
     });
 
-    var accessToken = '';   // for internal use only
+    var accessToken, harooID;   // for internal use only
 
     it('create account by email, password and optional nickname', function (done) {
         var result = {
@@ -151,6 +151,7 @@ describe('Account', function () {
 
                     // set new token for test only
                     accessToken = res.body.data.access_token;
+                    harooID = res.body.data.haroo_id;
 
                     done();
                 });
@@ -334,5 +335,94 @@ describe('Account', function () {
         });
     });
 
+    describe('User', function () {
+        it('access user api by Bad access token', function (done) {
+            var result = {
+                message: 'Bad Request: access deny',
+                data: null,
+                isResult: true,
+                statusCode: 400,
+                meta: {error: 'Bad Request', message: 'access deny'}
+            };
 
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/user/' + harooID + '/info')
+                    .set('x-access-host', 'supertest')
+                    .expect('Content-Type', /json/)
+                    .expect(400)
+                    .end(function (err, res) {
+                        assert.ok(!err, err);
+                        assert.deepEqual(res.body, result);
+                        done();
+                    });
+            });
+        });
+
+        it('access user api by Expired access token', function (done) {
+            // todo: need to patch or inject login expire date
+            var result = {
+                message: 'Bad Request: access deny',
+                data: null,
+                isResult: true,
+                statusCode: 401,
+                meta: {error: 'Bad Request', message: 'access deny'}
+            };
+
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/user/' + harooID + '/info')
+                    .set('x-access-host', 'supertest')
+                    .set('x-access-token', accessToken)
+                    .expect('Content-Type', /json/)
+                    .expect(401)
+                    .end(function (err, res) {
+                        //assert.ok(!err, err);
+                        //assert.deepEqual(res.body, result);
+                        done();
+                    });
+            })
+        });
+
+        it('get user account info by access token', function (done) {
+            var result = {
+                message: 'OK: done',
+                data: {
+                    email: 'test@email.net',
+                    haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                    profile: {
+                        nickname: '',
+                        gender: '',
+                        location: '',
+                        website: '',
+                        picture: ''
+                    },
+                    db_host: 'db1.haroopress.com',
+                    access_host: 'supertest',
+                    access_token: '0e34e369-3cec-4327-ae0a-b73bd225685a',
+                    login_expire: '1422455621786',
+                    tokens: []
+                },
+                isResult: true,
+                statusCode: 200,
+                meta: {error: 'OK', message: 'done'}
+            };
+
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/user/' + harooID + '/info')
+                    .set('x-access-host', 'supertest')
+                    .set('x-access-token', accessToken)
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.ok(!err, err);
+                        assert.equal(res.body.haroo_id, result.haroo_id);
+                        assert.notEqual(res.body.data.access_token, result.data.access_token);
+                        assert.notEqual(res.body.data.login_expire, result.data.login_expire);
+                        done();
+                    });
+            })
+        });
+    });
 });

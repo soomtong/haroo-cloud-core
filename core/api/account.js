@@ -7,6 +7,39 @@ var sendmail = require('../lib/sendmail');
 var Account = require('../models/account');
 var AccountToken = require('../models/accountToken');
 
+// middleware: check token validate for this account
+exports.getValidateToken = function (req, res, next) {
+    var params = {
+        haroo_id: req.params['haroo_id'],
+        accessToken: res.accessToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, result;
+
+    AccountToken.findOne({access_token: params.accessToken, access_host: params.accessHost, haroo_id: params.haroo_id},
+        function (err, existToken) {
+            if (err || !existToken) {
+                msg = i18n.t('token.read.notExist');
+                result = feedback.badRequest(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+
+            if (common.isThisTokenExpired(existToken)) {
+                msg = i18n.t('token.read.expired');
+                result = feedback.unauthorized(msg, params);
+
+                return res.json(result.statusCode, result);
+            } else {
+                res.clientToken = existToken;
+            }
+
+            next();
+        });
+};
+
 // signup
 exports.createAccount = function (req, res, next) {
     var params = {
@@ -196,7 +229,7 @@ exports.mailingResetPassword = function (req, res, next) {
 };
 
 // validate token
-exports.validateToken = function (req, res) {
+exports.validateToken = function (req, res, next) {
     var params = {
         keepToken: req.params['keep'],
         accessToken: res.accessToken,
@@ -204,7 +237,7 @@ exports.validateToken = function (req, res) {
         accessIP: res.accessIP
     };
 
-    var msg, client, result;
+    var msg, result;
 
     // keep or remove or validate only
     switch (params.keepToken) {
@@ -302,4 +335,37 @@ exports.validateToken = function (req, res) {
                 }
             });
     }
+
+    next();
+};
+
+// get user info
+exports.accountInfo = function (req, res, next) {
+    var params = {
+        haroo_id: req.params['haroo_id'],
+        clientToken: res.clientToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, client, result;
+
+    Account.findOne({haroo_id: params.haroo_id}, function (err, existUser) {
+        if (err || !existUser) {
+            msg = i18n.t('user.info.fail');
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        // done right
+        msg = i18n.t('user.info.done');
+        client = common.setDataToClient(existUser, params.clientToken);
+        result = feedback.done(msg, client);
+
+        //AccountLog.accessHarooID({haroo_id: params['haroo_id']});
+        return res.json(result);
+    });
+
+    next();
 };

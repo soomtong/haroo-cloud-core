@@ -125,6 +125,12 @@ function route(mode, callback) {
         next();
     });
 
+    // for users
+    server.post({
+        path: '/user/:haroo_id/info', validation: {
+            haroo_id: {isRequired: true}
+        }
+    }, account.getValidateToken, account.accountInfo);
 
 
     callback(server);

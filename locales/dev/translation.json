@@ -47,5 +47,10 @@
       "fail": "failed"
     }
   },
-  "sprintf": "Hello %s, %s, %s and %s"
+  "user": {
+    "info": {
+      "done": "done",
+      "fail": "failed"
+    }
+  }
 }
