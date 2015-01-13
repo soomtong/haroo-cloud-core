@@ -212,16 +212,16 @@ exports.validateToken = function (req, res) {
             AccountToken.findOne({access_token: params.accessToken, access_host: params.accessHost}, function (err, existToken) {
                 if (err || !existToken) {
                     msg = i18n.t('token.read.notExist');
-                    result = feedback.done(msg, params);
+                    result = feedback.badRequest(msg, params);
 
-                    return res.json(result);
+                    return res.json(result.statusCode, result);
                 }
 
                 if (common.isThisTokenExpired(existToken)) {
                     msg = i18n.t('token.read.expired');
-                    result = feedback.done(msg, params);
+                    result = feedback.unauthorized(msg, params);
 
-                    return res.json(result);
+                    return res.json(result.statusCode, result);
                 } else {
                     // keep this token once more
                     existToken.login_expire = common.getLoginExpireDate();
@@ -247,16 +247,16 @@ exports.validateToken = function (req, res) {
             AccountToken.findOne({access_token: params.accessToken, access_host: params.accessHost}, function (err, existToken) {
                 if (err || !existToken) {
                     msg = i18n.t('token.read.notExist');
-                    result = feedback.done(msg, params);
+                    result = feedback.badRequest(msg, params);
 
-                    return res.json(result);
+                    return res.json(result.statusCode, result);
                 }
 
                 if (common.isThisTokenExpired(existToken)) {
                     msg = i18n.t('token.read.expired');
-                    result = feedback.done(msg, params);
+                    result = feedback.unauthorized(msg, params);
 
-                    return res.json(result);
+                    return res.json(result.statusCode, result);
                 } else {
                     // remove token information
                     existToken.remove(function (err, token) {
@@ -282,16 +282,16 @@ exports.validateToken = function (req, res) {
             AccountToken.findOne({access_token: params.accessToken, access_host: params.accessHost}, function (err, existToken) {
                 if (err || !existToken) {
                     msg = i18n.t('token.read.notExist');
-                    result = feedback.done(msg, params);
+                    result = feedback.badRequest(msg, params);
 
-                    return res.json(result);
+                    return res.json(result.statusCode, result);
                 }
 
                 if (common.isThisTokenExpired(existToken)) {
                     msg = i18n.t('token.read.expired');
-                    result = feedback.done(msg, params);
+                    result = feedback.unauthorized(msg, params);
 
-                    return res.json(result);
+                    return res.json(result.statusCode, result);
                 } else {
                     // reading right
                     msg = i18n.t('token.read.done');

@@ -111,6 +111,8 @@ describe('Account', function () {
         }
     });
 
+    var accessToken = '';   // for internal use only
+
     it('create account by email, password and optional nickname', function (done) {
         var result = {
             message: 'OK: '+i18n.t('account.create.done'),
@@ -147,6 +149,9 @@ describe('Account', function () {
                     assert.deepEqual(res.body.data.haroo_id, result.data.haroo_id);
                     //assert.deepEqual(res.body.message, result.message);
 
+                    // set new token for test only
+                    accessToken = res.body.data.access_token;
+
                     done();
                 });
         });
@@ -165,6 +170,7 @@ describe('Account', function () {
             statusCode: 200,
             meta: {error: 'OK', message: 'none exist'}
         };
+
         app.init(app.node_env, function (server) {
             supertest(server)
                 .post('/account/login')
@@ -200,6 +206,7 @@ describe('Account', function () {
             statusCode: 200,
             meta: {error: 'OK', message: 'done'}
         };
+
         app.init(app.node_env, function (server) {
             supertest(server)
                 .post('/account/login')
@@ -235,6 +242,7 @@ describe('Account', function () {
             statusCode: 200,
             meta: {error: 'OK', message: 'done'}
         };
+
         app.init(app.node_env, function (server) {
             supertest(server)
                 .post('/account/forgot_password')
@@ -251,11 +259,55 @@ describe('Account', function () {
     });
 
     it("validate token for non exist", function (done) {
-        // check not exist token or no params
+        var result = {
+            message: 'Bad Request: access deny',
+            data: null,
+            isResult: true,
+            statusCode: 400,
+            meta: {error: 'Bad Request', message: 'access deny'}
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/token/validate')
+                .set('x-access-host', 'supertest')
+                .expect('Content-Type', /json/)
+                .expect(400)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+                    done();
+                });
+        });
     });
 
     it("validate token for keep", function (done) {
         // compare token
+        var result = {
+            message: 'OK: done',
+            data: {
+                accessToken: 'fb70f37a-cb0b-46a2-b30e-df8cac2d1346',
+                accessHost: 'supertest',
+                accessIP: '127.0.0.1'
+            },
+            isResult: true,
+            statusCode: 200,
+            meta: {error: 'OK', message: 'done'}
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/token/validate')
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', accessToken)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body.message, result.message);
+                    done();
+                });
+        });
     });
 
 });

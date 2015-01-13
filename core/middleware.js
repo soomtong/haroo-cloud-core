@@ -61,7 +61,7 @@ exports.accessToken = function (req, res, next) {
     //if (!token) throw "no token, that's blocked";
     if (!token) {
         var msg = i18n.t('token.read.notExist');
-        var result = feedback.forbidden(msg);
+        var result = feedback.badRequest(msg);
 
         return res.json(result.statusCode, result);
     }

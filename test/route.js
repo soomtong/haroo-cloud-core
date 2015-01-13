@@ -219,17 +219,17 @@ describe('Route', function () {
 
     it('just access denying', function (done) {
         var result = {
-            message: 'Forbidden: access deny',
+            message: 'Bad Request: access deny',
             data: null,
             isResult: true,
-            statusCode: 403,
-            meta: {error: 'Forbidden', message: 'access deny'}
+            statusCode: 400,
+            meta: {error: 'Bad Request', message: 'access deny'}
         };
 
         app.init(app.node_env, function (server) {
             supertest(server)
                 .get('/access-deny')
-                .expect(403)
+                .expect(400)
                 .end(function (err, res) {
                     assert.ok(!err, err);
                     assert.deepEqual(res.body, result);
@@ -240,17 +240,17 @@ describe('Route', function () {
 
     it('districted access token deny with X-Access-Token', function (done) {
         var result = {
-            message: 'Forbidden: access deny',
+            message: 'Bad Request: access deny',
             data: null,
             isResult: true,
-            statusCode: 403,
-            meta: {error: 'Forbidden', message: 'access deny'}
+            statusCode: 400,
+            meta: {error: 'Bad Request', message: 'access deny'}
         };
 
         app.init(app.node_env, function (server) {
             supertest(server)
                 .post('/access-no-header-token')
-                .expect(403)
+                .expect(400)
                 .end(function (err, res) {
                     assert.ok(!err, err);
                     assert.deepEqual(res.body, result);
