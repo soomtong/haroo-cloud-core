@@ -113,6 +113,18 @@ function route(mode, callback) {
     // for token
     server.post('/token/validate', account.validateToken);
 
+    // for api version
+    server.post('/spec/version', function (req, res, next) {
+        var version = require('../package').version;
+
+        var msg = i18n.t('app.version.done');
+        var result = feedback.done(msg, {ver: version, released: new Date('2015-3-1')});
+
+        res.json(result);
+
+        next();
+    });
+
 
 
     callback(server);

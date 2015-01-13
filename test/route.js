@@ -216,7 +216,6 @@ describe('Route', function () {
         });
     });
 
-
     it('just access denying', function (done) {
         var result = {
             message: 'Bad Request: access deny',

@@ -5,6 +5,9 @@
     },
     "company": {
       "name": "my company from dev"
+    },
+    "version": {
+      "done": "api version"
     }
   },
   "account": {

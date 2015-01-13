@@ -310,4 +310,29 @@ describe('Account', function () {
         });
     });
 
+    it('get api service spec version', function (done) {
+        var result = {
+            message: 'OK: api version',
+            data: {ver: '0.0.1', released: '2015-02-28T15:00:00.000Z'},
+            isResult: true,
+            statusCode: 200,
+            meta: {error: 'OK', message: 'api version'}
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/spec/version')
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', accessToken)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+                    done();
+                });
+        });
+    });
+
+
 });
