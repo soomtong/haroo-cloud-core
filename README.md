@@ -28,9 +28,9 @@ npm start
 
 ## APIs list
 
-### Account
+### No Access Token Required
 
-#### No Access Token Required
+#### Account
 
 `POST` /account/create
 
@@ -38,7 +38,26 @@ npm start
 
 `POST` /account/forgot-password
 
-#### Access Token Required in Request Header with `X-Access-Token`
+### Access Token Required in Request Header with `X-Access-Token`
+
+#### Common
+
+`POST` /token/validate
+
+`POST` /spec/version
+
+#### User
+
+`POST` /user/:haroo_id/info
+
+`POST` /user/:haroo_id/change_password
+
+`POST` /user/:haroo_id/update_info
+
+`POST` /user/:haroo_id/logout
+
+`POST` /user/:haroo_id/delete
+
 
 
 
