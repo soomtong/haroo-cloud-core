@@ -415,3 +415,48 @@ exports.updatePassword = function (req, res, next) {
 
     next();
 };
+
+// update user info
+exports.updateAccountInfo = function (req, res, next) {
+    var params = {
+        haroo_id: req.params['haroo_id'],
+        email: req.params['email'],
+        clientToken: res.clientToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, client, result;
+
+    Account.findOne({ email: params.email }, function(err, updateUser) {
+        if (err || !updateUser) {
+            msg = i18n.t('user.update.fail');
+            params.clientToken = undefined; // clear token info
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        // just for now, only update user's nickname
+        updateUser.profile.nickname = req.params['nickname'];
+        updateUser.updated_at = Date.now();
+
+        updateUser.save(function (err, affectedUser) {
+            if (err) {
+                msg = i18n.t('user.update.fail');
+                result = feedback.badImplementation(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+
+            msg = i18n.t('user.update.done');
+            client = common.setDataToClient(updateUser, params.clientToken);
+            result = feedback.done(msg, client);
+
+            //AccountLog.update({email: params['email']});
+            return res.json(result);
+        });
+    });
+
+    next();
+};

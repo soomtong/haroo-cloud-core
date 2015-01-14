@@ -134,6 +134,10 @@ function route(mode, callback) {
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
     }}, account.getValidateToken, account.updatePassword);
+    server.post({ path: '/user/:haroo_id/update_info', validation: {
+        haroo_id: { isRequired: true },
+        email: { isRequired: true, isEmail: true }
+    }}, account.getValidateToken, account.updateAccountInfo);
 
 
 
