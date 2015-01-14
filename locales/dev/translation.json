@@ -63,6 +63,11 @@
     "dismiss": {
       "done": "done",
       "fail": "failed"
+    },
+    "delete": {
+      "done": "done",
+      "mismatch": "invalid password",
+      "fail": "failed"
     }
   }
 }

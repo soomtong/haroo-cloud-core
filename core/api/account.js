@@ -148,25 +148,57 @@ exports.readAccount = function (req, res, next) {
 
     var msg, client, result;
 
-    Account.findOne({email: params.email}, function (err, user) {
-        if (!user) {
+    Account.findOne({email: params.email}, function (err, existUser) {
+        if (!existUser) {
             msg = i18n.t('account.read.fail');
-            result = feedback.done(msg, params);
+            result = feedback.badRequest(msg, params);
 
-            return res.json(result);
+            return res.json(result.statusCode, result);
         }
-        user.comparePassword(params.password, function (err, isMatch) {
+        existUser.comparePassword(params.password, function (err, isMatch) {
             if (isMatch) {
-                msg = i18n.t('account.read.done');
-                client = common.setDataToClient(user);
-                result = feedback.done(msg, client);
+                // remove previous token for access IP and Host
+                AccountToken.remove({haroo_id: existUser.haroo_id, access_ip: params.accessIP, access_host: params.accessHost}, function (err) {
+                    if (err) {
+                        msg = i18n.t('token.delete.fail');
+                        result = feedback.badImplementation(msg, params);
 
-                res.json(result);
+                        return res.json(result.statusCode, result);
+                    }
+
+                    // make new account token
+                    var token = new AccountToken({
+                        access_ip: params['accessIP'],
+                        access_host: params['accessHost'],
+                        access_token: common.getAccessToken(),
+                        haroo_id: existUser.haroo_id,
+                        login_expire: common.getLoginExpireDate(),
+                        created_at: Date.now()
+                    });
+
+                    token.save(function (err) {
+                        if (err) {
+                            msg = i18n.t('token.create.fail');
+                            result = feedback.badImplementation(msg, params);
+
+                            return res.json(result.statusCode, result);
+                        }
+
+
+                        // done right
+                        msg = i18n.t('account.read.done');
+                        client = common.setDataToClient(existUser, token);
+                        result = feedback.done(msg, client);
+
+                        //AccountLog.signIn({email: params['email']});
+                        res.json(result);
+                    });
+                });
             } else {
                 msg = i18n.t('account.read.mismatch');
-                result = feedback.done(msg, params);
+                result = feedback.unauthorized(msg, params);
 
-                res.json(result);
+                res.json(result.statusCode, result);
             }
         });
     });
@@ -496,6 +528,75 @@ exports.dismissAccount = function (req, res, next) {
 
             //AccountLog.signOut({email: params['email']});
             return res.json(result);
+        });
+    });
+
+    next();
+};
+
+exports.removeAccount = function (req, res, next) {
+    var params = {
+        haroo_id: req.params['haroo_id'],
+        email: req.params['email'],
+        password: req.params['password'],
+        clientToken: res.clientToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, result;
+
+    Account.findOne({haroo_id: params.haroo_id, email: params.email}, function (err, validUser) {
+        if (err || !validUser) {
+            msg = i18n.t('user.delete.fail');
+            params.clientToken = undefined; // clear token info
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+        validUser.comparePassword(params.password, function (err, isMatch) {
+            if (err) {
+                msg = i18n.t('user.delete.fail');
+                params.clientToken = undefined; // clear token info
+
+                result = feedback.badImplementation(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+
+            if (isMatch) {
+                // remove all token for this account
+                AccountToken.remove({haroo_id: validUser.haroo_id}, function (err) {
+                    if (err) {
+                        msg = i18n.t('user.delete.fail');
+                        result = feedback.badImplementation(msg, params);
+
+                        return res.json(result.statusCode, result);
+                    }
+
+                    // done right
+                    Account.remove({_id: validUser._id}, function (err, countAffected) {
+                        if (err) {
+                            msg = i18n.t('user.delete.fail');
+                            result = feedback.badImplementation(msg, params);
+
+                            return res.json(result.statusCode, result);
+                        }
+
+                        msg = i18n.t('user.delete.done');
+                        result = feedback.done(msg, params);
+                        // AccountLog.remove({email: params['email']});
+
+                        res.json(result);
+                    });
+                });
+
+            } else {
+                msg = i18n.t('user.delete.mismatch');
+                result = feedback.unauthorized(msg, params);
+
+                res.json(result.statusCode, result);
+            }
         });
     });
 

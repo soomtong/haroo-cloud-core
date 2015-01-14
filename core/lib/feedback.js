@@ -51,8 +51,8 @@ exports.badRequest = function (message, data) {
     return exports.create(400, message, data);
 };
 
-exports.unauthorized = function (message) {
-    return exports.create(401, message);
+exports.unauthorized = function (message, data) {
+    return exports.create(401, message, data);
 };
 
 exports.forbidden = function (message, data) {
@@ -75,51 +75,41 @@ exports.proxyAuthRequired = function (message, data) {
     return exports.create(407, message, data);
 };
 
-
 exports.clientTimeout = function (message, data) {
     return exports.create(408, message, data);
 };
-
 
 exports.conflict = function (message, data) {
     return exports.create(409, message, data);
 };
 
-
 exports.resourceGone = function (message, data) {
     return exports.create(410, message, data);
 };
-
 
 exports.lengthRequired = function (message, data) {
     return exports.create(411, message, data);
 };
 
-
 exports.preconditionFailed = function (message, data) {
     return exports.create(412, message, data);
 };
-
 
 exports.entityTooLarge = function (message, data) {
     return exports.create(413, message, data);
 };
 
-
 exports.uriTooLong = function (message, data) {
     return exports.create(414, message, data);
 };
-
 
 exports.unsupportedMediaType = function (message, data) {
     return exports.create(415, message, data);
 };
 
-
 exports.rangeNotSatisfiable = function (message, data) {
     return exports.create(416, message, data);
 };
-
 
 exports.expectationFailed = function (message, data) {
     return exports.create(417, message, data);

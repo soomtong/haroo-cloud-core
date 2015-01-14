@@ -142,6 +142,11 @@ function route(mode, callback) {
         haroo_id: { isRequired: true },
         email: { isRequired: true, isEmail: true }
     }}, account.getValidateToken, account.dismissAccount);
+    server.post({ path: '/user/:haroo_id/delete', validation: {
+        haroo_id: { isRequired: true },
+        email: { isRequired: true, isEmail: true },
+        password: { isRequired: true }
+    }}, account.getValidateToken, account.removeAccount);
 
 
 

@@ -160,7 +160,7 @@ describe('Account', function () {
 
     it('login fail by invalid email or invalid password', function (done) {
         var result = {
-            message: 'OK: '+i18n.t('account.read.mismatch'),
+            message: 'Unauthorized: '+i18n.t('account.read.mismatch'),
             data: {
                 email: 'test@email.net',
                 password: 'wrong_password',
@@ -168,8 +168,8 @@ describe('Account', function () {
                 accessIP: '127.0.0.1'
             },
             isResult: true,
-            statusCode: 200,
-            meta: {error: 'OK', message: 'none exist'}
+            statusCode: 401,
+            meta: {error: 'Unauthorized', message: 'none exist'}
         };
 
         app.init(app.node_env, function (server) {
@@ -178,7 +178,7 @@ describe('Account', function () {
                 .set('x-access-host', 'supertest')
                 .send({email: 'test@email.net', password: 'wrong_password'})
                 .expect('Content-Type', /json/)
-                .expect(200)
+                .expect(401)
                 .end(function (err, res) {
                     assert.ok(!err, err);
                     assert.deepEqual(res.body, result);
@@ -217,7 +217,11 @@ describe('Account', function () {
                 .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
-                    assert.deepEqual(res.body, result);
+                    assert.equal(res.body.data.email, result.data.email);
+                    assert.equal(res.body.data.haroo_id, result.data.haroo_id);
+                    //assert.deepEqual(res.body, result);
+
+                    dummyAccount = res.body.data;
                     done();
                 });
         });
@@ -544,5 +548,90 @@ describe('Account', function () {
             });
         });
 
+        it("user login again for remove user test", function (done) {
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/account/login')
+                    .set('x-access-host', 'supertest')
+                    .send({email: 'test@email.net', password: 'anotherPassword'})
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.ok(!err, err);
+                        //dummyAccount = res.body.data;
+                        dummyAccount.access_token = res.body.data.access_token;
+                        done();
+                    });
+            });
+        });
+
+        it("remove account by invalid email and password with haroo_id and should valid access token", function (done) {
+            var result = {
+                message: 'Unauthorized: invalid password',
+                data: {
+                    haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                    email: 'test@email.net',
+                    password: 'invalidPassword',
+                    clientToken: {
+                        _id: '54b6368592c4f0111381940c',
+                        access_ip: '127.0.0.1',
+                        access_host: 'supertest',
+                        access_token: 'f8500a8d-7173-4980-8597-fefe600a4b7a',
+                        haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                        login_expire: '1422523653990',
+                        created_at: '2015-01-14T09:27:33.990Z',
+                        __v: 0
+                    },
+                    accessHost: 'supertest',
+                    accessIP: '127.0.0.1'
+                },
+                isResult: true,
+                statusCode: 401,
+                meta: {error: 'Unauthorized', message: 'invalid password'}
+            };
+
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/user/' + dummyAccount.haroo_id + '/delete')
+                    .set('x-access-host', 'supertest')
+                    .set('x-access-token', dummyAccount.access_token)
+                    .send({email: 'test@email.net', password: 'invalidPassword'})
+                    .expect('Content-Type', /json/)
+                    .expect(401)
+                    .end(function (err, res) {
+                        assert.ok(!err, err);
+                        assert.equal(res.body.message, result.message);
+                        assert.equal(res.body.data.haroo_id, result.data.haroo_id);
+                        done();
+                    });
+            });
+        });
+
+        it("remove account by email and password with haroo_id and should valid access token", function (done) {
+            var result = {
+                message: 'OK: done',
+                data: dummyAccount,
+                isResult: true,
+                statusCode: 200,
+                meta: {error: 'OK', message: 'done'}
+            };
+
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/user/' + dummyAccount.haroo_id + '/delete')
+                    .set('x-access-host', 'supertest')
+                    .set('x-access-token', dummyAccount.access_token)
+                    .send({email: 'test@email.net', password: 'anotherPassword'})
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.ok(!err, err);
+                        assert.equal(res.body.data.clientToken.access_token, result.data.access_token);
+                        assert.equal(res.body.haroo_id, result.haroo_id);
+                        //assert.deepEqual(res.body, result);
+                        done();
+                    });
+            });
+        });
     });
 });
