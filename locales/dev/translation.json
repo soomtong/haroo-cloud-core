@@ -59,6 +59,10 @@
     "updatePassword": {
       "done": "done",
       "fail": "failed"
+    },
+    "dismiss": {
+      "done": "done",
+      "fail": "failed"
     }
   }
 }

@@ -518,5 +518,31 @@ describe('Account', function () {
                     });
             });
         });
+
+        it('dismiss account profile by email and should valid access token', function (done) {
+            var result = {
+                message: 'OK: done',
+                data: dummyAccount,
+                isResult: true,
+                statusCode: 200,
+                meta: {error: 'OK', message: 'done'}
+            };
+
+            app.init(app.node_env, function (server) {
+                supertest(server)
+                    .post('/user/' + dummyAccount.haroo_id + '/logout')
+                    .set('x-access-host', 'supertest')
+                    .set('x-access-token', dummyAccount.access_token)
+                    .send({email: 'test@email.net'})
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .end(function (err, res) {
+                        assert.ok(!err, err);
+                        assert.deepEqual(res.body, result);
+                        done();
+                    });
+            });
+        });
+
     });
 });

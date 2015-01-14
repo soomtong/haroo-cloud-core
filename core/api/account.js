@@ -460,3 +460,44 @@ exports.updateAccountInfo = function (req, res, next) {
 
     next();
 };
+
+exports.dismissAccount = function (req, res, next) {
+    var params = {
+        haroo_id: req.params['haroo_id'],
+        email: req.params['email'],
+        clientToken: res.clientToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, client, result;
+
+    Account.findOne({haroo_id: params.haroo_id, email: params.email}, function (err, logoutUser) {
+        if (err || !logoutUser) {
+            msg = i18n.t('user.dismiss.fail');
+            params.clientToken = undefined; // clear token info
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        // just remove previous token for access IP and Host
+        AccountToken.remove({haroo_id: logoutUser.haroo_id, access_ip: params.accessIP, access_host: params.accessHost}, function (err) {
+            if (err) {
+                msg = i18n.t('user.dismiss.fail');
+                result = feedback.badImplementation(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+
+            msg = i18n.t('user.dismiss.done');
+            client = common.setDataToClient(logoutUser, params.clientToken);
+            result = feedback.done(msg, client);
+
+            //AccountLog.signOut({email: params['email']});
+            return res.json(result);
+        });
+    });
+
+    next();
+};

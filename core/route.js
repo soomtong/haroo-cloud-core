@@ -138,6 +138,10 @@ function route(mode, callback) {
         haroo_id: { isRequired: true },
         email: { isRequired: true, isEmail: true }
     }}, account.getValidateToken, account.updateAccountInfo);
+    server.post({ path: '/user/:haroo_id/logout', validation: {
+        haroo_id: { isRequired: true },
+        email: { isRequired: true, isEmail: true }
+    }}, account.getValidateToken, account.dismissAccount);
 
 
 
