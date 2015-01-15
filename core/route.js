@@ -74,47 +74,47 @@ function route(mode, callback) {
     globalMiddleware(mode);
 
     // dummy testing
-    server.get('/testing/', dummyTest.testSimple);
-    server.get('/testing/:name', dummyTest.testSimpleWithParam);
-    server.get('/i18n', dummyTest.testI18N);
-    server.get('/i18n-en', dummyTest.testEnForce);
+    server.get('/api/testing/', dummyTest.testSimple);
+    server.get('/api/testing/:name', dummyTest.testSimpleWithParam);
+    server.get('/api/i18n', dummyTest.testI18N);
+    server.get('/api/i18n-en', dummyTest.testEnForce);
 
     // version specified api for only feature test
-    server.get({ path: '/version', version: '1.0.1'}, dummyTest.testVersion1);
-    server.get({ path: '/version', version: '1.2.3'}, dummyTest.testVersion1_2_3);
-    server.get({ path: '/version', version: '2.0.1'}, dummyTest.testVersion2);
+    server.get({ path: '/api/version', version: '1.0.1'}, dummyTest.testVersion1);
+    server.get({ path: '/api/version', version: '1.2.3'}, dummyTest.testVersion1_2_3);
+    server.get({ path: '/api/version', version: '2.0.1'}, dummyTest.testVersion2);
 
     // haroo cloud api document page
     server.get('/', staticPage.home);
 
     commonMiddleware(mode);
 
-    server.get('/test-no-header-locals', dummyTest.testCustomParams);
-    server.get('/test-with-header-locals', dummyTest.testCustomParams);
+    server.get('/api/test-no-header-locals', dummyTest.testCustomParams);
+    server.get('/api/test-with-header-locals', dummyTest.testCustomParams);
 
     // for account
-    server.post({ path: '/account/create', validation: {
+    server.post({ path: '/api/account/create', validation: {
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
     }}, middleware.getCoreDatabase(mode), account.createAccount);
-    server.post({ path: '/account/login', validation: {
+    server.post({ path: '/api/account/login', validation: {
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
     }}, account.readAccount);
-    server.post({ path: '/account/forgot_password', validation: {
+    server.post({ path: '/api/account/forgot_password', validation: {
         email: { isRequired: true, isEmail: true }
     }}, middleware.getCoreMailer(mode), account.mailingResetPassword);
 
     districtMiddleware(mode);
 
-    server.get('/access-deny', dummyTest.noAccessToken);
-    server.post('/access-no-header-token', dummyTest.noAccessToken);
+    server.get('/api/access-deny', dummyTest.noAccessToken);
+    server.post('/api/access-no-header-token', dummyTest.noAccessToken);
 
     // for token
-    server.post('/token/validate', account.validateToken);
+    server.post('/api/token/validate', account.validateToken);
 
     // for api version
-    server.post('/spec/version', function (req, res, next) {
+    server.post('/api/spec/version', function (req, res, next) {
         var version = require('../package').version;
 
         var msg = i18n.t('app.version.done');
@@ -126,23 +126,23 @@ function route(mode, callback) {
     });
 
     // for users
-    server.post({ path: '/user/:haroo_id/info', validation: {
+    server.post({ path: '/api/user/:haroo_id/info', validation: {
         haroo_id: { isRequired: true }
     }}, account.getValidateToken, account.accountInfo);
-    server.post({ path: '/user/:haroo_id/change_password', validation: {
+    server.post({ path: '/api/user/:haroo_id/change_password', validation: {
         haroo_id: { isRequired: true },
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
     }}, account.getValidateToken, account.updatePassword);
-    server.post({ path: '/user/:haroo_id/update_info', validation: {
+    server.post({ path: '/api/user/:haroo_id/update_info', validation: {
         haroo_id: { isRequired: true },
         email: { isRequired: true, isEmail: true }
     }}, account.getValidateToken, account.updateAccountInfo);
-    server.post({ path: '/user/:haroo_id/logout', validation: {
+    server.post({ path: '/api/user/:haroo_id/logout', validation: {
         haroo_id: { isRequired: true },
         email: { isRequired: true, isEmail: true }
     }}, account.getValidateToken, account.dismissAccount);
-    server.post({ path: '/user/:haroo_id/delete', validation: {
+    server.post({ path: '/api/user/:haroo_id/delete', validation: {
         haroo_id: { isRequired: true },
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }

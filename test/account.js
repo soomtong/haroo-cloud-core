@@ -39,7 +39,7 @@ describe('Account', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/account/create')
+                .post('/api/account/create')
                 .send({password: 'new_password'})
                 .expect('Content-Type', /json/)
                 .expect(400)
@@ -83,7 +83,7 @@ describe('Account', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/account/create')
+                .post('/api/account/create')
                 .send({email: 'test@email.net'})
                 .expect('Content-Type', /json/)
                 .expect(400)
@@ -137,7 +137,7 @@ describe('Account', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/account/create')
+                .post('/api/account/create')
                 .set('x-access-host', 'supertest')
                 .send({email: 'test@email.net', password: 'new_password'})
                 .expect('Content-Type', /json/)
@@ -174,7 +174,7 @@ describe('Account', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/account/login')
+                .post('/api/account/login')
                 .set('x-access-host', 'supertest')
                 .send({email: 'test@email.net', password: 'wrong_password'})
                 .expect('Content-Type', /json/)
@@ -210,7 +210,7 @@ describe('Account', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/account/login')
+                .post('/api/account/login')
                 .set('x-access-host', 'supertest')
                 .send({email: 'test@email.net', password: 'new_password'})
                 .expect('Content-Type', /json/)
@@ -250,7 +250,7 @@ describe('Account', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/account/forgot_password')
+                .post('/api/account/forgot_password')
                 .set('x-access-host', 'supertest')
                 .send({email: 'test@email.net'})
                 .expect('Content-Type', /json/)
@@ -274,7 +274,7 @@ describe('Account', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/token/validate')
+                .post('/api/token/validate')
                 .set('x-access-host', 'supertest')
                 .expect('Content-Type', /json/)
                 .expect(400)
@@ -302,7 +302,7 @@ describe('Account', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/token/validate')
+                .post('/api/token/validate')
                 .set('x-access-host', 'supertest')
                 .set('x-access-token', dummyAccount.access_token)
                 .expect('Content-Type', /json/)
@@ -326,7 +326,7 @@ describe('Account', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/spec/version')
+                .post('/api/spec/version')
                 .set('x-access-host', 'supertest')
                 .set('x-access-token', dummyAccount.access_token)
                 .expect('Content-Type', /json/)
@@ -351,7 +351,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + dummyAccount.haroo_id + '/info')
+                    .post('/api/user/' + dummyAccount.haroo_id + '/info')
                     .set('x-access-host', 'supertest')
                     .expect('Content-Type', /json/)
                     .expect(400)
@@ -375,7 +375,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + dummyAccount.haroo_id + '/info')
+                    .post('/api/user/' + dummyAccount.haroo_id + '/info')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .expect('Content-Type', /json/)
@@ -404,7 +404,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + "invalidHarooID" + '/info')
+                    .post('/api/user/' + "invalidHarooID" + '/info')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .expect('Content-Type', /json/)
@@ -428,7 +428,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + dummyAccount.haroo_id + '/info')
+                    .post('/api/user/' + dummyAccount.haroo_id + '/info')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .expect('Content-Type', /json/)
@@ -458,7 +458,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + dummyAccount.haroo_id + '/change_password')
+                    .post('/api/user/' + dummyAccount.haroo_id + '/change_password')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .send({email: 'invalid@email.net', password: 'anotherPassword'})
@@ -483,7 +483,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + dummyAccount.haroo_id + '/change_password')
+                    .post('/api/user/' + dummyAccount.haroo_id + '/change_password')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .send({email: 'test@email.net', password: 'anotherPassword'})
@@ -509,7 +509,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + dummyAccount.haroo_id + '/update_info')
+                    .post('/api/user/' + dummyAccount.haroo_id + '/update_info')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .send({email: 'test@email.net', nickname: '테스터1'})
@@ -534,7 +534,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + dummyAccount.haroo_id + '/logout')
+                    .post('/api/user/' + dummyAccount.haroo_id + '/logout')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .send({email: 'test@email.net'})
@@ -551,7 +551,7 @@ describe('Account', function () {
         it("user login again for remove user test", function (done) {
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/account/login')
+                    .post('/api/account/login')
                     .set('x-access-host', 'supertest')
                     .send({email: 'test@email.net', password: 'anotherPassword'})
                     .expect('Content-Type', /json/)
@@ -592,7 +592,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + dummyAccount.haroo_id + '/delete')
+                    .post('/api/user/' + dummyAccount.haroo_id + '/delete')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .send({email: 'test@email.net', password: 'invalidPassword'})
@@ -618,7 +618,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/user/' + dummyAccount.haroo_id + '/delete')
+                    .post('/api/user/' + dummyAccount.haroo_id + '/delete')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .send({email: 'test@email.net', password: 'anotherPassword'})

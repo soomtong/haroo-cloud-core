@@ -15,7 +15,7 @@ describe('Route', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .get('/i18n')
+                    .get('/api/i18n')
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
@@ -33,7 +33,7 @@ describe('Route', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .get('/i18n-en')
+                    .get('/api/i18n-en')
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
@@ -51,7 +51,7 @@ describe('Route', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .get('/i18n-en')
+                    .get('/api/i18n-en')
                     .set('Accept-Language','en-US')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -73,7 +73,7 @@ describe('Route', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .get('/version')
+                    .get('/api/version')
                     .expect('Content-Type', /json/)
                     .expect(200)
                     .end(function (err, res) {
@@ -91,7 +91,7 @@ describe('Route', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .get('/version')
+                    .get('/api/version')
                     .set('Accept-Version','~1.0')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -110,7 +110,7 @@ describe('Route', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .get('/version')
+                    .get('/api/version')
                     .set('Accept-Version','1.2.3')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -129,7 +129,7 @@ describe('Route', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .get('/version')
+                    .get('/api/version')
                     .set('Accept-Version','~2')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -147,7 +147,7 @@ describe('Route', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/testing')
+                .get('/api/testing')
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
@@ -163,7 +163,7 @@ describe('Route', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/testing/hello')
+                .get('/api/testing/hello')
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
@@ -182,7 +182,7 @@ describe('Route', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/test-no-header-locals')
+                .get('/api/test-no-header-locals')
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
@@ -204,7 +204,7 @@ describe('Route', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/test-with-header-locals')
+                .get('/api/test-with-header-locals')
                 .set('X-Access-Host', 'test local machine')
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -227,7 +227,7 @@ describe('Route', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/access-deny')
+                .get('/api/access-deny')
                 .expect(400)
                 .end(function (err, res) {
                     assert.ok(!err, err);
@@ -248,7 +248,7 @@ describe('Route', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/access-no-header-token')
+                .post('/api/access-no-header-token')
                 .expect(400)
                 .end(function (err, res) {
                     assert.ok(!err, err);

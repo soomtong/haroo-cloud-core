@@ -32,31 +32,31 @@ npm start
 
 #### Account
 
-`POST` /account/create
+`POST` /api/account/create
 
-`POST` /account/read
+`POST` /api/account/read
 
-`POST` /account/forgot-password
+`POST` /api/account/forgot-password
 
 ### Access Token Required in Request Header with `X-Access-Token`
 
 #### Common
 
-`POST` /token/validate
+`POST` /api/token/validate
 
-`POST` /spec/version
+`POST` /api/spec/version
 
 #### User
 
-`POST` /user/:haroo_id/info
+`POST` /api/user/:haroo_id/info
 
-`POST` /user/:haroo_id/change_password
+`POST` /api/user/:haroo_id/change_password
 
-`POST` /user/:haroo_id/update_info
+`POST` /api/user/:haroo_id/update_info
 
-`POST` /user/:haroo_id/logout
+`POST` /api/user/:haroo_id/logout
 
-`POST` /user/:haroo_id/delete
+`POST` /api/user/:haroo_id/delete
 
 
 
