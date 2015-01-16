@@ -18,13 +18,20 @@ should to ready mongo, couch and mysql database
 
 install modules
 
-```shell
-npm install
+> npm install
 
-npm test
+> npm test
 
-npm start
-```
+> npm start
+
+### Run App my MODE
+
+> NODE_ENV=development nodemon app
+
+or
+
+> NODE_ENV=production pm2 start app.js --name "core"
+
 
 ## APIs list
 
