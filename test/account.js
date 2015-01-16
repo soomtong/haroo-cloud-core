@@ -118,9 +118,9 @@ describe('Account', function () {
             message: 'OK: '+i18n.t('account.create.done'),
             data: {
                 "access_token": "e8e58304-dd29-4c03-8791-673e96a7f34e",
-                "db_host": "db1.haroopress.com",
+                "db_host": "localhost",
                 "email": "test@email.net",
-                "haroo_id": "b090e563d9c725ea48933efdeaa348fb4",
+                "haroo_id": "tfdf073f8d9915f9191ea73edef12f85b",
                 "login_expire": "1422208905667",
                 "profile": {
                     "gender": "",
@@ -192,7 +192,7 @@ describe('Account', function () {
             message: 'OK: done',
             data: {
                 email: 'test@email.net',
-                haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
                 profile: {
                     nickname: '',
                     gender: '',
@@ -232,7 +232,7 @@ describe('Account', function () {
             message: 'OK: done',
             data: {
                 email: 'test@email.net',
-                haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
                 profile: {
                     nickname: '',
                     gender: '',
@@ -240,7 +240,7 @@ describe('Account', function () {
                     website: '',
                     picture: ''
                 },
-                db_host: 'db1.haroopress.com',
+                db_host: 'localhost',
                 tokens: []
             },
             isResult: true,
@@ -445,7 +445,7 @@ describe('Account', function () {
             var result = {
                 message: 'Bad Request: failed',
                 data: {
-                    haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                    haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
                     email: 'invalid@email.net',
                     password: 'anotherPassword',
                     accessHost: 'supertest',
@@ -569,7 +569,7 @@ describe('Account', function () {
             var result = {
                 message: 'Unauthorized: invalid password',
                 data: {
-                    haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                    haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
                     email: 'test@email.net',
                     password: 'invalidPassword',
                     clientToken: {
@@ -577,7 +577,7 @@ describe('Account', function () {
                         access_ip: '127.0.0.1',
                         access_host: 'supertest',
                         access_token: 'f8500a8d-7173-4980-8597-fefe600a4b7a',
-                        haroo_id: 'b090e563d9c725ea48933efdeaa348fb4',
+                        haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
                         login_expire: '1422523653990',
                         created_at: '2015-01-14T09:27:33.990Z',
                         __v: 0
