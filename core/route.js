@@ -8,13 +8,13 @@ var middleware = require('./middleware');
 var feedback = require('./lib/feedback');
 
 var dummyTest = require('./api/dummy');
-var staticPage = require('./api/static');
-
 var account = require('./api/account');
 
 function route(mode, callback) {
 
     var app = config({mode: mode}).app;
+
+    // init for localize
     i18n.init({
         lng: app.lang,
         useCookie: false,
@@ -22,9 +22,12 @@ function route(mode, callback) {
         sendMissingTo: 'fallback'
     });
 
-    var server = restify.createServer({
-        name: 'haroo-cloud-core'
-    });
+    // init restify server
+    var options = {
+        name: app.name
+    };
+
+    var server = restify.createServer(options);
 
     // globalMiddleware
     server.use(restify.throttle({
@@ -55,7 +58,10 @@ function route(mode, callback) {
     server.get({ path: '/api/version', version: '2.0.1'}, dummyTest.testVersion2);
 
     // haroo cloud api document page
-    server.get('/', staticPage.home);
+    server.get('/', restify.serveStatic({
+        directory: 'static',
+        default: 'index.html'
+    }));
 
     // commonMiddleware
     // set host name to res.locals for all client

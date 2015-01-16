@@ -1,12 +1,15 @@
 {
   "app": {
     "production": {
+      "name": "haroo-cloud-core",
       "lang": "en"
     },
     "development": {
+      "name": "haroo-cloud-core-dev",
       "lang": "ko"
     },
     "testing": {
+      "name": "haroo-cloud-core-test",
       "lang": "dev"
     }
   },
