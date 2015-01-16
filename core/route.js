@@ -12,11 +12,21 @@ var staticPage = require('./api/static');
 
 var account = require('./api/account');
 
-var server = restify.createServer({
-    name: 'haroo-cloud-core'
-});
+function route(mode, callback) {
 
-function globalMiddleware(mode) {
+    var app = config({mode: mode}).app;
+    i18n.init({
+        lng: app.lang,
+        useCookie: false,
+        debug: false,
+        sendMissingTo: 'fallback'
+    });
+
+    var server = restify.createServer({
+        name: 'haroo-cloud-core'
+    });
+
+    // globalMiddleware
     server.use(restify.throttle({
         burst: 100,
         rate: 50,
@@ -32,46 +42,6 @@ function globalMiddleware(mode) {
     // api counter for ip district
     server.use(middleware.callCounterForIPs);
     server.use(middleware.callCounterForToken);
-}
-
-function commonMiddleware(mode) {
-// set host name to res.locals for all client
-    server.use(middleware.accessClient);
-    server.use(restify.queryParser());
-    server.use(restify.bodyParser());
-    server.use(restifyValidation.validationPlugin({
-        //errorHandler: middleware.validationError
-        // shit, can't set custom res.status by standard features, need a hack. let's do it later.
-        // todo: hack restifyValidation errorhandler
-    }));
-    /*
-    patch this and update this middleware
-    var handle = function (errors, req, res, options, next) {
-        if (options.errorHandler) {
-            return options.errorHandler(errors, res);   // for custom res.status
-        } else {
-            return res.send(400, {
-                status: 'validation failed',
-                errors: errors
-            });
-        }
-    }
-    */
-}
-function districtMiddleware(mode) {
-    server.use(middleware.accessToken);
-}
-
-function route(mode, callback) {
-    var app = config({mode: mode}).app;
-    i18n.init({
-        lng: app.lang,
-        useCookie: false,
-        debug: false,
-        sendMissingTo: 'fallback'
-    });
-
-    globalMiddleware(mode);
 
     // dummy testing
     server.get('/api/testing/', dummyTest.testSimple);
@@ -87,8 +57,31 @@ function route(mode, callback) {
     // haroo cloud api document page
     server.get('/', staticPage.home);
 
-    commonMiddleware(mode);
+    // commonMiddleware
+    // set host name to res.locals for all client
+    server.use(middleware.accessClient);
+    server.use(restify.queryParser());
+    server.use(restify.bodyParser());
+    server.use(restifyValidation.validationPlugin({
+        //errorHandler: middleware.validationError
+        // shit, can't set custom res.status by standard features, need a hack. let's do it later.
+        // todo: hack restifyValidation errorhandler
+    }));
+    /*
+     patch this and update this middleware
+     var handle = function (errors, req, res, options, next) {
+        if (options.errorHandler) {
+            return options.errorHandler(errors, res);   // for custom res.status
+        } else {
+            return res.send(400, {
+                status: 'validation failed',
+                errors: errors
+            });
+        }
+     }
+     */
 
+    // header parameter test
     server.get('/api/test-no-header-locals', dummyTest.testCustomParams);
     server.get('/api/test-with-header-locals', dummyTest.testCustomParams);
 
@@ -105,8 +98,10 @@ function route(mode, callback) {
         email: { isRequired: true, isEmail: true }
     }}, middleware.getCoreMailer(mode), account.mailingResetPassword);
 
-    districtMiddleware(mode);
+    // districtMiddleware
+    server.use(middleware.accessToken);
 
+    // district test
     server.get('/api/access-deny', dummyTest.noAccessToken);
     server.post('/api/access-no-header-token', dummyTest.noAccessToken);
 

@@ -236,6 +236,7 @@ exports.mailingResetPassword = function (req, res, next) {
 
         // send mail
         if (params.serviceMailer.delegate) {
+            console.log('\n=== send mail to account for password reset using dedicate mail service.\n');
             sendmail.sendPasswordResetMailByDelegate(existAccount.email,
                 {link: params.serviceHost + '/account/update-password/' + randomToken},
                 params.serviceMailer.delegate,
@@ -245,7 +246,7 @@ exports.mailingResetPassword = function (req, res, next) {
         } else {
             // todo: custom mailer
             //sendmail.sendPasswordResetMail();
-            console.log('\n=== send mail to account for password reset!\n');
+            console.error('\n=== fake: send mail to account for password reset!\n');
         }
 
         //AccountLog.resetPasswordMail({email: params['email']});
