@@ -24,7 +24,7 @@ install modules
 
 > npm start
 
-### Run App my MODE
+### Run App by MODE
 
 > NODE_ENV=development nodemon app
 

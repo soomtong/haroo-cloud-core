@@ -47,7 +47,8 @@ function route(mode, callback) {
     server.use(middleware.callCounterForToken);
 
     // dummy testing
-    server.get('/api/testing/', dummyTest.testSimple);
+    server.get('/api', dummyTest.testVersion1);
+    server.get('/api/testing', dummyTest.testSimple);
     server.get('/api/testing/:name', dummyTest.testSimpleWithParam);
     server.get('/api/i18n', dummyTest.testI18N);
     server.get('/api/i18n-en', dummyTest.testEnForce);
@@ -58,7 +59,7 @@ function route(mode, callback) {
     server.get({ path: '/api/version', version: '2.0.1'}, dummyTest.testVersion2);
 
     // haroo cloud api document page
-    server.get('/', restify.serveStatic({
+    server.get(/\/^(?!api).*$/, restify.serveStatic({
         directory: 'static',
         default: 'index.html'
     }));

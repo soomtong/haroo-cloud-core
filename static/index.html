@@ -31,92 +31,62 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h1>
-<a id="haroo-api" class="anchor" href="#haroo-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>haroo-api</h1>
-
-<p>haroo-api for haroo cloud service</p>
-
-<ul>
-<li>nodejs</li>
-<li>restify</li>
-<li>database bind
-
-<ul>
-<li>mongo : mongoose</li>
-<li>couch : nano</li>
-<li>mysql : sequelize</li>
-</ul>
-</li>
-</ul>
-
-<p>refer. <code>package.json</code> more.</p>
-
-<h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
-
-<p>should to ready mongo, couch and mysql database</p>
-
-<p>install modules</p>
-
-<blockquote>
-<p>npm install</p>
-
-<p>npm test</p>
-
-<p>npm start</p>
-</blockquote>
-
-<h3>
-<a id="run-app-my-mode" class="anchor" href="#run-app-my-mode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run App my MODE</h3>
-
-<blockquote>
-<p>NODE_ENV=development nodemon app</p>
-</blockquote>
-
-<p>or</p>
-
-<blockquote>
-<p>NODE_ENV=production pm2 start app.js --name "core"</p>
-</blockquote>
-
-<h2>
-<a id="apis-list" class="anchor" href="#apis-list" aria-hidden="true"><span class="octicon octicon-link"></span></a>APIs list</h2>
-
-<h3>
-<a id="no-access-token-required" class="anchor" href="#no-access-token-required" aria-hidden="true"><span class="octicon octicon-link"></span></a>No Access Token Required</h3>
-
-<h4>
-<a id="account" class="anchor" href="#account" aria-hidden="true"><span class="octicon octicon-link"></span></a>Account</h4>
-
-<p><code>POST</code> /api/account/create</p>
-
-<p><code>POST</code> /api/account/read</p>
-
-<p><code>POST</code> /api/account/forgot-password</p>
-
-<h3>
-<a id="access-token-required-in-request-header-with-x-access-token" class="anchor" href="#access-token-required-in-request-header-with-x-access-token" aria-hidden="true"><span class="octicon octicon-link"></span></a>Access Token Required in Request Header with <code>X-Access-Token</code>
-</h3>
-
-<h4>
-<a id="common" class="anchor" href="#common" aria-hidden="true"><span class="octicon octicon-link"></span></a>Common</h4>
-
-<p><code>POST</code> /api/token/validate</p>
-
-<p><code>POST</code> /api/spec/version</p>
-
-<h4>
-<a id="user" class="anchor" href="#user" aria-hidden="true"><span class="octicon octicon-link"></span></a>User</h4>
-
-<p><code>POST</code> /api/user/:haroo_id/info</p>
-
-<p><code>POST</code> /api/user/:haroo_id/change_password</p>
-
-<p><code>POST</code> /api/user/:haroo_id/update_info</p>
-
-<p><code>POST</code> /api/user/:haroo_id/logout</p>
-
-<p><code>POST</code> /api/user/:haroo_id/delete</p>
+          <h1>
+              <a id="haroo-api" class="anchor" href="#haroo-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>haroo-api</h1>
+          <p>haroo-api for haroo cloud service</p>
+          <ul>
+              <li>nodejs</li>
+              <li>restify</li>
+              <li>database bind
+                  <ul>
+                      <li>mongo : mongoose</li>
+                      <li>couch : nano</li>
+                      <li>mysql : sequelize</li>
+                  </ul>
+              </li>
+          </ul>
+          <p>refer. <code>package.json</code> more.</p>
+          <h2>
+              <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+          <p>should to ready mongo, couch and mysql database</p>
+          <p>install modules</p>
+          <blockquote>
+              <p>npm install</p>
+              <p>npm test</p>
+              <p>npm start</p>
+          </blockquote>
+          <h3>
+              <a id="run-app-my-mode" class="anchor" href="#run-app-my-mode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run App my MODE</h3>
+          <blockquote>
+              <p>NODE_ENV=development nodemon app</p>
+          </blockquote>
+          <p>or</p>
+          <blockquote>
+              <p>NODE_ENV=production pm2 start app.js --name "core"</p>
+          </blockquote>
+          <h2>
+              <a id="apis-list" class="anchor" href="#apis-list" aria-hidden="true"><span class="octicon octicon-link"></span></a>APIs list</h2>
+          <h3>
+              <a id="no-access-token-required" class="anchor" href="#no-access-token-required" aria-hidden="true"><span class="octicon octicon-link"></span></a>No Access Token Required</h3>
+          <h4>
+              <a id="account" class="anchor" href="#account" aria-hidden="true"><span class="octicon octicon-link"></span></a>Account</h4>
+          <p><code>POST</code> /api/account/create</p>
+          <p><code>POST</code> /api/account/read</p>
+          <p><code>POST</code> /api/account/forgot-password</p>
+          <h3>
+              <a id="access-token-required-in-request-header-with-x-access-token" class="anchor" href="#access-token-required-in-request-header-with-x-access-token" aria-hidden="true"><span class="octicon octicon-link"></span></a>Access Token Required in Request Header with <code>X-Access-Token</code>
+          </h3>
+          <h4>
+              <a id="common" class="anchor" href="#common" aria-hidden="true"><span class="octicon octicon-link"></span></a>Common</h4>
+          <p><code>POST</code> /api/token/validate</p>
+          <p><code>POST</code> /api/spec/version</p>
+          <h4>
+              <a id="user" class="anchor" href="#user" aria-hidden="true"><span class="octicon octicon-link"></span></a>User</h4>
+          <p><code>POST</code> /api/user/:haroo_id/info</p>
+          <p><code>POST</code> /api/user/:haroo_id/change_password</p>
+          <p><code>POST</code> /api/user/:haroo_id/update_info</p>
+          <p><code>POST</code> /api/user/:haroo_id/logout</p>
+          <p><code>POST</code> /api/user/:haroo_id/delete</p>
       </section>
     </div>
 
