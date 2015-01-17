@@ -46,6 +46,12 @@ function route(mode, callback) {
     server.use(middleware.callCounterForIPs);
     server.use(middleware.callCounterForToken);
 
+    // haroo cloud api document page
+    server.get(/^\/(?!api).*$/, restify.serveStatic({
+        directory: 'static',
+        default: 'index.html'
+    }));
+
     // dummy testing
     server.get('/api', dummyTest.testVersion1);
     server.get('/api/testing', dummyTest.testSimple);
@@ -57,12 +63,6 @@ function route(mode, callback) {
     server.get({ path: '/api/version', version: '1.0.1'}, dummyTest.testVersion1);
     server.get({ path: '/api/version', version: '1.2.3'}, dummyTest.testVersion1_2_3);
     server.get({ path: '/api/version', version: '2.0.1'}, dummyTest.testVersion2);
-
-    // haroo cloud api document page
-    server.get(/\/^(?!api).*$/, restify.serveStatic({
-        directory: 'static',
-        default: 'index.html'
-    }));
 
     // commonMiddleware
     // set host name to res.locals for all client
