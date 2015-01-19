@@ -39,7 +39,7 @@ or
 
 #### Account
 
-`POST` /api/account/create
+##### `POST` /api/account/create
 
 **Send**
 
@@ -88,7 +88,7 @@ or
 }
 ```
 
-`POST` /api/account/login
+##### `POST` /api/account/login
 
 **Send**
 
@@ -136,7 +136,7 @@ or
 }
 ```
 
-`POST` /api/account/forgot-password
+##### `POST` /api/account/forgot-password
 
 **Send**
 
@@ -183,7 +183,7 @@ or
 
 #### Common
 
-`POST` /api/token/validate
+##### `POST` /api/token/validate
 
 **Send**
 
@@ -277,7 +277,7 @@ or
 }
 ```
 
-`POST` /api/spec/version
+##### `POST` /api/spec/version
 
 **Send**
 
@@ -301,7 +301,7 @@ or
 
 #### User
 
-`POST` /api/user/:haroo_id/info
+##### `POST` /api/user/:haroo_id/info
 
 **Send**
 
@@ -349,7 +349,7 @@ or
 }
 ```
 
-`POST` /api/user/:haroo_id/change_password
+##### `POST` /api/user/:haroo_id/change_password
 
 **Send**
 
@@ -381,7 +381,7 @@ or
 }
 ```
 
-`POST` /api/user/:haroo_id/update_info
+##### `POST` /api/user/:haroo_id/update_info
 
 **Send**
 
@@ -413,7 +413,7 @@ or
 }
 ```
 
-`POST` /api/user/:haroo_id/logout
+##### `POST` /api/user/:haroo_id/logout
 
 **Send**
 
@@ -445,7 +445,7 @@ or
 }
 ```
 
-`POST` /api/user/:haroo_id/delete
+##### `POST` /api/user/:haroo_id/delete
 
 **Send**
 
@@ -486,7 +486,7 @@ or
 
 #### Document
 
-`POST` /api/document/:document_id/public
+##### `POST` /api/document/:document_id/public
 
 **Send**
 
