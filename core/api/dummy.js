@@ -65,3 +65,20 @@ exports.noAccessToken = function (req, res, next) {
 
     next();
 };
+
+var meta = {
+    "message": "OK: done",
+    "data": {
+        "email": "soomtong@gmail.com",
+        "haroo_id": "b4c4ae0692b435427b671649ea30848e7",
+        "profile": {"gender": "", "location": "", "website": "", "picture": ""},
+        "db_host": "db1.haroopress.com",
+        "access_host": "sven-mac-pro",
+        "access_token": "29478ae2-4c19-457e-aaac-74fef36d208e",
+        "login_expire": "1422973044455",
+        "tokens": []
+    },
+    "isResult": true,
+    "statusCode": 200,
+    "meta": {"error": "OK", "message": "done"}
+}
