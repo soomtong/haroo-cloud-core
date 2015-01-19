@@ -9,6 +9,7 @@ var feedback = require('./lib/feedback');
 
 var dummyTest = require('./api/dummy');
 var account = require('./api/account');
+var document = require('./api/document');
 
 function route(mode, callback) {
 
@@ -149,6 +150,12 @@ function route(mode, callback) {
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
     }}, account.getValidateToken, account.removeAccount);
+
+    // for documents
+    server.post({ path: '/api/document/:document_id/public', validation: {
+        haroo_id: { isRequired: true },
+        document_id: { isRequired: true }
+    }}, account.getValidateToken, document.togglePublic);
 
 
 

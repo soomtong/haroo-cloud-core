@@ -31,6 +31,25 @@ exports.getRandomToken = function () {
     return uuid.v1();
 };
 
+exports.getToday = function () {
+    //return new Date().toISOString().slice(0, 10);
+    return (new Date().toISOString().slice(0, 10)).replace(/-/g,'');
+};
+
+exports.makeZeroFill = function (num, numZeros) {
+    // ref. http://stackoverflow.com/questions/1267283/how-can-i-create-a-zerofilled-value-using-javascript
+    if (!num) num = 1;
+    if (!numZeros) numZeros = 3;
+    var n = Math.abs(num);
+    var zeros = Math.max(0, numZeros - Math.floor(n).toString().length);
+    var zeroString = Math.pow(10, zeros).toString().substr(1);
+    if (num < 0) {
+        zeroString = '-' + zeroString;
+    }
+
+    return zeroString + n;
+};
+
 exports.getLoginExpireDate = function () {
     return Date.now() + ( 15 * Number(DAY) );
 };

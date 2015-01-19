@@ -69,5 +69,11 @@
       "mismatch": "invalid password",
       "fail": "failed"
     }
+  },
+  "document": {
+    "togglePublic": {
+      "done": "done",
+      "fail": "failed"
+    }
   }
 }

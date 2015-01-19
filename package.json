@@ -19,6 +19,7 @@
     "i18next": "^1.7.8",
     "init-user": "git://github.com/haroo-studio/init-user.git",
     "mongoose": "^3.8.21",
+    "nano": "^6.0.2",
     "node-restify-validation": "^0.1.2",
     "node-uuid": "^1.4.2",
     "nodemailer": "^1.3.0",
