@@ -222,6 +222,8 @@ exports.mailingResetPassword = function (req, res, next) {
     Account.findOne({email: params.email}, function (err, existAccount) {
         if (err || !existAccount || !existAccount.email) {
             msg = i18n.t('account.forgotPassword.fail');
+            params.serviceMailer = undefined; // clear mailer info
+            params.serviceHost = undefined; // clear host info
             result = feedback.done(msg, params);
 
             return res.json(result);
