@@ -76,7 +76,9 @@ exports.setDataToClient = function (userData, tokenData) {
         if (tokenData.login_expire) result.login_expire = tokenData.login_expire;
     }
 
-    if (userData.provider) result.provider = userData.provider;
+    if (userData.facebook) result.facebook = userData.facebook;
+    if (userData.twitter) result.twitter = userData.twitter;
+    if (userData.google) result.google = userData.google;
     if (userData.tokens) result.tokens = userData.tokens;
 
     return result;
