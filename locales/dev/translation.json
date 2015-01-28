@@ -72,8 +72,12 @@
   },
   "document": {
     "togglePublic": {
-      "done": "done",
-      "fail": "failed"
+      "done": "togglePublic done",
+      "fail": "togglePublic failed"
+    },
+    "retrieve": {
+      "done": "retrieve done",
+      "fail": "retrieve failed"
     }
   }
 }

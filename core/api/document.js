@@ -115,3 +115,51 @@ exports.togglePublic = function (req, res, next) {
 
     next();
 };
+
+exports.readDocuments = function (req, res, next) {
+
+    var params = {
+        haroo_id: req.params['haroo_id'],
+        clientToken: res.clientToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var listType = (params.type || 'all');
+    var orderType = (params.order || 'by_updated_at');
+
+    var msg, result;
+
+    // get user
+    Account.findOne({ haroo_id: params.haroo_id }, function (err, user) {
+        if (err || !user) {
+            msg = i18n.t('document.retrieve.fail');
+            params.clientToken = undefined; // clear token info
+            result = feedback.badImplementation(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        var couch = nano({url: 'http://' + user.db_host}).use(params.haroo_id);
+
+        couch.view(listType, orderType, {include_docs:true},  function (err, coreDocs) {
+            if (err) {
+                console.error(err);
+
+                msg = i18n.t('document.retrieve.fail');
+                params.clientToken = undefined; // clear token info
+                result = feedback.notImplemented(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+
+            msg = i18n.t('document.retrieve.done');
+            result = feedback.done(msg, coreDocs.rows);
+
+            return res.json(result);
+
+        });
+    });
+
+    next();
+};

@@ -156,6 +156,12 @@ function route(mode, callback) {
         haroo_id: { isRequired: true },
         document_id: { isRequired: true }
     }}, account.getValidateToken, document.togglePublic);
+    server.get({ path: '/api/documents/:haroo_id', validation: {
+        haroo_id: { isRequired: true }
+    }}, account.getValidateToken, document.readDocuments);
+    server.get({ path: '/api/documents/:haroo_id/simple', validation: {
+        haroo_id: { isRequired: true }
+    }}, account.getValidateToken, document.readDocuments);
 
 
 
