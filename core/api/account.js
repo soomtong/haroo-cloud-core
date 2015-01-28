@@ -57,9 +57,9 @@ exports.createAccount = function (req, res, next) {
     Account.findOne({ email: params.email }, function(err, existUser) {
         if (err || existUser) {
             msg = i18n.t('account.create.exist');
-            result = feedback.done(msg, params);
+            result = feedback.preconditionFailed(msg, params);
 
-            return res.json(result);
+            return res.json(result.statusCode, result);
         }
 
         // make new account
@@ -68,9 +68,9 @@ exports.createAccount = function (req, res, next) {
         if (!haroo_id) {
             //throw new Error('no exist haroo id!');
             msg = i18n.t('account.create.fail');
-            result = feedback.preconditionFailed(msg, params);
+            result = feedback.badImplementation(msg, params);
 
-            return res.json(result);
+            return res.json(result.statusCode, result);
         }
 
         var user = new Account({
@@ -90,9 +90,9 @@ exports.createAccount = function (req, res, next) {
             if (err) {
                 //throw new Error('fail make new account with couch database');
                 msg = i18n.t('account.create.fail');
-                result = feedback.done(msg, err);
+                result = feedback.badImplementation(msg, err);
 
-                return res.json(result);
+                return res.json(result.statusCode, result);
             }
 
             // save account to mongo

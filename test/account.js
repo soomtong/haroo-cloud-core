@@ -158,6 +158,44 @@ describe('Account', function () {
         });
     });
 
+    it('create duplicated account by email, password', function (done) {
+        var result = {
+            message: 'Precondition Failed: already exist',
+            data: {
+                email: 'test@email.net',
+                password: 'new_password',
+                accessHost: 'supertest',
+                accessIP: '127.0.0.1',
+                database: 'localhost'
+            },
+            isResult: true,
+            statusCode: 412,
+            meta: {error: 'Precondition Failed', message: 'already exist'}
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/api/account/create')
+                .set('x-access-host', 'supertest')
+                .send({email: 'test@email.net', password: 'new_password'})
+                .expect('Content-Type', /json/)
+                .expect(412)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+                    //assert.deepEqual(res.body.data.db_host, result.data.db_host);
+                    //assert.deepEqual(res.body.data.haroo_id, result.data.haroo_id);
+                    //assert.deepEqual(res.body.message, result.message);
+
+                    // set new token for test only
+                    //dummyAccount = res.body.data;
+                    //dummyAccount.profile.nickname = "";
+
+                    done();
+                });
+        });
+    });
+
     it('login fail by invalid email or invalid password', function (done) {
         var result = {
             message: 'Unauthorized: '+i18n.t('account.read.mismatch'),
