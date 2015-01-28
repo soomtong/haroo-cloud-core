@@ -68,7 +68,7 @@ exports.createAccount = function (req, res, next) {
         if (!haroo_id) {
             //throw new Error('no exist haroo id!');
             msg = i18n.t('account.create.fail');
-            result = feedback.done(msg, params);
+            result = feedback.preconditionFailed(msg, params);
 
             return res.json(result);
         }
@@ -224,7 +224,7 @@ exports.mailingResetPassword = function (req, res, next) {
             msg = i18n.t('account.forgotPassword.fail');
             params.serviceMailer = undefined; // clear mailer info
             params.serviceHost = undefined; // clear host info
-            result = feedback.done(msg, params);
+            result = feedback.preconditionFailed(msg, params);
 
             return res.json(result);
         }
