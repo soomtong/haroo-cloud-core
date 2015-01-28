@@ -118,7 +118,7 @@ describe('Account', function () {
             message: 'OK: '+i18n.t('account.create.done'),
             data: {
                 "access_token": "e8e58304-dd29-4c03-8791-673e96a7f34e",
-                "db_host": "localhost",
+                "db_host": "localhost:5984",
                 "email": "test@email.net",
                 "haroo_id": "tfdf073f8d9915f9191ea73edef12f85b",
                 "login_expire": "1422208905667",
@@ -166,7 +166,7 @@ describe('Account', function () {
                 password: 'new_password',
                 accessHost: 'supertest',
                 accessIP: '127.0.0.1',
-                database: 'localhost'
+                database: 'localhost:5984'
             },
             isResult: true,
             statusCode: 412,
@@ -278,7 +278,7 @@ describe('Account', function () {
                     website: '',
                     picture: ''
                 },
-                db_host: 'localhost',
+                db_host: 'localhost:5984',
                 tokens: []
             },
             isResult: true,

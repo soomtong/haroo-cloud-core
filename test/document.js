@@ -35,21 +35,14 @@ describe('Document', function () {
 
     it("read a user's all document", function (done) {
         var result = {
-            message: 'Precondition Failed: already exist',
-            data: {
-                email: 'test@email.net',
-                password: 'new_password',
-                accessHost: 'supertest',
-                accessIP: '127.0.0.1',
-                database: 'localhost'
-            },
+            message: 'OK: retrieve done',
+            data: [],
             isResult: true,
-            statusCode: 412,
-            meta: {error: 'Precondition Failed', message: 'already exist'}
+            statusCode: 200,
+            meta: {error: 'OK', message: 'retrieve done'}
         };
 
         app.init(app.node_env, function (server) {
-            console.log(dummyAccount);
             supertest(server)
                 .get('/api/documents/' + dummyAccount.haroo_id)
                 .set('x-access-host', 'supertest')
@@ -57,8 +50,8 @@ describe('Document', function () {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
-                    //console.log(res.body);
                     assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
 
                     done();
                 });

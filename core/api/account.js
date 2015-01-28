@@ -49,7 +49,7 @@ exports.createAccount = function (req, res, next) {
         joinFrom: req.params['client_id'],
         accessHost: res.accessHost,
         accessIP: res.accessIP,
-        database: res.coreDatabase['host']
+        database: res.coreDatabase['host'] + (res.coreDatabase['port'] ? ':' + res.coreDatabase['port'] : '')
     };
 
     var msg, client, result;
