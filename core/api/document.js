@@ -122,7 +122,10 @@ exports.readDocuments = function (req, res, next) {
         haroo_id: req.params['haroo_id'],
         clientToken: res.clientToken,
         accessHost: res.accessHost,
-        accessIP: res.accessIP
+        accessIP: res.accessIP,
+        type: req.body['type'],
+        page: req.body['page'],
+        order: req.body['order']
     };
 
     var listType = (params.type || 'all');
