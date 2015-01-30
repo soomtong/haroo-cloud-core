@@ -449,7 +449,7 @@ or
 
 **Send**
 
-> localhost:3030/api/spec/version
+> localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/delete
 
 ```json
 { "X-Access-Token": "ac4ca287-55d9-4aa1-837b-f3cb85f27278", "X-Access-Host": "sven-mac-pro" }
@@ -486,7 +486,25 @@ or
 
 #### Document
 
-##### 1. `POST` /api/document/:document_id/public
+##### 1. `GET` /api/documents/:haroo_id
+
+**Send**
+
+> localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7
+
+```json
+{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
+```
+
+**Receive - done**
+
+```json
+{
+    // to do
+}
+```
+
+##### 2. `POST` /api/document/:document_id/public
 
 **Send**
 
