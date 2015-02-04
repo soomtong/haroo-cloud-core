@@ -157,7 +157,7 @@ exports.readDocuments = function (req, res, next) {
             }
 
             msg = i18n.t('document.retrieve.done');
-            result = feedback.done(msg, coreDocs.rows);
+            result = feedback.done(msg, coreDocs);
 
             return res.json(result);
 
