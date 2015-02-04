@@ -44,7 +44,7 @@ describe('Document', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/api/documents/' + dummyAccount.haroo_id)
+                .get('/api/document/' + dummyAccount.haroo_id)
                 .set('x-access-host', 'supertest')
                 .set('x-access-token', dummyAccount.access_token)
                 .expect('Content-Type', /json/)

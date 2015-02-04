@@ -152,16 +152,17 @@ function route(mode, callback) {
     }}, account.getValidateToken, account.removeAccount);
 
     // for documents
-    server.post({ path: '/api/document/:document_id/public', validation: {
+    server.get({ path: '/api/document/:haroo_id', validation: {
+        haroo_id: { isRequired: true }
+    }}, account.getValidateToken, document.readDocuments);
+    server.get({ path: '/api/document/:haroo_id/:document_id', validation: {
+        haroo_id: { isRequired: true },
+        document_id: { isRequired: true }
+    }}, account.getValidateToken, document.readDocuments);
+    server.get({ path: '/api/document/:haroo_id/:document_id/public', validation: {
         haroo_id: { isRequired: true },
         document_id: { isRequired: true }
     }}, account.getValidateToken, document.togglePublic);
-    server.get({ path: '/api/documents/:haroo_id', validation: {
-        haroo_id: { isRequired: true }
-    }}, account.getValidateToken, document.readDocuments);
-    server.get({ path: '/api/documents/:haroo_id/simple', validation: {
-        haroo_id: { isRequired: true }
-    }}, account.getValidateToken, document.readDocuments);
 
 
 

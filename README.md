@@ -486,7 +486,7 @@ or
 
 #### Document
 
-##### 1. `GET` /api/documents/:haroo_id
+##### 1. `GET` /api/document/:haroo_id
 
 **Send**
 
@@ -504,15 +504,14 @@ or
 }
 ```
 
-##### 2. `POST` /api/document/:document_id/public
+##### 2. `GET` /api/document/:haroo_id/:document_id/public
 
 **Send**
 
-> localhost:3030/api/document/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419/public
+> localhost:3030/api/document/b4c4ae0692b435427b671649ea30848e7/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419/public
 
 ```json
 { "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
-{ "haroo_id": "b4c4ae0692b435427b671649ea30848e7" }
 ```
 
 **Receive - done**
