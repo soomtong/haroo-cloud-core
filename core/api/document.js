@@ -136,7 +136,7 @@ exports.readAllDocument = function (req, res, next) {
     // get user
     Account.findOne({ haroo_id: params.haroo_id }, function (err, user) {
         if (err || !user) {
-            msg = i18n.t('document.retrieve.fail');
+            msg = i18n.t('document.retrieveAll.fail');
             params.clientToken = undefined; // clear token info
             result = feedback.badImplementation(msg, params);
 
@@ -149,15 +149,61 @@ exports.readAllDocument = function (req, res, next) {
             if (err) {
                 console.error(err);
 
-                msg = i18n.t('document.retrieve.fail');
+                msg = i18n.t('document.retrieveAll.fail');
                 params.clientToken = undefined; // clear token info
                 result = feedback.notImplemented(msg, params);
 
                 return res.json(result.statusCode, result);
             }
 
-            msg = i18n.t('document.retrieve.done');
+            msg = i18n.t('document.retrieveAll.done');
             result = feedback.done(msg, coreDocs);
+
+            return res.json(result);
+
+        });
+    });
+
+    next();
+};
+
+exports.readOneDocument = function (req, res, next) {
+
+    var params = {
+        haroo_id: req.params['haroo_id'],
+        document_id: req.params['document_id'],
+        clientToken: res.clientToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, result;
+
+    // get user
+    Account.findOne({ haroo_id: params.haroo_id }, function (err, user) {
+        if (err || !user) {
+            msg = i18n.t('document.retrieveOne.fail');
+            params.clientToken = undefined; // clear token info
+            result = feedback.badImplementation(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        var couch = nano({url: 'http://' + user.db_host}).use(params.haroo_id);
+
+        couch.get(params.document_id,  function (err, coreDoc) {
+            if (err) {
+                console.error(err);
+
+                msg = i18n.t('document.retrieveOne.fail');
+                params.clientToken = undefined; // clear token info
+                result = feedback.notImplemented(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+
+            msg = i18n.t('document.retrieveOne.done');
+            result = feedback.done(msg, coreDoc);
 
             return res.json(result);
 

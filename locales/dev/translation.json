@@ -75,9 +75,13 @@
       "done": "togglePublic done",
       "fail": "togglePublic failed"
     },
-    "retrieve": {
-      "done": "retrieve done",
-      "fail": "retrieve failed"
+    "retrieveAll": {
+      "done": "retrieve all done",
+      "fail": "retrieve all failed"
+    },
+    "retrieveOne": {
+      "done": "retrieve one done",
+      "fail": "retrieve one failed"
     }
   }
 }

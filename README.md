@@ -504,7 +504,25 @@ or
 }
 ```
 
-##### 2. `GET` /api/document/:haroo_id/:document_id/public
+##### 2. `GET` /api/document/:haroo_id/:document_id
+
+**Send**
+
+> localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419
+
+```json
+{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
+```
+
+**Receive - done**
+
+```json
+{
+    // to do
+}
+```
+
+##### 3. `GET` /api/document/:haroo_id/:document_id/public
 
 **Send**
 

@@ -57,4 +57,30 @@ describe('Document', function () {
                 });
         });
     });
+
+    it("read a user's one document", function (done) {
+        var result = {
+            message: 'OK: retrieve done',
+            data: [],
+            isResult: true,
+            statusCode: 200,
+            meta: {error: 'OK', message: 'retrieve done'}
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/api/document/' + dummyAccount.haroo_id + '/' + '')
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', dummyAccount.access_token)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+
+                    done();
+                });
+        });
+    });
+
 });
