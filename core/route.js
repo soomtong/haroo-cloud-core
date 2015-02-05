@@ -129,7 +129,7 @@ function route(mode, callback) {
     });
 
     // for users
-    server.post({ path: '/api/user/:haroo_id/info', validation: {
+    server.get({ path: '/api/user/:haroo_id/info', validation: {
         haroo_id: { isRequired: true }
     }}, account.getValidateToken, account.accountInfo);
     server.post({ path: '/api/user/:haroo_id/change_password', validation: {
@@ -154,11 +154,11 @@ function route(mode, callback) {
     // for documents
     server.get({ path: '/api/document/:haroo_id', validation: {
         haroo_id: { isRequired: true }
-    }}, account.getValidateToken, document.readDocuments);
+    }}, account.getValidateToken, document.readAllDocument);
     server.get({ path: '/api/document/:haroo_id/:document_id', validation: {
         haroo_id: { isRequired: true },
         document_id: { isRequired: true }
-    }}, account.getValidateToken, document.readDocuments);
+    }}, account.getValidateToken, document.readOneDocument);
     server.get({ path: '/api/document/:haroo_id/:document_id/public', validation: {
         haroo_id: { isRequired: true },
         document_id: { isRequired: true }

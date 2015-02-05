@@ -389,7 +389,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/api/user/' + dummyAccount.haroo_id + '/info')
+                    .get('/api/user/' + dummyAccount.haroo_id + '/info')
                     .set('x-access-host', 'supertest')
                     .expect('Content-Type', /json/)
                     .expect(400)
@@ -442,7 +442,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/api/user/' + "invalidHarooID" + '/info')
+                    .get('/api/user/' + "invalidHarooID" + '/info')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .expect('Content-Type', /json/)
@@ -466,7 +466,7 @@ describe('Account', function () {
 
             app.init(app.node_env, function (server) {
                 supertest(server)
-                    .post('/api/user/' + dummyAccount.haroo_id + '/info')
+                    .get('/api/user/' + dummyAccount.haroo_id + '/info')
                     .set('x-access-host', 'supertest')
                     .set('x-access-token', dummyAccount.access_token)
                     .expect('Content-Type', /json/)

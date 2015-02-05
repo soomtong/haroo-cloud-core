@@ -116,7 +116,7 @@ exports.togglePublic = function (req, res, next) {
     next();
 };
 
-exports.readDocuments = function (req, res, next) {
+exports.readAllDocument = function (req, res, next) {
 
     var params = {
         haroo_id: req.params['haroo_id'],
