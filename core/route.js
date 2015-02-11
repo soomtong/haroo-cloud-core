@@ -106,6 +106,13 @@ function route(mode, callback) {
         email: { isRequired: true, isEmail: true }
     }}, middleware.getCoreMailer(mode), account.mailingResetPassword);
 
+    // for public documents
+    server.post({ path: '/api/public/document', validation: {
+        date: { isRequired: true },
+        counter: { isRequired: true },
+        counted: { isRequired: true }
+    }}, document.readPublicDocument);
+
     // districtMiddleware
     server.use(middleware.accessToken);
 
@@ -163,7 +170,6 @@ function route(mode, callback) {
         haroo_id: { isRequired: true },
         document_id: { isRequired: true }
     }}, account.getValidateToken, document.togglePublic);
-
 
 
     callback(server);

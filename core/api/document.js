@@ -212,3 +212,60 @@ exports.readOneDocument = function (req, res, next) {
 
     next();
 };
+
+exports.readPublicDocument = function (req, res, next) {
+
+    var params = {
+        date: req.params['date'],
+        counter: req.params['counter'],
+        counted: req.params['counted'],
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    var msg, result;
+
+    PublicDocument.findOne({release_date: params.date, counter: params.counter}, function (err, publicDoc) {
+        if (err || !publicDoc || !publicDoc.haroo_id || !publicDoc.document_id) {
+            msg = i18n.t('document.retrievePublic.fail');
+            result = feedback.badImplementation(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        Account.findOne({haroo_id: publicDoc.haroo_id}, function (err, user) {
+            if (err || !user || !user.db_host) {
+                msg = i18n.t('document.retrievePublic.fail');
+                result = feedback.badImplementation(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+
+            var couch = nano({url: 'http://' + user.db_host}).use(user.haroo_id);
+
+            couch.get(publicDoc.document_id, function (err, document) {
+                if (err || !document) {
+                    msg = i18n.t('document.retrievePublic.notExist');
+                    result = feedback.notFound(msg, params);
+
+                    return res.json(result.statusCode, result);                }
+
+                if (!params.counted) {
+                    publicDoc.viewCount = publicDoc.viewCount ? publicDoc.viewCount + 1 : 1;
+                    publicDoc.save();
+                }
+
+                params.doc = document;
+                params.meta = publicDoc;
+
+                msg = i18n.t('document.retrievePublic.done');
+                result = feedback.done(msg, params);
+
+                return res.json(result);
+            });
+
+        });
+    });
+
+    next();
+};

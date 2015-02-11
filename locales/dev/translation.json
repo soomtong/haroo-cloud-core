@@ -82,6 +82,11 @@
     "retrieveOne": {
       "done": "retrieve one done",
       "fail": "retrieve one failed"
+    },
+    "retrievePublic": {
+      "done": "retrieve public document done",
+      "notExist": "notExist that public document",
+      "fail": "retrieve public document failed"
     }
   }
 }
