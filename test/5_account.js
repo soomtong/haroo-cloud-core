@@ -103,7 +103,7 @@ describe('Account', function () {
         var AccountToken = require('../core/models/accountToken');
 
         if (temp) {
-            Account.remove({}, function (err, result) {
+            Account.remove({ email: 'test@email.net'}, function (err, result) {
                 done();
             });
         } else {

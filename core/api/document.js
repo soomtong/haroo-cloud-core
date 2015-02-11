@@ -123,9 +123,9 @@ exports.readAllDocument = function (req, res, next) {
         clientToken: res.clientToken,
         accessHost: res.accessHost,
         accessIP: res.accessIP,
-        type: req.body['type'],
-        page: req.body['page'],
-        order: req.body['order']
+        type: req.query['type'],
+        page: req.query['page'],
+        order: req.query['order']
     };
 
     var listType = (params.type || 'all');
