@@ -1,5 +1,6 @@
 var i18n = require('i18next');
-var nano = require('nano');
+var nano = require('nano'); // todo: remove
+var counoun = require('counoun');
 
 var feedback = require('../lib/feedback');
 var common = require('../lib/common');
@@ -8,9 +9,9 @@ var Account = require('../models/account');
 var PublicDocument = require('../models/publicDocument');
 
 function togglePublicCoreDocument(haroo_id, document_id, shareData) {
-    var couch = nano.db.use(haroo_id);
+    var CoreDocument = counoun.model(haroo_id);
 
-    couch.get(document_id, function (err, coreDocument) {
+    CoreDocument.get(document_id, function (err, coreDocument) {
         if (err) {
             if (err) throw new Error('couch database access denied');
         }
@@ -23,7 +24,7 @@ function togglePublicCoreDocument(haroo_id, document_id, shareData) {
         coreDocument.meta = meta;
 
         // update document
-        couch.insert(coreDocument, document_id, function (err) {
+        CoreDocument.put(document_id, coreDocument, function (err) {
             if (err) throw new Error('couch database access denied');
         });
     });
@@ -189,9 +190,9 @@ exports.readOneDocument = function (req, res, next) {
             return res.json(result.statusCode, result);
         }
 
-        var couch = nano({url: 'http://' + user.db_host}).use(params.haroo_id);
+        var CoreDocument = counoun.model(haroo_id);
 
-        couch.get(params.document_id,  function (err, coreDoc) {
+        CoreDocument.get(params.document_id, function (err, coreDoc) {
             if (err) {
                 console.error(err);
 
@@ -241,14 +242,15 @@ exports.readPublicDocument = function (req, res, next) {
                 return res.json(result.statusCode, result);
             }
 
-            var couch = nano({url: 'http://' + user.db_host}).use(user.haroo_id);
+            var CoreDocument = counoun.model(user.haroo_id);
 
-            couch.get(publicDoc.document_id, function (err, document) {
+            CoreDocument.get(publicDoc.document_id, function (err, document) {
                 if (err || !document) {
                     msg = i18n.t('document.retrievePublic.notExist');
                     result = feedback.notFound(msg, params);
 
-                    return res.json(result.statusCode, result);                }
+                    return res.json(result.statusCode, result);
+                }
 
                 if (!params.counted) {
                     publicDoc.viewCount = publicDoc.viewCount ? publicDoc.viewCount + 1 : 1;
