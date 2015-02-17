@@ -134,35 +134,22 @@ exports.readAllDocument = function (req, res, next) {
 
     var msg, result;
 
-    // get user
-    Account.findOne({ haroo_id: params.haroo_id }, function (err, user) {
-        if (err || !user) {
+    var CoreDocument = counoun.model(params.haroo_id);
+
+    CoreDocument.view(listType, orderType, function (err, coreDocs) {
+        if (err) {
             msg = i18n.t('document.retrieveAll.fail');
             params.clientToken = undefined; // clear token info
-            result = feedback.badImplementation(msg, params);
+            result = feedback.notImplemented(msg, params);
 
             return res.json(result.statusCode, result);
         }
 
-        var couch = nano({url: 'http://' + user.db_host}).use(params.haroo_id);
+        msg = i18n.t('document.retrieveAll.done');
+        result = feedback.done(msg, coreDocs);
 
-        couch.view(listType, orderType, {include_docs:true},  function (err, coreDocs) {
-            if (err) {
-                console.error(err);
+        return res.json(result);
 
-                msg = i18n.t('document.retrieveAll.fail');
-                params.clientToken = undefined; // clear token info
-                result = feedback.notImplemented(msg, params);
-
-                return res.json(result.statusCode, result);
-            }
-
-            msg = i18n.t('document.retrieveAll.done');
-            result = feedback.done(msg, coreDocs);
-
-            return res.json(result);
-
-        });
     });
 
     next();

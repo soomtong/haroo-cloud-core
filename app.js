@@ -6,6 +6,8 @@ var app = {
     config: require('./core/config')
 };
 
+// todo: 데이터베이스 서버는 하나만, 고로 array 로 된 현재 세팅 값은 그냥 일반 스트링으로 변경해야 함.
+
 app.init(app.node_env, function (server) {
     var mongoose = require('mongoose');
     var counoun = require('counoun');
@@ -22,6 +24,7 @@ app.init(app.node_env, function (server) {
     });
 
     // init counoun
+    // todo : how about specified core database for users? doesn't mean anymore? hmm...
     counoun.connect(config.database.couch[0].host, config.database.couch[0].port,
         { user: config.database.couch[0].auth[0], pass: config.database.couch[0].auth[1] }
     );
