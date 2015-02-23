@@ -486,7 +486,26 @@ or
 
 #### Document
 
-##### 1. `GET` /api/document/:haroo_id
+##### 1. `POST` /api/push/:haroo_id
+
+**Send**
+
+> localhost:3030/api/push/b4c4ae0692b435427b671649ea30848e7
+
+```json
+{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
+{ "bulk" : [bulk set] }
+```
+
+**Receive - done**
+
+```json
+{
+    // to do
+}
+```
+
+##### 2. `GET` /api/pull/:haroo_id
 
 **Send**
 
@@ -504,7 +523,26 @@ or
 }
 ```
 
-##### 2. `GET` /api/document/:haroo_id/:document_id
+##### 3. `POST` /api/document/:haroo_id
+
+**Send**
+
+> localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7
+
+```json
+{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
+{ "doc": [document set] }
+```
+
+**Receive - done**
+
+```json
+{
+    // to do
+}
+```
+
+##### 4. `GET` /api/document/:haroo_id/:document_id
 
 **Send**
 
@@ -522,7 +560,7 @@ or
 }
 ```
 
-##### 3. `GET` /api/document/:haroo_id/:document_id/public
+##### 5. `GET` /api/document/:haroo_id/:document_id/public
 
 **Send**
 
