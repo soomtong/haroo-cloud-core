@@ -74,7 +74,7 @@ exports.getCoreDatabase = function (mode) {
     var server = config({mode: mode})['database'];
 
     return function (req, res, next) {
-        res.coreDatabase = server.couch[0];
+        res.coreDatabase = server.couch;
 
         next();
     };
