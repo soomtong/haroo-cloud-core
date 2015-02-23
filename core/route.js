@@ -159,9 +159,15 @@ function route(mode, callback) {
     }}, account.getValidateToken, account.removeAccount);
 
     // for documents
-    server.get({ path: '/api/document/:haroo_id', validation: {
+    server.post({ path: '/api/push/:haroo_id', validation: {
+        haroo_id: { isRequired: true }
+    }}, account.getValidateToken, document.saveAllDocument);
+    server.get({ path: '/api/pull/:haroo_id', validation: {
         haroo_id: { isRequired: true }
     }}, account.getValidateToken, document.readAllDocument);
+    server.post({ path: '/api/document/:haroo_id', validation: {
+        haroo_id: { isRequired: true }
+    }}, account.getValidateToken, document.saveOneDocument);
     server.get({ path: '/api/document/:haroo_id/:document_id', validation: {
         haroo_id: { isRequired: true },
         document_id: { isRequired: true }

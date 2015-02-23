@@ -117,6 +117,16 @@ exports.togglePublic = function (req, res, next) {
     next();
 };
 
+exports.saveOneDocument = function (req, res, next) {
+
+    next();
+};
+
+exports.saveAllDocument = function (req, res, next) {
+
+    next();
+};
+
 exports.readAllDocument = function (req, res, next) {
 
     var params = {

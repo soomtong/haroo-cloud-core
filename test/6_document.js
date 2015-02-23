@@ -10,6 +10,7 @@ app.node_env = 'testing';
 describe('Document', function () {
 
     var dummyAccount;       // for internal use only
+    var dummyCollection;
 
     before(function(done){
         var Account = require('../core/models/account');
@@ -33,6 +34,29 @@ describe('Document', function () {
         // dump core documents
     });
 
+    it("save one document for user's", function (done) {
+        var document = {
+            name: "robert",
+            age: 43
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/api/document/' + dummyAccount.haroo_id)
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', dummyAccount.access_token)
+                .send(document)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+
+                    done();
+                });
+        });
+    });
+
     it("read a user's all document", function (done) {
         var result = {
             message: 'OK: retrieve all done',
@@ -44,9 +68,28 @@ describe('Document', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/api/document/' + dummyAccount.haroo_id)
+                .get('/api/pull/' + dummyAccount.haroo_id)
                 .set('x-access-host', 'supertest')
                 .set('x-access-token', dummyAccount.access_token)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+
+                    dummyCollection = res.body.data;
+                    done();
+                });
+        });
+    });
+
+    it("save all document for user's", function (done) {
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/api/push/' + dummyAccount.haroo_id)
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', dummyAccount.access_token)
+                .send(dummyCollection)
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
@@ -56,6 +99,7 @@ describe('Document', function () {
                     done();
                 });
         });
+
     });
 
     it("read a user's all document with query", function (done) {
