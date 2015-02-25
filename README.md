@@ -486,11 +486,11 @@ or
 
 #### Document
 
-##### 1. `POST` /api/push/:haroo_id
+##### 1. `POST` /api/documents/:haroo_id
 
 **Send**
 
-> localhost:3030/api/push/b4c4ae0692b435427b671649ea30848e7
+> localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7
 
 ```json
 { "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
@@ -505,7 +505,7 @@ or
 }
 ```
 
-##### 2. `GET` /api/pull/:haroo_id
+##### 2. `GET` /api/documents/:haroo_id
 
 **Send**
 
@@ -527,7 +527,7 @@ or
 
 **Send**
 
-> localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7
+> localhost:3030/api/document/b4c4ae0692b435427b671649ea30848e7
 
 ```json
 { "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
@@ -546,7 +546,7 @@ or
 
 **Send**
 
-> localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419
+> localhost:3030/api/document/b4c4ae0692b435427b671649ea30848e7/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419
 
 ```json
 { "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }

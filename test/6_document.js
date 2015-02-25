@@ -57,7 +57,7 @@ describe('Document', function () {
         });
     });
 
-    it("read a user's all document", function (done) {
+    it("read a user's documents multiple", function (done) {
         var result = {
             message: 'OK: retrieve all done',
             data: {total_rows: 0, offset: 0, rows: []},
@@ -68,7 +68,7 @@ describe('Document', function () {
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/api/pull/' + dummyAccount.haroo_id)
+                .get('/api/documents/' + dummyAccount.haroo_id)
                 .set('x-access-host', 'supertest')
                 .set('x-access-token', dummyAccount.access_token)
                 .expect('Content-Type', /json/)
@@ -83,10 +83,36 @@ describe('Document', function () {
         });
     });
 
-    it("save all document for user's", function (done) {
+    it("read a user's documents multiple with query", function (done) {
+        var result = {
+            message: 'OK: retrieve all done',
+            data: {total_rows: 0, offset: 0, rows: []},
+            isResult: true,
+            statusCode: 200,
+            meta: {error: 'OK', message: 'retrieve all done'}
+        };
+
         app.init(app.node_env, function (server) {
             supertest(server)
-                .post('/api/push/' + dummyAccount.haroo_id)
+                .get('/api/documents/' + dummyAccount.haroo_id + '?page=2')
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', dummyAccount.access_token)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+
+                    dummyCollection = res.body.data;
+                    done();
+                });
+        });
+    });
+
+    it("save multiple documents for user's", function (done) {
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/api/documents/' + dummyAccount.haroo_id)
                 .set('x-access-host', 'supertest')
                 .set('x-access-token', dummyAccount.access_token)
                 .send(dummyCollection)
