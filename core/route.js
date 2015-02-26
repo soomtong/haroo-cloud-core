@@ -158,13 +158,13 @@ function route(mode, callback) {
         password: { isRequired: true }
     }}, account.getValidateToken, account.removeAccount);
 
-    // for documents
+    // for documents, sync process are using a proxy just.
     server.post({ path: '/api/documents/:haroo_id', validation: {
         haroo_id: { isRequired: true }
-    }}, account.getValidateToken, document.saveAllDocument);
+    }}, account.getValidateToken, document.saveMultiDocuments);
     server.get({ path: '/api/documents/:haroo_id', validation: {
         haroo_id: { isRequired: true }
-    }}, account.getValidateToken, document.readAllDocument);
+    }}, account.getValidateToken, document.readMultiDocuments);
     server.post({ path: '/api/document/:haroo_id', validation: {
         haroo_id: { isRequired: true }
     }}, account.getValidateToken, document.saveOneDocument);

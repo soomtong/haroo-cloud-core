@@ -122,12 +122,12 @@ exports.saveOneDocument = function (req, res, next) {
     next();
 };
 
-exports.saveAllDocument = function (req, res, next) {
+exports.saveMultiDocuments = function (req, res, next) {
 
     next();
 };
 
-exports.readAllDocument = function (req, res, next) {
+exports.readMultiDocuments = function (req, res, next) {
 
     var params = {
         haroo_id: req.params['haroo_id'],
