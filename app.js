@@ -18,15 +18,15 @@ app.init(app.node_env, function (server) {
     var config = app.config({mode: app.node_env});
 
     // init mongoose
-    mongoose.connect(config.database.mongo.host);
+    mongoose.connect(config.database.mongo[0].host);
     mongoose.connection.on('error', function () {
         console.error('MongoDB Connection Error. Make sure MongoDB is running.');
     });
 
     // init counoun
     // todo : how about specified core database for users? doesn't mean anymore? hmm...
-    counoun.connect(config.database.couch.host, config.database.couch.port,
-        { user: config.database.couch.auth[0], pass: config.database.couch.auth[1] }
+    counoun.connect(config.database.couch[0].host, config.database.couch[0].port,
+        { user: config.database.couch[0].auth[0], pass: config.database.couch[0].auth[1] }
     );
 
     // start application
