@@ -161,17 +161,17 @@ function route(mode, callback) {
     // for documents, sync process are using a proxy just.
     server.post({ path: '/api/documents/:haroo_id', validation: {
         haroo_id: { isRequired: true }
-    }}, account.getValidateToken, document.saveMultiDocuments);
+    }}, account.getValidateToken, document.put);
     server.get({ path: '/api/documents/:haroo_id', validation: {
         haroo_id: { isRequired: true }
-    }}, account.getValidateToken, document.readMultiDocuments);
+    }}, account.getValidateToken, document.get);
     server.post({ path: '/api/document/:haroo_id', validation: {
         haroo_id: { isRequired: true }
-    }}, account.getValidateToken, document.saveOneDocument);
+    }}, account.getValidateToken, document.save);
     server.get({ path: '/api/document/:haroo_id/:document_id', validation: {
         haroo_id: { isRequired: true },
         document_id: { isRequired: true }
-    }}, account.getValidateToken, document.readOneDocument);
+    }}, account.getValidateToken, document.read);
     server.get({ path: '/api/document/:haroo_id/:document_id/public', validation: {
         haroo_id: { isRequired: true },
         document_id: { isRequired: true }

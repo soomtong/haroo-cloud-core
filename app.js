@@ -10,7 +10,6 @@ var app = {
 
 app.init(app.node_env, function (server) {
     var mongoose = require('mongoose');
-    var counoun = require('counoun');
 
     var restify = require('restify');
     var bunyan = require('bunyan');
@@ -22,12 +21,6 @@ app.init(app.node_env, function (server) {
     mongoose.connection.on('error', function () {
         console.error('MongoDB Connection Error. Make sure MongoDB is running.');
     });
-
-    // init counoun
-    // todo : how about specified core database for users? doesn't mean anymore? hmm...
-    counoun.connect(config.database.couch[0].host, config.database.couch[0].port,
-        { user: config.database.couch[0].auth[0], pass: config.database.couch[0].auth[1] }
-    );
 
     // start application
     server.listen(config.server.port, function serverStarted() {
