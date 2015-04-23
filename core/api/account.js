@@ -152,7 +152,7 @@ exports.readAccount = function (req, res, next) {
     Account.findOne({email: params.email}, function (err, existUser) {
         if (!existUser) {
             msg = i18n.t('account.read.mismatch');
-            result = feedback.badRequest(msg, params);
+            result = feedback.unauthorized(msg, params);
 
             return res.json(result.statusCode, result);
         }
