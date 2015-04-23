@@ -68,6 +68,7 @@ function route(mode, callback) {
     // commonMiddleware
     // set host name to res.locals for all client
     server.use(middleware.accessClient);
+    server.use(restify.CORS());
     server.use(restify.queryParser());
     server.use(restify.bodyParser());
     server.use(restifyValidation.validationPlugin({
