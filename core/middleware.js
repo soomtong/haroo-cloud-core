@@ -48,8 +48,12 @@ exports.callCounterForToken = function (req, res, next) {
 
 // tracking host name
 exports.accessClient = function (req, res, next) {
+    console.log(req.headers);
     var host = res.accessHost = req.header('x-access-host');
     var ip = res.accessIP = util.getHostIp(req.header('host'));
+
+    console.log('host:',host);
+    console.log('ip:',ip);
 
     next();
 };
@@ -58,6 +62,7 @@ exports.accessClient = function (req, res, next) {
 exports.accessToken = function (req, res, next) {
     var token = res.accessToken = req.header('x-access-token');
 
+    console.log('token:',token);
     //if (!token) throw "no token, that's blocked";
     if (!token) {
         var msg = i18n.t('token.read.notExist');

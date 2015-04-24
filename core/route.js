@@ -1,6 +1,7 @@
 var restify = require('restify');
 var restifyValidation = require('node-restify-validation');
 var i18n = require('i18next');
+var corsMiddleware = require('restify-cors-middleware');
 
 var config = require('./config');
 var middleware = require('./middleware');
@@ -43,6 +44,14 @@ function route(mode, callback) {
         }
     }));
 
+    // allow cors
+    var cors = corsMiddleware({
+        allowHeaders: ['X-Access-Host', 'X-Access-Token']
+    });
+
+    server.pre(cors.preflight);
+    server.use(cors.actual);
+
     // api counter for ip district
     server.use(middleware.callCounterForIPs);
     server.use(middleware.callCounterForToken);
@@ -68,7 +77,6 @@ function route(mode, callback) {
     // commonMiddleware
     // set host name to res.locals for all client
     server.use(middleware.accessClient);
-    server.use(restify.CORS());
     server.use(restify.queryParser());
     server.use(restify.bodyParser());
     server.use(restifyValidation.validationPlugin({
