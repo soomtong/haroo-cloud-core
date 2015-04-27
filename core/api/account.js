@@ -302,6 +302,7 @@ exports.validateToken = function (req, res, next) {
                         }
 
                         msg = i18n.t('token.keep.done');
+                        params.tokenExpire = existToken.login_expire;
                         result = feedback.done(msg, params);
 
                         //AccountLog.checkToken({token: params.accessToken});
