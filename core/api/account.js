@@ -225,9 +225,9 @@ exports.mailingResetPassword = function (req, res, next) {
             msg = i18n.t('account.forgotPassword.fail');
             params.serviceMailer = undefined; // clear mailer info
             params.serviceHost = undefined; // clear host info
-            result = feedback.preconditionFailed(result.statusCode, msg, params);
+            result = feedback.preconditionFailed(msg, params);
 
-            return res.json(result);
+            return res.json(result.statusCode, result);
         }
 
         var randomToken = common.getRandomToken();

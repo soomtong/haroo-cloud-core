@@ -2,18 +2,21 @@
   "app": {
     "production": {
       "name": "haroo-cloud-core",
-      "lang": "en"
+      "lang": "en",
+      "port": 3030
     },
     "development": {
       "name": "haroo-cloud-core-dev",
-      "lang": "ko"
+      "lang": "ko",
+      "port": 3030
     },
     "testing": {
       "name": "haroo-cloud-core-test",
-      "lang": "dev"
+      "lang": "dev",
+      "port": 3030
     }
   },
-  "server": {
+  "web_server": {
     "production": {
       "host": "hostname.com", "secure": true, "port": 3000
     },

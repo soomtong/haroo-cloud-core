@@ -83,11 +83,11 @@ exports.getCoreDatabase = function (mode) {
 // select mail server info
 exports.getCoreMailer = function (mode) {
     var mailer = config({mode: mode})['mailer'];
-    var server = config({mode: mode})['server'];
+    var server = config({mode: mode})['web_server'];
 
     return function (req, res, next) {
         res.coreMailer = mailer;
-        res.coreHost = server.secure ? 'https://' : 'http://' + server.host + server.port ? server.port : '';
+        res.coreHost = (server.secure ? 'https://' : 'http://') + server.host + (server.port ? ':' + server.port : '');
 
         next();
     };

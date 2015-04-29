@@ -8,7 +8,7 @@ var app = function appConfig(option) {
 };
 
 var server = function serverConfig(option) {
-    var config = require('../config')['server'];
+    var config = require('../config')['web_server'];
 
     return config[option.mode];
 };
@@ -30,7 +30,7 @@ module.exports = function getConfiguration(option) {
         name: SERVICE_NAME,
         root: SERVICE_FOLDER,
         app: app(option),
-        server: server(option),
+        web_server: server(option),
         mailer: mailer(option),
         database: database(option)
     };

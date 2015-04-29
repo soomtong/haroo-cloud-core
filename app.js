@@ -23,7 +23,7 @@ app.init(app.node_env, function (server) {
     });
 
     // start application
-    server.listen(config.server.port, function serverStarted() {
+    server.listen(config.app.port, function serverStarted() {
         console.log('%s listening at %s in %s mode', server.name, server.url, app.node_env);
     });
 

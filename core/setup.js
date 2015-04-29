@@ -41,16 +41,16 @@ function init() {
 
         var config = require('../config');
 
-        if (!config.server.production) {
+        if (!config.app['production']) {
             throw Error('configuration file corrupted');
         }
-        if (!config.server.development) {
+        if (!config['web_server']['development']) {
             throw Error('configuration file corrupted');
         }
-        if (!config.database.production) {
+        if (!config.database['production']) {
             throw Error('configuration file corrupted');
         }
-        if (!config.database.development) {
+        if (!config.database['development']) {
             throw Error('configuration file corrupted');
         }
     });
