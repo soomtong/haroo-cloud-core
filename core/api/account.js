@@ -263,6 +263,47 @@ exports.mailingResetPassword = function (req, res, next) {
     next();
 };
 
+// update password for reset
+exports.updatePasswordForReset = function (req, res, next) {
+    var params = {
+        token: req.params['token'],
+        password: req.params['password']
+    };
+
+    var msg, result;
+
+    Account.findOne({ reset_password_token: params.token })
+        .where('reset_password_token_expire').gt(Date.now())
+        .exec(function (err, accountForReset) {
+            if (err || !accountForReset) {
+                msg = i18n.t('account.resetPassword.notExist');
+                result = feedback.badRequest(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+
+            accountForReset.password = params.password;
+            accountForReset.reset_password_token = undefined;
+            accountForReset.reset_password_token_expire = undefined;
+
+            // force Login process
+            accountForReset.save(function (err) {
+                if (err) {
+                    msg = i18n.t('account.resetPassword.fail');
+                    result = feedback.badImplementation(msg, params);
+
+                    return res.json(result.statusCode, result);
+                }
+
+                msg = i18n.t('account.resetPassword.done');
+                client = common.setDataToClient(accountForReset);
+                result = feedback.done(msg, client);
+
+                res.json(result);
+            });
+        });
+};
+
 // validate token
 exports.validateToken = function (req, res, next) {
     var params = {

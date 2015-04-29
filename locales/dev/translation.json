@@ -24,6 +24,11 @@
     "forgotPassword": {
       "done": "done",
       "fail": "can't find information"
+    },
+    "resetPassword": {
+      "done": "done",
+      "fail": "can't reset password",
+      "notExist": "not exist reset token"
     }
   },
   "token": {

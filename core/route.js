@@ -114,6 +114,10 @@ function route(mode, callback) {
     server.post({ path: '/api/account/forgot_password', validation: {
         email: { isRequired: true, isEmail: true }
     }}, middleware.getCoreMailer(mode), account.mailingResetPassword);
+    server.post({ path: '/api/account/reset_password', validation: {
+        token: { isRequired: true },
+        password: { isRequired: true }
+    }}, account.updatePasswordForReset);
 
     // for public documents
     server.post({ path: '/api/public/document', validation: {
