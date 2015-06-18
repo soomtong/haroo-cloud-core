@@ -353,6 +353,44 @@ exports.validateToken = function (req, res, next) {
             });
 
             break;
+        case '2':
+            AccountToken.findOne({access_token: params.accessToken, access_host: params.accessHost}, function (err, existToken) {
+                console.log(existToken);
+                if (err || !existToken) {
+                    msg = i18n.t('token.read.notExist');
+                    result = feedback.badRequest(msg, params);
+
+                    return res.json(result.statusCode, result);
+                }
+
+                if (common.isThisTokenExpired(existToken)) {
+                    msg = i18n.t('token.read.expired');
+                    result = feedback.unauthorized(msg, params);
+
+                    return res.json(result.statusCode, result);
+                } else {
+                    // keep this token once more
+                    existToken.login_expire = common.getLoginExpireDate();
+                    existToken.save(function (err, token) {
+                        if (err) {
+                            msg = i18n.t('token.keep.fail');
+                            result = feedback.badImplementation(msg, params);
+
+                            return res.json(result.statusCode, result);
+                        }
+
+                        msg = i18n.t('token.keep.done');
+                        params.tokenExpire = existToken.login_expire;
+                        params.harooID = existToken.haroo_id;
+                        result = feedback.done(msg, params);
+
+                        //AccountLog.checkToken({token: params.accessToken});
+                        return res.json(result);
+                    });
+                }
+            });
+
+            break;
         case '0':
             AccountToken.findOne({access_token: params.accessToken, access_host: params.accessHost}, function (err, existToken) {
                 if (err || !existToken) {
