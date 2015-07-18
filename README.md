@@ -1,7 +1,7 @@
-haroo-api
-=========
+haroo-cloud
+===========
 
-haroo-api for haroo cloud service
+the document hosting service, haroo cloud
 
 - nodejs (prefer nginx proxy)
 - restify framework
@@ -12,15 +12,15 @@ refer. `package.json` more.
 
 ## Usage
 
-should to ready mongo database
+prepare mongo database running
 
 install modules
 
 > npm install
 
-> npm test
+> npm postinstall
 
-> npm start
+> npm test
 
 ### Run App by MODE
 
@@ -32,7 +32,7 @@ or
 
 ### Public Document Storage Service
 
-bind `/public` url to `your-public-service.com` and map proxy in nginx or your proxy server.
+open `/tree/index.html` in a browser or bind `/tree` url to `your-public-service.com` and map proxy in nginx or your proxy server.
  
 example here!
 
@@ -40,4 +40,4 @@ example here!
 
 ## APIs
 
-check out `APIs.md` or open `/api` url in a browser.
+check out `APIs.md` or open `/dev/doc` url in a browser.
