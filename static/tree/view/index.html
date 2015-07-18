@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>view document</h1>
+<h2>/tree/view/?document_id#render_type</h2>
+<script>
+    var id = window.location.search;
+    var type = window.location.hash;
+
+    console.log(id.slice(1), type.slice(1));
+</script>
+</body>
+</html>
