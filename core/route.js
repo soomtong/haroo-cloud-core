@@ -34,7 +34,7 @@ function route(mode, callback) {
     // globalMiddleware
     server.use(restify.throttle({
         burst: 100,
-        rate: 50,
+        rate: 5,
         ip: true,
         overrides: {
             '192.168.1.1': {
@@ -56,12 +56,12 @@ function route(mode, callback) {
     server.use(middleware.callCounterForIPs);
     server.use(middleware.callCounterForToken);
 
-    // haroo cloud api document page
+    // redirect not ended '/' trail
     server.get(/^\/(dev\/doc)$/, function (req, res, next) {
-        console.log('redirect');
-        res.redirect('/dev/doc/index.html', next);
+        res.redirect('/dev/doc/', next);
     });
 
+    // haroo cloud api document page
     server.get(/^\/(?!api).*$/, restify.serveStatic({
         directory: 'static',
         default: 'index.html'

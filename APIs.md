@@ -1,4 +1,75 @@
-## APIs list
+---
+
+title: API Reference
+
+language_tabs:
+
+toc_footers:
+  - <a href='//haroocloud.com/dev/signup'>Sign Up for a Developer Key</a>
+  - <a href='//github.com/tripit/slate'>Documentation Powered by Slate</a>
+
+search: true
+
+---
+
+# Introduction
+
+Welcome to the Haroo Cloud API!
+
+# Public Document
+
+## Create Public Document
+
+```shell
+curl 'localhost:3030/api/tree/doc'
+  -H '{ "title": "title of our secret story", "content": "text of content" }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "message": "OK: done",
+    "data": {
+    },
+    "isResult": true,
+    "statusCode": 200,
+    "meta": {"error": "OK", "message": "done"}
+}
+```
+
+Make a public document by anonymous
+
+Use simple rest call for make new document. 
+call http POST method and send data in a body. no need auth or tokens.
+but a little district exist here.
+
+- throttle for huge call simultaneously in same IP
+  - 5 (number of requests/second to allow)
+  - 1000  (amount of requests)
+
+### HTTP Request
+
+`POST https://haroocloud.com/api/tree/doc`
+
+### Header
+
+### Parameters
+
+Parameter | Require | Default   | Description
+--------- | ------- | --------- | -----------
+title     | false   | null      | 
+content   | true    |           |
+author    | false   | anonymous |
+
+
+## Read Public Document
+
+Read a public document
+
+
+
+# Developer Account
 
 ### No Access Token Required
 
