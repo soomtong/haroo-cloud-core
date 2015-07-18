@@ -1,4 +1,4 @@
-var SERVICE_NAME = 'haroo-cloud-core';
+var SERVICE_NAME = 'haroo-cloud';
 var SERVICE_FOLDER = '../';
 
 var app = function appConfig(option) {

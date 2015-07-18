@@ -6,8 +6,6 @@ var app = {
     config: require('./core/config')
 };
 
-// todo: 데이터베이스 서버는 하나만, 고로 array 로 된 현재 세팅 값은 그냥 일반 스트링으로 변경해야 함.
-
 app.init(app.node_env, function (server) {
     var mongoose = require('mongoose');
 
@@ -30,7 +28,7 @@ app.init(app.node_env, function (server) {
     // start request logger
     server.on('after', restify.auditLogger({
         log: bunyan.createLogger({
-            name: 'haroo-api',
+            name: 'haroo-cloud',
             streams: [{
                 level: 'info',
                 path: 'logs/info.log',

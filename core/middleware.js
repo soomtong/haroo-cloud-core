@@ -70,6 +70,7 @@ exports.accessToken = function (req, res, next) {
 };
 
 // select database info
+/*
 exports.getCoreDatabase = function (mode) {
     var server = config({mode: mode})['database'];
 
@@ -79,6 +80,7 @@ exports.getCoreDatabase = function (mode) {
         next();
     };
 };
+*/
 
 // select mail server info
 exports.getCoreMailer = function (mode) {

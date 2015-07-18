@@ -26,12 +26,12 @@ describe('Application', function () {
         });
 
         it('there is a specified port number', function () {
-            var server = config({mode: app.node_env}).server;
+            var server = config({mode: app.node_env}).app;
             assert.ok(server.port > 1000 && server.port < 9999);
         });
 
         it('server configure file has production mode parameter', function () {
-            var productionServer = config({mode: 'production'}).server;
+            var productionServer = config({mode: 'production'}).app;
             assert.ok(productionServer.port > 1000 && productionServer.port < 9999);
         });
     });

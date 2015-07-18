@@ -46,7 +46,7 @@ function route(mode, callback) {
 
     // allow cors
     var cors = corsMiddleware({
-        allowHeaders: ['X-Access-Host', 'X-Access-Token']
+        allowHeaders: ['X-Access-Host', 'X-Access-Token', 'X-Developer-Token']
     });
 
     server.pre(cors.preflight);
@@ -106,7 +106,7 @@ function route(mode, callback) {
     server.post({ path: '/api/account/create', validation: {
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
-    }}, middleware.getCoreDatabase(mode), account.createAccount);
+    }}, /*middleware.getCoreDatabase(mode),*/ account.createAccount);
     server.post({ path: '/api/account/login', validation: {
         email: { isRequired: true, isEmail: true },
         password: { isRequired: true }
@@ -125,6 +125,7 @@ function route(mode, callback) {
         counter: { isRequired: true },
         counted: { isRequired: true }
     }}, document.readPublicDocument);
+
 
     // districtMiddleware
     server.use(middleware.accessToken);

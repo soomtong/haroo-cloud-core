@@ -44,7 +44,7 @@ function init() {
         if (!config.app['production']) {
             throw Error('configuration file corrupted');
         }
-        if (!config['web_server']['development']) {
+        if (!config.app['development']) {
             throw Error('configuration file corrupted');
         }
         if (!config.database['production']) {
