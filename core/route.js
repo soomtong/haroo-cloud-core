@@ -57,6 +57,11 @@ function route(mode, callback) {
     server.use(middleware.callCounterForToken);
 
     // haroo cloud api document page
+    server.get(/^\/(dev\/doc)$/, function (req, res, next) {
+        console.log('redirect');
+        res.redirect('/dev/doc/index.html', next);
+    });
+
     server.get(/^\/(?!api).*$/, restify.serveStatic({
         directory: 'static',
         default: 'index.html'
