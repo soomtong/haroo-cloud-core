@@ -4,6 +4,8 @@ var feedback = require('../lib/feedback');
 
 var Document = require('../models/anonymousDocument');
 
+var urlPrefix = '/api/tree/doc/';
+
 exports.createDocument = function (req, res, next) {
     var params = {
         title: req.params['title'],
@@ -35,8 +37,13 @@ exports.createDocument = function (req, res, next) {
             }
 
             // done right
+            var data = {
+                _id: document._id,
+                url: urlPrefix + document._id
+            };
+
             msg = i18n.t('anonymous.create.done');
-            result = feedback.done(msg, document);
+            result = feedback.done(msg, data);
 
             res.json(result);
         });
@@ -77,6 +84,12 @@ exports.readDocument = function (req, res, next) {
             }
         });
 
+        // for cli output
+        if (params.output == 'terminal') {
+
+        }
+
+        // for render markdown
         if (params.output == 'html') {
 
         }

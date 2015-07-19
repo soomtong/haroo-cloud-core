@@ -16,13 +16,13 @@ search: true
 
 Welcome to the Haroo Cloud API!
 
-# Public Document
+# Anonymous Document
 
-## Create Public Document
+## Create Anonymous Document
 
 ```shell
 curl 'localhost:3030/api/tree/doc'
-  -H '{ "title": "title of our secret story", "content": "text of content" }'
+  -d '{ "title": "title of our secret story", "content": "text of content" }'
 ```
 
 > The above command returns JSON structured like this:
@@ -31,6 +31,7 @@ curl 'localhost:3030/api/tree/doc'
 {
     "message": "OK: done",
     "data": {
+            "url": "localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9"
     },
     "isResult": true,
     "statusCode": 200,
@@ -54,19 +55,72 @@ but a little district exist here.
 
 ### Header
 
-### Parameters
+None
+
+### Content
 
 Parameter | Require | Default   | Description
 --------- | ------- | --------- | -----------
 title     | false   | null      | 
 text      | true    |           |
-type      | false   | text      |
+type      | false   | text      | normal text or language type for code highlight (todo: javascript/monokai)
 author    | false   | anonymous |
 
 
-## Read Public Document
+## Read Anonymous Document
 
-Read a public document
+```shell
+curl 'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9'
+
+curl 'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "message": "OK: done",
+    "data": {
+        "__v": 0,
+        "title": "test title",
+        "text": "test content with title and author",
+        "author": "anonymous_101",
+        "view_count": 0,
+        "commend_count": 0,
+        "alert_count": 0,
+        "created_at": "2015-07-19T10:17:47.730Z",
+        "_id": "55ab794b4368269fdf9de925" 
+    },
+    "isResult": true,
+    "statusCode": 200,
+    "meta": {"error": "OK", "message": "done"}
+}
+```
+
+Read a anonymous document by document id
+
+call http GET method with url. same throttle exist.
+
+### HTTP Request
+
+`GET https://haroocloud.com/api/tree/doc/:document_id`
+
+### Header
+
+None
+
+### Resource
+
+Parameter   | Require | Default   | Description
+----------- | ------- | --------- | -----------
+document_id | true    |           | 
+
+
+### Query
+
+Parameter | Require | Default   | Description
+--------- | ------- | --------- | -----------
+output    | false   |           | 
 
 
 

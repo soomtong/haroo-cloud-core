@@ -40,11 +40,11 @@
 
 <p>Welcome to the Haroo Cloud API!</p>
 
-<h1 id="public-document">Public Document</h1>
+<h1 id="anonymous-document">Anonymous Document</h1>
 
-<h2 id="create-public-document">Create Public Document</h2>
+<h2 id="create-anonymous-document">Create Anonymous Document</h2>
 <pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/doc'</span>
-  -H <span class="s1">'{ "title": "title of our secret story", "content": "text of content" }'</span>
+  -d <span class="s1">'{ "title": "title of our secret story", "content": "text of content" }'</span>
 </code></pre>
 
 <blockquote>
@@ -53,6 +53,7 @@
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
@@ -81,7 +82,9 @@ but a little district exist here.</p>
 
 <h3 id="header">Header</h3>
 
-<h3 id="parameters">Parameters</h3>
+<p>None</p>
+
+<h3 id="content">Content</h3>
 
 <table><thead>
 <tr>
@@ -98,10 +101,16 @@ but a little district exist here.</p>
 <td></td>
 </tr>
 <tr>
-<td>content</td>
+<td>text</td>
 <td>true</td>
 <td></td>
 <td></td>
+</tr>
+<tr>
+<td>type</td>
+<td>false</td>
+<td>text</td>
+<td>normal text or language type for code highlight (todo: javascript/monokai)</td>
 </tr>
 <tr>
 <td>author</td>
@@ -111,9 +120,582 @@ but a little district exist here.</p>
 </tr>
 </tbody></table>
 
-<h2 id="read-public-document">Read Public Document</h2>
+<h2 id="read-anonymous-document">Read Anonymous Document</h2>
+<pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9'</span>
 
-<p>Read a public document</p>
+curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure'</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test title"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test content with title and author"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"anonymous_101"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"view_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"commend_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"alert_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-07-19T10:17:47.730Z"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ab794b4368269fdf9de925"</span><span class="w"> 
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Read a anonymous document by document id</p>
+
+<p>call http GET method with url. same throttle exist.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://haroocloud.com/api/tree/doc/:document_id</code></p>
+
+<h3 id="header">Header</h3>
+
+<p>None</p>
+
+<h3 id="resource">Resource</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Require</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>document_id</td>
+<td>true</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h3 id="query">Query</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Require</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>output</td>
+<td>false</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h1 id="developer-account">Developer Account</h1>
+
+<h3 id="no-access-token-required">No Access Token Required</h3>
+
+<h4 id="account">Account</h4>
+
+<h5 id="1-post-api-account-create">1. <code class="prettyprint">POST</code> /api/account/create</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/account/create</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w"> </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"password"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"soomtong@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"db_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db1.haroopress.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"29478ae2-4c19-457e-aaac-74fef36d208e"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"login_expire"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1422973044455"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"tokens"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - exist</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: already exist"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"soomtong@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"password"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessHost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessIP"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"database"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db1.haroopress.com"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"already exist"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="2-post-api-account-login">2. <code class="prettyprint">POST</code> /api/account/login</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/account/login</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w"> </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"password"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"soomtong@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"db_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db1.haroopress.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"621d08ca-1b2c-4e8b-b543-89e85e88fbf2"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"login_expire"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1422973462420"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"tokens"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - invalid</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unauthorized: none exist"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wrong-password"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessHost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessIP"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">401</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unauthorized"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none exist"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="3-post-api-account-forgot-password">3. <code class="prettyprint">POST</code> /api/account/forgot-password</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/account/forgot_password</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"db_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db1.haroopress.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"tokens"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - invalid</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: can't find information"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wrong-id@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessIP"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"can't find information"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h3 id="access-token-required-in-request-header-with-x-access-token">Access Token Required in Request Header with <code class="prettyprint">X-Access-Token</code></h3>
+
+<h4 id="common">Common</h4>
+
+<h5 id="1-post-api-token-validate">1. <code class="prettyprint">POST</code> /api/token/validate</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/token/validate</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcbba695-fd91-45f0-987e-1311d8b4b6ca"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"accessToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcbba695-fd91-45f0-987e-1311d8b4b6ca"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessHost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessIP"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - invalid</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bad Request: access deny"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"accessToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wrong-dcbba695-fd91-45f0-987e-1311d8b4b6ca"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessHost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessIP"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bad Request"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"access deny"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/token/validate</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcbba695-fd91-45f0-987e-1311d8b4b6ca"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nt">"keep"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: kept one more"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"keepToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcbba695-fd91-45f0-987e-1311d8b4b6ca"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessHost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessIP"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kept one more"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/token/validate</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcbba695-fd91-45f0-987e-1311d8b4b6ca"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nt">"keep"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"keepToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0d82f030-8cc1-4c42-a3cf-1938faf40b5b"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessHost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessIP"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="2-post-api-spec-version">2. <code class="prettyprint">POST</code> /api/spec/version</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/spec/version</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dcbba695-fd91-45f0-987e-1311d8b4b6ca"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: api version"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"ver"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.1"</span><span class="p">,</span><span class="w"> </span><span class="nt">"released"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-02-28T15:00:00.000Z"</span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"api version"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h4 id="user">User</h4>
+
+<h5 id="1-post-api-user-haroo_id-info">1. <code class="prettyprint">POST</code> /api/user/:haroo_id/info</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/info</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"db_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db1.haroopress.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"login_expire"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1422975245862"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"tokens"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - invalid</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bad Request: access deny"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"976ca623-349b-4a3f-91ee-0e3933cca3fd"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessHost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessIP"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bad Request"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"access deny"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="2-post-api-user-haroo_id-change_password">2. <code class="prettyprint">POST</code> /api/user/:haroo_id/change_password</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/change_password</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w"> </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"password"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"db_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db1.haroopress.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"login_expire"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1422975245862"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"tokens"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="3-post-api-user-haroo_id-update_info">3. <code class="prettyprint">POST</code> /api/user/:haroo_id/update_info</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/update_info</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w"> </span><span class="nt">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"screenName"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"screenName"</span><span class="p">,</span><span class="w"> </span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"db_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db1.haroopress.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"login_expire"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1422975245862"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"tokens"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="4-post-api-user-haroo_id-logout">4. <code class="prettyprint">POST</code> /api/user/:haroo_id/logout</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/logout</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"screenName"</span><span class="p">,</span><span class="w"> </span><span class="nt">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"website"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="nt">"picture"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">},</span><span class="w">
+        </span><span class="nt">"db_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db1.haroopress.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"login_expire"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1422975245862"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"tokens"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="5-post-api-user-haroo_id-delete">5. <code class="prettyprint">POST</code> /api/user/:haroo_id/delete</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/delete</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ac4ca287-55d9-4aa1-837b-f3cb85f27278"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w"> </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"password"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test@gmail.com"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"password"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"clientToken"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54bd1da48e1b0eeb0ee4c400"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"access_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"access_host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ac4ca287-55d9-4aa1-837b-f3cb85f27278"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"haroo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b4c4ae0692b435427b671649ea30848e7"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"login_expire"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1422976036114"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-01-19T15:07:16.114Z"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"accessHost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"accessIP"</span><span class="p">:</span><span class="w"> </span><span class="s2">"localhost"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h4 id="document">Document</h4>
+
+<h5 id="1-post-api-documents-haroo_id">1. <code class="prettyprint">POST</code> /api/documents/:haroo_id</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nt">"bulk"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">bulk</span><span class="w"> </span><span class="err">set</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">do</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="2-get-api-documents-haroo_id">2. <code class="prettyprint">GET</code> /api/documents/:haroo_id</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">do</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="3-post-api-document-haroo_id">3. <code class="prettyprint">POST</code> /api/document/:haroo_id</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/document/b4c4ae0692b435427b671649ea30848e7</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">{</span><span class="w"> </span><span class="nt">"doc"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">document</span><span class="w"> </span><span class="err">set</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">do</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="4-get-api-document-haroo_id-document_id">4. <code class="prettyprint">GET</code> /api/document/:haroo_id/:document_id</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/document/b4c4ae0692b435427b671649ea30848e7/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">do</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<h5 id="5-get-api-document-haroo_id-document_id-public">5. <code class="prettyprint">GET</code> /api/document/:haroo_id/:document_id/public</h5>
+
+<p><strong>Send</strong></p>
+
+<blockquote>
+<p>localhost:3030/api/document/b4c4ae0692b435427b671649ea30848e7/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419/public</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w"> </span><span class="nt">"X-Access-Token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8091cc47-ca6e-451e-b91a-b7797aa8a94e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"X-Access-Host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sven-mac-pro"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p><strong>Receive - done</strong></p>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">not</span><span class="w"> </span><span class="err">yet</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 
       </div>
       <div class="dark-box">

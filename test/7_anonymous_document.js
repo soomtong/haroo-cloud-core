@@ -19,12 +19,7 @@ describe('Anonymous Document', function () {
         var expectedResult = {
             message: 'OK: done',
             data: {
-                text: 'test content no title',
-                type: 'text',
-                author: 'anonymous',
-                view_count: 0,
-                commend_count: 0,
-                alert_count: 0
+                url: ''
             },
             isResult: true,
             statusCode: 200,
@@ -39,12 +34,7 @@ describe('Anonymous Document', function () {
                 .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
-                    assert.equal(res.body.data.text, expectedResult.data.text);
-                    assert.equal(res.body.data.type, expectedResult.data.type);
-                    assert.equal(res.body.data.author, expectedResult.data.author);
-                    assert.equal(res.body.data.view_count, expectedResult.data.view_count);
-                    assert.equal(res.body.data.commend_count, expectedResult.data.commend_count);
-                    assert.equal(res.body.data.alert_count, expectedResult.data.alert_count);
+                    assert.ok(res.body.data.url);
 
                     res.body.data = undefined;
                     expectedResult.data = undefined;
@@ -87,13 +77,7 @@ describe('Anonymous Document', function () {
                 .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
-                    assert.equal(res.body.data.title, expectedResult.data.title);
-                    assert.equal(res.body.data.text, expectedResult.data.text);
-                    assert.equal(res.body.data.type, expectedResult.data.type);
-                    assert.equal(res.body.data.author, expectedResult.data.author);
-                    assert.equal(res.body.data.view_count, expectedResult.data.view_count);
-                    assert.equal(res.body.data.commend_count, expectedResult.data.commend_count);
-                    assert.equal(res.body.data.alert_count, expectedResult.data.alert_count);
+                    assert.ok(res.body.data.url);
 
                     res.body.data = undefined;
                     expectedResult.data = undefined;
@@ -137,13 +121,7 @@ describe('Anonymous Document', function () {
                 .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
-                    assert.equal(res.body.data.title, expectedResult.data.title);
-                    assert.equal(res.body.data.text, expectedResult.data.text);
-                    assert.equal(res.body.data.type, expectedResult.data.type);
-                    assert.equal(res.body.data.author, expectedResult.data.author);
-                    assert.equal(res.body.data.view_count, expectedResult.data.view_count);
-                    assert.equal(res.body.data.commend_count, expectedResult.data.commend_count);
-                    assert.equal(res.body.data.alert_count, expectedResult.data.alert_count);
+                    assert.ok(res.body.data.url);
 
                     dummyDocument = res.body.data;
 
@@ -192,16 +170,7 @@ describe('Anonymous Document', function () {
         var result = {
             message: 'OK: done',
             data: {
-                _id: dummyDocument._id,
-                title: dummyDocument.title,
-                text: dummyDocument.text,
-                type: dummyDocument.type,
-                author: dummyDocument.author,
-                view_count: ++dummyDocument.view_count,
-                commend_count: 0,
-                alert_count: 0,
-                created_at: dummyDocument.created_at,
-                __v: 0
+                _id: dummyDocument._id
             },
             isResult: true,
             statusCode: 200,
@@ -215,6 +184,9 @@ describe('Anonymous Document', function () {
                 .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
+
+                    res.body.data = undefined;
+                    result.data = undefined;
 
                     assert.deepEqual(res.body, result);
 
