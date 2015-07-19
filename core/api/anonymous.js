@@ -108,3 +108,14 @@ exports.statDocument = function (req, res, next) {
 
     next();
 };
+
+exports.listDocument = function (req, res, next) {
+
+    next();
+};
+
+exports.feedbackDocument = function (req, res, next) {
+    // restrict for IP per 1 day
+
+    next();
+};

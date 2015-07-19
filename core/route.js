@@ -113,11 +113,22 @@ function route(mode, callback) {
             doc_id: { isRequired: true }
         }
     }}, anonymous.readDocument);
-    server.get({  path: '/api/tree/stat/:doc_id', validation: {
+    server.get({ path: '/api/tree/stat/:doc_id', validation: {
         resources: {
             doc_id: { isRequired: true }
         }
     }}, anonymous.statDocument);
+    server.get({ path: '/api/tree/list', validation: {
+        queries: {
+            order: { isRequired: false, isIn: ['newest', 'oldest', 'hottest', 'coldest', 'commended', 'claimed'] }
+        }
+    }}, anonymous.listDocument);
+    server.get({ path: '/api/tree/doc/:doc_id/:feedback', validation: {
+        resources: {
+            doc_id: { isRequired: true },
+            feedback: { isRequired: true, isIn: ['commend', 'claim'] }
+        }
+    }}, anonymous.feedbackDocument);
 
 
     // for account

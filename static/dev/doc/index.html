@@ -42,7 +42,7 @@
 
 <h1 id="anonymous-document">Anonymous Document</h1>
 
-<h2 id="create-anonymous-document">Create Anonymous Document</h2>
+<h2 id="create-document">Create Document</h2>
 <pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/doc'</span>
   -d <span class="s1">'{ "title": "title of our secret story", "content": "text of content" }'</span>
 </code></pre>
@@ -120,7 +120,7 @@ but a little district exist here.</p>
 </tr>
 </tbody></table>
 
-<h2 id="read-anonymous-document">Read Anonymous Document</h2>
+<h2 id="read-document">Read Document</h2>
 <pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9'</span>
 
 curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure'</span>
@@ -196,13 +196,70 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </tr>
 </tbody></table>
 
+<h2 id="document-list">Document List</h2>
+<pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/list'</span>
+
+curl <span class="s1">'localhost:3030/api/tree/list?order=newest'</span>
+
+curl <span class="s1">'localhost:3030/api/tree/list?order=hottest'</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">list:</span><span class="w"> </span><span class="err">[]</span><span class="w">
+        </span><span class="err">size:</span><span class="w"> </span><span class="err">10</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>description here&hellip;</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://haroocloud.com/api/tree/list</code></p>
+
+<h3 id="header">Header</h3>
+
+<p>None</p>
+
+<h3 id="query">Query</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Require</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>order</td>
+<td>false</td>
+<td>hottest</td>
+<td></td>
+</tr>
+<tr>
+<td>page</td>
+<td>false</td>
+<td>0</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h2 id="feedback-document">Feedback Document</h2>
+
 <h1 id="developer-account">Developer Account</h1>
 
-<h3 id="no-access-token-required">No Access Token Required</h3>
+<h2 id="account">Account</h2>
 
-<h4 id="account">Account</h4>
-
-<h5 id="1-post-api-account-create">1. <code class="prettyprint">POST</code> /api/account/create</h5>
+<h3 id="1-post-api-account-create">1. <code class="prettyprint">POST</code> /api/account/create</h3>
 
 <p><strong>Send</strong></p>
 
@@ -247,7 +304,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="2-post-api-account-login">2. <code class="prettyprint">POST</code> /api/account/login</h5>
+<h3 id="2-post-api-account-login">2. <code class="prettyprint">POST</code> /api/account/login</h3>
 
 <p><strong>Send</strong></p>
 
@@ -291,7 +348,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="3-post-api-account-forgot-password">3. <code class="prettyprint">POST</code> /api/account/forgot-password</h5>
+<h3 id="3-post-api-account-forgot-password">3. <code class="prettyprint">POST</code> /api/account/forgot-password</h3>
 
 <p><strong>Send</strong></p>
 
@@ -330,11 +387,9 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h3 id="access-token-required-in-request-header-with-x-access-token">Access Token Required in Request Header with <code class="prettyprint">X-Access-Token</code></h3>
+<h2 id="common">Common</h2>
 
-<h4 id="common">Common</h4>
-
-<h5 id="1-post-api-token-validate">1. <code class="prettyprint">POST</code> /api/token/validate</h5>
+<h3 id="1-post-api-token-validate">1. <code class="prettyprint">POST</code> /api/token/validate</h3>
 
 <p><strong>Send</strong></p>
 
@@ -420,7 +475,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="2-post-api-spec-version">2. <code class="prettyprint">POST</code> /api/spec/version</h5>
+<h3 id="2-post-api-spec-version">2. <code class="prettyprint">POST</code> /api/spec/version</h3>
 
 <p><strong>Send</strong></p>
 
@@ -440,9 +495,9 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h4 id="user">User</h4>
+<h2 id="user">User</h2>
 
-<h5 id="1-post-api-user-haroo_id-info">1. <code class="prettyprint">POST</code> /api/user/:haroo_id/info</h5>
+<h3 id="1-post-api-user-haroo_id-info">1. <code class="prettyprint">POST</code> /api/user/:haroo_id/info</h3>
 
 <p><strong>Send</strong></p>
 
@@ -486,7 +541,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="2-post-api-user-haroo_id-change_password">2. <code class="prettyprint">POST</code> /api/user/:haroo_id/change_password</h5>
+<h3 id="2-post-api-user-haroo_id-change_password">2. <code class="prettyprint">POST</code> /api/user/:haroo_id/change_password</h3>
 
 <p><strong>Send</strong></p>
 
@@ -516,7 +571,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="3-post-api-user-haroo_id-update_info">3. <code class="prettyprint">POST</code> /api/user/:haroo_id/update_info</h5>
+<h3 id="3-post-api-user-haroo_id-update_info">3. <code class="prettyprint">POST</code> /api/user/:haroo_id/update_info</h3>
 
 <p><strong>Send</strong></p>
 
@@ -546,7 +601,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="4-post-api-user-haroo_id-logout">4. <code class="prettyprint">POST</code> /api/user/:haroo_id/logout</h5>
+<h3 id="4-post-api-user-haroo_id-logout">4. <code class="prettyprint">POST</code> /api/user/:haroo_id/logout</h3>
 
 <p><strong>Send</strong></p>
 
@@ -576,7 +631,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="5-post-api-user-haroo_id-delete">5. <code class="prettyprint">POST</code> /api/user/:haroo_id/delete</h5>
+<h3 id="5-post-api-user-haroo_id-delete">5. <code class="prettyprint">POST</code> /api/user/:haroo_id/delete</h3>
 
 <p><strong>Send</strong></p>
 
@@ -613,9 +668,9 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h4 id="document">Document</h4>
+<h2 id="document">Document</h2>
 
-<h5 id="1-post-api-documents-haroo_id">1. <code class="prettyprint">POST</code> /api/documents/:haroo_id</h5>
+<h3 id="1-post-api-documents-haroo_id">1. <code class="prettyprint">POST</code> /api/documents/:haroo_id</h3>
 
 <p><strong>Send</strong></p>
 
@@ -632,7 +687,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="2-get-api-documents-haroo_id">2. <code class="prettyprint">GET</code> /api/documents/:haroo_id</h5>
+<h3 id="2-get-api-documents-haroo_id">2. <code class="prettyprint">GET</code> /api/documents/:haroo_id</h3>
 
 <p><strong>Send</strong></p>
 
@@ -648,7 +703,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="3-post-api-document-haroo_id">3. <code class="prettyprint">POST</code> /api/document/:haroo_id</h5>
+<h3 id="3-post-api-document-haroo_id">3. <code class="prettyprint">POST</code> /api/document/:haroo_id</h3>
 
 <p><strong>Send</strong></p>
 
@@ -665,7 +720,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="4-get-api-document-haroo_id-document_id">4. <code class="prettyprint">GET</code> /api/document/:haroo_id/:document_id</h5>
+<h3 id="4-get-api-document-haroo_id-document_id">4. <code class="prettyprint">GET</code> /api/document/:haroo_id/:document_id</h3>
 
 <p><strong>Send</strong></p>
 
@@ -681,7 +736,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<h5 id="5-get-api-document-haroo_id-document_id-public">5. <code class="prettyprint">GET</code> /api/document/:haroo_id/:document_id/public</h5>
+<h3 id="5-get-api-document-haroo_id-document_id-public">5. <code class="prettyprint">GET</code> /api/document/:haroo_id/:document_id/public</h3>
 
 <p><strong>Send</strong></p>
 
