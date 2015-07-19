@@ -1,97 +1,111 @@
 {
-  "app": {
-    "lang": {
-      "testMsg": "hi this is i18n for `dev`"
+    "app": {
+        "lang": {
+            "testMsg": "hi this is i18n for `dev`"
+        },
+        "company": {
+            "name": "my company from dev"
+        },
+        "version": {
+            "done": "api version"
+        }
     },
-    "company": {
-      "name": "my company from dev"
+    "anonymous": {
+        "create": {
+            "done": "done",
+            "fail": "failed"
+        },
+        "read": {
+            "done": "done",
+            "fail": "failed"
+        },
+        "delete": {
+            "done": "done",
+            "fail": "failed"
+        }
     },
-    "version": {
-      "done": "api version"
+    "account": {
+        "create": {
+            "done": "done",
+            "fail": "failed",
+            "exist": "already exist"
+        },
+        "read": {
+            "done": "done",
+            "fail": "failed",
+            "mismatch": "none exist"
+        },
+        "forgotPassword": {
+            "done": "done",
+            "fail": "can't find information"
+        },
+        "resetPassword": {
+            "done": "done",
+            "fail": "can't reset password",
+            "notExist": "not exist reset token"
+        }
+    },
+    "token": {
+        "create": {
+            "done": "done",
+            "fail": "failed",
+            "exist": "already exist"
+        },
+        "read": {
+            "done": "done",
+            "fail": "failed",
+            "expired": "token expired",
+            "notExist": "access deny"
+        },
+        "keep": {
+            "done": "kept one more",
+            "fail": "failed"
+        },
+        "delete": {
+            "done": "done",
+            "fail": "failed"
+        }
+    },
+    "user": {
+        "info": {
+            "done": "done",
+            "fail": "failed"
+        },
+        "update": {
+            "done": "done",
+            "fail": "failed"
+        },
+        "updatePassword": {
+            "done": "done",
+            "fail": "failed"
+        },
+        "dismiss": {
+            "done": "done",
+            "fail": "failed"
+        },
+        "delete": {
+            "done": "done",
+            "mismatch": "invalid password",
+            "fail": "failed"
+        }
+    },
+    "document": {
+        "togglePublic": {
+            "done": "togglePublic done",
+            "fail": "togglePublic failed"
+        },
+        "retrieveAll": {
+            "done": "retrieve all done",
+            "fail": "retrieve all failed"
+        },
+        "retrieveOne": {
+            "done": "retrieve one done",
+            "fail": "retrieve one failed"
+        },
+        "retrievePublic": {
+            "done": "retrieve public document done",
+            "notExist": "notExist that public document",
+            "fail": "retrieve public document failed"
+        }
     }
-  },
-  "account": {
-    "create": {
-      "done": "done",
-      "fail": "failed",
-      "exist": "already exist"
-    },
-    "read": {
-      "done": "done",
-      "fail": "failed",
-      "mismatch": "none exist"
-    },
-    "forgotPassword": {
-      "done": "done",
-      "fail": "can't find information"
-    },
-    "resetPassword": {
-      "done": "done",
-      "fail": "can't reset password",
-      "notExist": "not exist reset token"
-    }
-  },
-  "token": {
-    "create": {
-      "done": "done",
-      "fail": "failed",
-      "exist": "already exist"
-    },
-    "read": {
-      "done": "done",
-      "fail": "failed",
-      "expired": "token expired",
-      "notExist": "access deny"
-    },
-    "keep": {
-      "done": "kept one more",
-      "fail": "failed"
-    },
-    "delete": {
-      "done": "done",
-      "fail": "failed"
-    }
-  },
-  "user": {
-    "info": {
-      "done": "done",
-      "fail": "failed"
-    },
-    "update": {
-      "done": "done",
-      "fail": "failed"
-    },
-    "updatePassword": {
-      "done": "done",
-      "fail": "failed"
-    },
-    "dismiss": {
-      "done": "done",
-      "fail": "failed"
-    },
-    "delete": {
-      "done": "done",
-      "mismatch": "invalid password",
-      "fail": "failed"
-    }
-  },
-  "document": {
-    "togglePublic": {
-      "done": "togglePublic done",
-      "fail": "togglePublic failed"
-    },
-    "retrieveAll": {
-      "done": "retrieve all done",
-      "fail": "retrieve all failed"
-    },
-    "retrieveOne": {
-      "done": "retrieve one done",
-      "fail": "retrieve one failed"
-    },
-    "retrievePublic": {
-      "done": "retrieve public document done",
-      "notExist": "notExist that public document",
-      "fail": "retrieve public document failed"
-    }
-  }
 }

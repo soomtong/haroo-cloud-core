@@ -28,7 +28,7 @@ install modules
 
 or
 
-> NODE_ENV=production pm2 start app.js --name "core"
+> NODE_ENV=production pm2 start app.js --name "haroocloud"
 
 ### Public Document Storage Service
 
