@@ -611,7 +611,7 @@ describe('Account', function () {
                     email: 'test@email.net',
                     password: 'invalidPassword',
                     clientToken: {
-                        _id: '54b6368592c4f0111381940c',
+                        id: '54b6368592c4f0111381940c',
                         access_ip: '127.0.0.1',
                         access_host: 'supertest',
                         access_token: 'f8500a8d-7173-4980-8597-fefe600a4b7a',

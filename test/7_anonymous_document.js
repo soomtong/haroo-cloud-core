@@ -16,10 +16,12 @@ describe('Anonymous Document', function () {
             text: "test content no title"
         };
 
-        var expected_result = {
+        var expectedResult = {
             message: 'OK: done',
             data: {
                 text: 'test content no title',
+                type: 'text',
+                author: 'anonymous',
                 view_count: 0,
                 commend_count: 0,
                 alert_count: 0
@@ -37,15 +39,17 @@ describe('Anonymous Document', function () {
                 .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
-                    assert.equal(res.body.data.text, expected_result.data.text);
-                    assert.equal(res.body.data.view_count, expected_result.data.view_count);
-                    assert.equal(res.body.data.commend_count, expected_result.data.commend_count);
-                    assert.equal(res.body.data.alert_count, expected_result.data.alert_count);
+                    assert.equal(res.body.data.text, expectedResult.data.text);
+                    assert.equal(res.body.data.type, expectedResult.data.type);
+                    assert.equal(res.body.data.author, expectedResult.data.author);
+                    assert.equal(res.body.data.view_count, expectedResult.data.view_count);
+                    assert.equal(res.body.data.commend_count, expectedResult.data.commend_count);
+                    assert.equal(res.body.data.alert_count, expectedResult.data.alert_count);
 
                     res.body.data = undefined;
-                    expected_result.data = undefined;
+                    expectedResult.data = undefined;
 
-                    assert.deepEqual(res.body, expected_result);
+                    assert.deepEqual(res.body, expectedResult);
 
                     done();
                 });
@@ -62,6 +66,8 @@ describe('Anonymous Document', function () {
             message: 'OK: done',
             data: {
                 title: "test title",
+                type: 'text',
+                author: 'anonymous',
                 text: 'test content with title',
                 view_count: 0,
                 commend_count: 0,
@@ -83,6 +89,8 @@ describe('Anonymous Document', function () {
                     assert.ok(!err, err);
                     assert.equal(res.body.data.title, expectedResult.data.title);
                     assert.equal(res.body.data.text, expectedResult.data.text);
+                    assert.equal(res.body.data.type, expectedResult.data.type);
+                    assert.equal(res.body.data.author, expectedResult.data.author);
                     assert.equal(res.body.data.view_count, expectedResult.data.view_count);
                     assert.equal(res.body.data.commend_count, expectedResult.data.commend_count);
                     assert.equal(res.body.data.alert_count, expectedResult.data.alert_count);
@@ -109,6 +117,7 @@ describe('Anonymous Document', function () {
             data: {
                 title: "test title",
                 text: 'test content with title and author',
+                type: 'text',
                 author: 'anonymous_101',
                 view_count: 0,
                 commend_count: 0,
@@ -130,6 +139,7 @@ describe('Anonymous Document', function () {
                     assert.ok(!err, err);
                     assert.equal(res.body.data.title, expectedResult.data.title);
                     assert.equal(res.body.data.text, expectedResult.data.text);
+                    assert.equal(res.body.data.type, expectedResult.data.type);
                     assert.equal(res.body.data.author, expectedResult.data.author);
                     assert.equal(res.body.data.view_count, expectedResult.data.view_count);
                     assert.equal(res.body.data.commend_count, expectedResult.data.commend_count);
@@ -178,30 +188,39 @@ describe('Anonymous Document', function () {
         });
     });
 
-/*
     it("read a public document with specified hash", function (done) {
         var result = {
-            message: 'OK: retrieve all done',
-            data: {total_rows: 0, offset: 0, rows: []},
+            message: 'OK: done',
+            data: {
+                _id: dummyDocument._id,
+                title: dummyDocument.title,
+                text: dummyDocument.text,
+                type: dummyDocument.type,
+                author: dummyDocument.author,
+                view_count: ++dummyDocument.view_count,
+                commend_count: 0,
+                alert_count: 0,
+                created_at: dummyDocument.created_at,
+                __v: 0
+            },
             isResult: true,
             statusCode: 200,
-            meta: {error: 'OK', message: 'retrieve all done'}
+            meta: { error: 'OK', message: 'done' }
         };
 
         app.init(app.node_env, function (server) {
             supertest(server)
-                .get('/api/tree/doc/' + dummyDocument.document_id)
+                .get('/api/tree/doc/' + dummyDocument._id)
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
+
                     assert.deepEqual(res.body, result);
 
                     done();
                 });
         });
     });
-*/
-
 
 });

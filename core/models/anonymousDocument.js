@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var publicDocSchema = new mongoose.Schema({
     title: String,
     text: String,
+    type: String,
     author: String,
     created_at: Date,
     view_count: Number,

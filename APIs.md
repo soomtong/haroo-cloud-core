@@ -59,7 +59,8 @@ but a little district exist here.
 Parameter | Require | Default   | Description
 --------- | ------- | --------- | -----------
 title     | false   | null      | 
-content   | true    |           |
+text      | true    |           |
+type      | false   | text      |
 author    | false   | anonymous |
 
 

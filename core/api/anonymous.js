@@ -7,8 +7,9 @@ var Document = require('../models/anonymousDocument');
 exports.createDocument = function (req, res, next) {
     var params = {
         title: req.params['title'],
+        type: req.params['type'] || 'text',
         text: req.params['text'],
-        author: req.params['author']
+        author: req.params['author'] || 'anonymous'
     };
 
     var msg, result;
@@ -16,6 +17,7 @@ exports.createDocument = function (req, res, next) {
     var document = new Document({
         title: params.title,
         text: params.text,
+        type: params.type,
         author: params.author,
         view_count: 0,
         commend_count: 0,
@@ -24,26 +26,72 @@ exports.createDocument = function (req, res, next) {
     });
 
     if (params.text) {
-        document.save(function (err) {
-            if (err) {
+        document.save(function (error) {
+            if (error) {
                 msg = i18n.t('anonymous.create.fail');
-                result = feedback.badImplementation(msg, err);
+                result = feedback.badImplementation(msg, error);
 
                 return res.json(result.statusCode, result);
             }
 
             // done right
             msg = i18n.t('anonymous.create.done');
-
             result = feedback.done(msg, document);
 
             res.json(result);
         });
     } else {
         msg = i18n.t('anonymous.create.fail');
-
         result = feedback.badData(msg, document);
 
         res.json(result);
     }
+
+    next();
+};
+
+exports.readDocument = function (req, res, next) {
+    var params = {
+        id: req.params['doc_id'],
+        type: req.params['type']
+    };
+
+    var msg, result;
+
+    Document.findById(params.id, function (error, document) {
+        if (error || !document) {
+            msg = i18n.t('anonymous.read.fail');
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        document.view_count++;
+
+        document.save(function (error) {
+            if (error) {
+                msg = i18n.t('anonymous.read.fail');
+                result = feedback.badRequest(msg, params);
+
+                return res.json(result.statusCode, result);
+            }
+        });
+
+        if (params.output == 'html') {
+
+        }
+
+        msg = i18n.t('anonymous.read.done');
+        result = feedback.done(msg, document);
+
+        res.json(result);
+
+    });
+
+    next();
+};
+
+exports.statDocument = function (req, res, next) {
+
+    next();
 };

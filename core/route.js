@@ -33,6 +33,7 @@ function route(mode, callback) {
     var server = restify.createServer(options);
 
     // globalMiddleware
+    // throttle
     server.use(restify.throttle({
         burst: 100,
         rate: 5,
@@ -57,6 +58,8 @@ function route(mode, callback) {
     server.use(middleware.callCounterForIPs);
     server.use(middleware.callCounterForToken);
 
+
+    // static pages
     // redirect not ended '/' trail
     server.get(/^\/(dev\/doc)$/, function (req, res, next) {
         res.redirect('/dev/doc/', next);
@@ -67,6 +70,7 @@ function route(mode, callback) {
         directory: 'static',
         default: 'index.html'
     }));
+
 
     // dummy testing
     server.get('/api', dummyTest.testVersion1);
@@ -79,6 +83,7 @@ function route(mode, callback) {
     server.get({ path: '/api/version', version: '1.0.1'}, dummyTest.testVersion1);
     server.get({ path: '/api/version', version: '1.2.3'}, dummyTest.testVersion1_2_3);
     server.get({ path: '/api/version', version: '2.0.1'}, dummyTest.testVersion2);
+
 
     // commonMiddleware
     // set host name to res.locals for all client
@@ -95,12 +100,25 @@ function route(mode, callback) {
     server.get('/api/test-no-header-locals', dummyTest.testCustomParams);
     server.get('/api/test-with-header-locals', dummyTest.testCustomParams);
 
+
+    // anonymous document hosting service
     // for anonymous documents
     server.post({ path: '/api/tree/doc', validation: {
         content: {
             text: { isRequired: true }
         }
     }}, anonymous.createDocument);
+    server.get({ path: '/api/tree/doc/:doc_id', validation: {
+        resources: {
+            doc_id: { isRequired: true }
+        }
+    }}, anonymous.readDocument);
+    server.get({  path: '/api/tree/stat/:doc_id', validation: {
+        resources: {
+            doc_id: { isRequired: true }
+        }
+    }}, anonymous.statDocument);
+
 
     // for account
     server.post({ path: '/api/account/create', validation: {

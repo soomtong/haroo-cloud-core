@@ -658,7 +658,7 @@ exports.removeAccount = function (req, res, next) {
                     }
 
                     // done right
-                    Account.remove({_id: validUser._id}, function (err, countAffected) {
+                    Account.remove({id: validUser.id}, function (err, countAffected) {
                         if (err) {
                             msg = i18n.t('user.delete.fail');
                             result = feedback.badImplementation(msg, params);
