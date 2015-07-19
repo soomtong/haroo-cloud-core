@@ -9,6 +9,7 @@ var middleware = require('./middleware');
 var feedback = require('./lib/feedback');
 
 var dummyTest = require('./api/dummy');
+var anonymous = require('./api/anonymous');
 var account = require('./api/account');
 var document = require('./api/document');
 
@@ -107,28 +108,45 @@ function route(mode, callback) {
     server.get('/api/test-no-header-locals', dummyTest.testCustomParams);
     server.get('/api/test-with-header-locals', dummyTest.testCustomParams);
 
+    // for anonymous documents
+    server.post({ path: '/api/tree/doc', validation: {
+        content: {
+            text: { isRequired: true }
+        }
+    }}, anonymous.createDocument);
+
     // for account
     server.post({ path: '/api/account/create', validation: {
-        email: { isRequired: true, isEmail: true },
-        password: { isRequired: true }
+        content: {
+            email: { isRequired: true, isEmail: true },
+            password: { isRequired: true }
+        }
     }}, /*middleware.getCoreDatabase(mode),*/ account.createAccount);
     server.post({ path: '/api/account/login', validation: {
-        email: { isRequired: true, isEmail: true },
-        password: { isRequired: true }
+        content: {
+            email: { isRequired: true, isEmail: true },
+            password: { isRequired: true }
+        }
     }}, account.readAccount);
     server.post({ path: '/api/account/forgot_password', validation: {
-        email: { isRequired: true, isEmail: true }
+        content: {
+            email: { isRequired: true, isEmail: true }
+        }
     }}, middleware.getCoreMailer(mode), account.mailingResetPassword);
     server.post({ path: '/api/account/reset_password', validation: {
-        token: { isRequired: true },
-        password: { isRequired: true }
+        content: {
+            token: { isRequired: true },
+            password: { isRequired: true }
+        }
     }}, account.updatePasswordForReset);
 
     // for public documents
     server.post({ path: '/api/public/document', validation: {
-        date: { isRequired: true },
-        counter: { isRequired: true },
-        counted: { isRequired: true }
+        content: {
+            date: { isRequired: true },
+            counter: { isRequired: true },
+            counted: { isRequired: true }
+        }
     }}, document.readPublicDocument);
 
 
@@ -156,44 +174,72 @@ function route(mode, callback) {
 
     // for users
     server.get({ path: '/api/user/:haroo_id/info', validation: {
-        haroo_id: { isRequired: true }
+        resources: {
+            haroo_id: { isRequired: true }
+        }
     }}, account.getValidateToken, account.accountInfo);
     server.post({ path: '/api/user/:haroo_id/change_password', validation: {
-        haroo_id: { isRequired: true },
-        email: { isRequired: true, isEmail: true },
-        password: { isRequired: true }
+        resources: {
+            haroo_id: { isRequired: true }
+        },
+        content: {
+            email: { isRequired: true, isEmail: true },
+            password: { isRequired: true }
+        }
     }}, account.getValidateToken, account.updatePassword);
     server.post({ path: '/api/user/:haroo_id/update_info', validation: {
-        haroo_id: { isRequired: true },
-        email: { isRequired: true, isEmail: true }
+        resources: {
+            haroo_id: { isRequired: true }
+        },
+        content: {
+            email: { isRequired: true, isEmail: true }
+        }
     }}, account.getValidateToken, account.updateAccountInfo);
     server.post({ path: '/api/user/:haroo_id/logout', validation: {
-        haroo_id: { isRequired: true },
-        email: { isRequired: true, isEmail: true }
+        resources: {
+            haroo_id: { isRequired: true }
+        },
+        content: {
+            email: { isRequired: true, isEmail: true }
+        }
     }}, account.getValidateToken, account.dismissAccount);
     server.post({ path: '/api/user/:haroo_id/delete', validation: {
-        haroo_id: { isRequired: true },
-        email: { isRequired: true, isEmail: true },
-        password: { isRequired: true }
+        resources: {
+            haroo_id: { isRequired: true }
+        },
+        content: {
+            email: { isRequired: true, isEmail: true },
+            password: { isRequired: true }
+        }
     }}, account.getValidateToken, account.removeAccount);
 
     // for documents, sync process are using a proxy just.
     server.post({ path: '/api/documents/:haroo_id', validation: {
-        haroo_id: { isRequired: true }
+        resources: {
+            haroo_id: { isRequired: true }
+        }
     }}, account.getValidateToken, document.put);
     server.get({ path: '/api/documents/:haroo_id', validation: {
-        haroo_id: { isRequired: true }
+        resources: {
+            haroo_id: { isRequired: true }
+        }
     }}, account.getValidateToken, document.get);
     server.post({ path: '/api/document/:haroo_id', validation: {
-        haroo_id: { isRequired: true }
+        resources: {
+            haroo_id: { isRequired: true }
+        }
     }}, account.getValidateToken, document.save);
     server.get({ path: '/api/document/:haroo_id/:document_id', validation: {
-        haroo_id: { isRequired: true },
-        document_id: { isRequired: true }
+        resources: {
+            haroo_id: { isRequired: true },
+            document_id: { isRequired: true }
+        }
     }}, account.getValidateToken, document.read);
     server.get({ path: '/api/document/:haroo_id/:document_id/public', validation: {
-        haroo_id: { isRequired: true },
-        document_id: { isRequired: true }
+        resources: {
+            haroo_id: { isRequired: true },
+            document_id: { isRequired: true }
+        }
     }}, account.getValidateToken, document.togglePublic);
 
 
