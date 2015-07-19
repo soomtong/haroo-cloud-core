@@ -38,9 +38,7 @@ exports.create = function (statusCode, message, data) {
         data: data || null
     };
 
-    feedback.init(result, statusCode);
-
-    return result;
+    return feedback.init(result, statusCode);
 };
 
 exports.done = function (message, data) {

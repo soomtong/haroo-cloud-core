@@ -96,6 +96,8 @@ exports.getCoreMailer = function (mode) {
 };
 
 // request validation error handler
-exports.validationError = function (errors) {
-    return feedback.badData("validation failed", errors);
+exports.validationError = function (res, errors) {
+    var result = feedback.badRequest("validation failed", errors);
+
+    return res.json(result.statusCode, result);
 };

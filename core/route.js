@@ -86,23 +86,10 @@ function route(mode, callback) {
     server.use(restify.queryParser());
     server.use(restify.bodyParser());
     server.use(restifyValidation.validationPlugin({
-        //errorHandler: middleware.validationError
-        // shit, can't set custom res.status by standard features, need a hack. let's do it later.
-        // todo: hack restifyValidation errorhandler
+        errorsAsArray: false,
+        handleError: middleware.validationError
+        // no errorHandler, use handleError
     }));
-    /*
-     patch this and update this middleware
-     var handle = function (errors, req, res, options, next) {
-        if (options.errorHandler) {
-            return options.errorHandler(errors, res);   // for custom res.status
-        } else {
-            return res.send(400, {
-                status: 'validation failed',
-                errors: errors
-            });
-        }
-     }
-     */
 
     // header parameter test
     server.get('/api/test-no-header-locals', dummyTest.testCustomParams);
