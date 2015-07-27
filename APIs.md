@@ -75,6 +75,7 @@ author    | false   | anonymous |
 ```shell
 curl 'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9'
 
+(todo)
 curl 'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure'
 ```
 
@@ -118,13 +119,57 @@ Parameter   | Require | Default   | Description
 ----------- | ------- | --------- | -----------
 document_id | true    |           | 
 
-
 ### Query
 
 Parameter | Require | Default   | Description
 --------- | ------- | --------- | -----------
-output    | false   |           | 
+output    | false   |           | code highlight style and color theme
 
+use like this
+
+- javascript : code highlight
+- solarize : theme
+- javascript/monokai : (combination)
+
+## Get Document Stat
+
+```shell
+curl 'localhost:3030/api/tree/stat/55aba11a13693fc1e166eba9'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "message": "OK: done",
+    "data": {
+        (todo)
+    },
+    "isResult": true,
+    "statusCode": 200,
+    "meta": {"error": "OK", "message": "done"}
+}
+```
+
+Read stats of document by document id
+
+call http GET method with url. same throttle exist.
+
+(todo)
+
+### HTTP Request
+
+`GET https://haroocloud.com/api/tree/stat/:document_id`
+
+### Header
+
+None
+
+### Resource
+
+Parameter   | Require | Default   | Description
+----------- | ------- | --------- | -----------
+document_id | true    |           | 
 
 
 ## Document List
@@ -132,8 +177,8 @@ output    | false   |           |
 ```shell
 curl 'localhost:3030/api/tree/list'
 
+(todo)
 curl 'localhost:3030/api/tree/list?order=newest'
-
 curl 'localhost:3030/api/tree/list?order=hottest'
 ```
 

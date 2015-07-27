@@ -195,4 +195,32 @@ describe('Anonymous Document', function () {
         });
     });
 
+    it("read a public document with wrong hash", function (done) {
+        var result = {
+            message: 'Bad Request: failed',
+            data: { id: 'wrong_hash_here' },
+            isResult: true,
+            statusCode: 400,
+            meta: { error: 'Bad Request', message: 'failed' }
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/api/tree/doc/' + 'wrong_hash_here')
+                .expect('Content-Type', /json/)
+                .expect(400)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+
+                    assert.deepEqual(res.body, result);
+
+                    done();
+                });
+        });
+    });
+
+    //todo: stats of one document
+    //todo: lists by orders
+    //todo: stats of all anonymous documents
+
 });

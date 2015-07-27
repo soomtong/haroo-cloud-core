@@ -123,6 +123,7 @@ but a little district exist here.</p>
 <h2 id="read-document">Read Document</h2>
 <pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9'</span>
 
+<span class="o">(</span>todo<span class="o">)</span>
 curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure'</span>
 </code></pre>
 
@@ -192,6 +193,64 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 <td>output</td>
 <td>false</td>
 <td></td>
+<td>code highlight style and color theme</td>
+</tr>
+</tbody></table>
+
+<p>use like this</p>
+
+<ul>
+<li>javascript : code highlight</li>
+<li>solarize : theme</li>
+<li>javascript/monokai : (combination)</li>
+</ul>
+
+<h2 id="get-document-stat">Get Document Stat</h2>
+<pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/stat/55aba11a13693fc1e166eba9'</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK: done"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">(todo)</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"error"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="p">,</span><span class="w"> </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"done"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Read stats of document by document id</p>
+
+<p>call http GET method with url. same throttle exist.</p>
+
+<p>(todo)</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://haroocloud.com/api/tree/stat/:document_id</code></p>
+
+<h3 id="header">Header</h3>
+
+<p>None</p>
+
+<h3 id="resource">Resource</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Require</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>document_id</td>
+<td>true</td>
+<td></td>
 <td></td>
 </tr>
 </tbody></table>
@@ -199,8 +258,8 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 <h2 id="document-list">Document List</h2>
 <pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/list'</span>
 
+<span class="o">(</span>todo<span class="o">)</span>
 curl <span class="s1">'localhost:3030/api/tree/list?order=newest'</span>
-
 curl <span class="s1">'localhost:3030/api/tree/list?order=hottest'</span>
 </code></pre>
 
