@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="Haroo-api : haroo cloud api stack">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    <link rel="stylesheet" type="text/css" media="screen" href="bower_components/kube/css/kube.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
     <title>Haroo-api</title>
 </head>
 
@@ -16,535 +16,78 @@
 <!-- HEADER -->
 <div id="header_wrap" class="outer">
     <header class="inner">
-        <a id="forkme_banner" href="https://github.com/Haroo-Studio/haroo-api">View on GitHub</a>
-
-        <h1 id="project_title">Haroo-api</h1>
-        <h2 id="project_tagline">haroo cloud api stack</h2>
-
-        <section id="downloads">
-            <a class="zip_download_link" href="https://github.com/Haroo-Studio/haroo-api/zipball/master">Download this project as a .zip file</a>
-            <a class="tar_download_link" href="https://github.com/Haroo-Studio/haroo-api/tarball/master">Download this project as a tar.gz file</a>
-        </section>
+        <a id="forkme_banner" href="https://github.com/soomtong/haroo-cloud-core">View on GitHub</a>
     </header>
 </div>
 
 <!-- MAIN CONTENT -->
-<div id="main_content_wrap" class="outer">
-    <section id="main_content" class="inner">
-        <h1>
-            <a id="haroo-api" class="anchor" href="#haroo-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>haroo-api</h1>
+<div id="main">
 
-        <p>haroo-api for haroo cloud service</p>
-
+    <nav id="sub-nav">
+        <h2 id="logo"><a href="/">Haroo Cloud Core</a></h2>
         <ul>
-            <li>nodejs</li>
-            <li>restify</li>
-            <li>database bind
-
-                <ul>
-                    <li>mongo : mongoose</li>
-                    <li>couch : nano</li>
-                    <li>mysql : sequelize</li>
-                </ul>
-            </li>
+            <li class="hide"><span>Download</span></li>
+            <li><span>Application</span></li>
+            <li><span>Developer Key</span></li>
+            <li><a href="dev/doc">API Document</a></li>
         </ul>
+    </nav>
 
-        <p>refer. <code>package.json</code> more.</p>
+    <div id="intro" class="intro-kube">
+        <h1>Cloud service stack for text Document</h1>
+        <img src="img/haroo-cloud-core.png" alt="Logo"/>
 
-        <h2>
-            <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+        <p>
+            Document based PaaS for Multi clients
+        </p>
+    </div>
 
-        <p>should to ready mongo, couch and mysql database</p>
 
-        <p>install modules</p>
+    <div id="download-box" class="units-row">
+        <div class="unit-33" id="txtree">
+            <a href="apps.html#txtree" class="btn btn-blue">Txtree</a>
 
-        <blockquote>
-            <p>npm install</p>
+            <p>Anonymous Document Hosting Service <br>used Haroo Cloud Core. with Chrome App!</p>
+        </div>
+        <div class="unit-33" id="harookit">
+            <a href="apps.html#haroo-kit" class="btn btn-black">Haroo Kit</a>
 
-            <p>npm test</p>
+            <p>Cloud Storage for Private Account <br/>used Haroo Cloud Core. with Atom Extension!</p>
+        </div>
+        <div class="unit-33" id="yours">
 
-            <p>npm start</p>
-        </blockquote>
+            <a href="#yours" class="btn btn-yellow">Something Good!</a>
 
-        <h3>
-            <a id="run-app-by-mode" class="anchor" href="#run-app-by-mode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run App by MODE</h3>
+            <p>Fork us and make <br/>your own Application or Service</p>
+        </div>
+    </div>
 
-        <blockquote>
-            <p>NODE_ENV=development nodemon app</p>
-        </blockquote>
+    <div class="units-row">
+        <div class="unit-50 gray-box">
+            <h3>Node and Mongo</h3>
 
-        <p>or</p>
+            <p>Super cool stuffs. Here!</p>
+        </div>
+        <div class="unit-50 gray-box">
+            <h3>License</h3>
 
-        <blockquote>
-            <p>NODE_ENV=production pm2 start app.js --name "core"</p>
-        </blockquote>
+            <p>Haroo Cloud Core licensed under <a href="http://opensource.org/licenses/MIT">MIT</a></p>
+        </div>
 
-        <h2>
-            <a id="apis-list" class="anchor" href="#apis-list" aria-hidden="true"><span class="octicon octicon-link"></span></a>APIs list</h2>
+    </div>
 
-        <h3>
-            <a id="no-access-token-required" class="anchor" href="#no-access-token-required" aria-hidden="true"><span class="octicon octicon-link"></span></a>No Access Token Required</h3>
 
-        <h4>
-            <a id="account" class="anchor" href="#account" aria-hidden="true"><span class="octicon octicon-link"></span></a>Account</h4>
-
-        <h5>
-            <a id="1-post-apiaccountcreate" class="anchor" href="#1-post-apiaccountcreate" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. <code>POST</code> /api/account/create</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/account/create</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>soomtong@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>picture<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>},
-        <span class="pl-s1"><span class="pl-pds">"</span>db_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>db1.haroopress.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>29478ae2-4c19-457e-aaac-74fef36d208e<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>login_expire<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1422973044455<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>tokens<span class="pl-pds">"</span></span>: []
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <p><strong>Receive - exist</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: already exist<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>soomtong@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessHost<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessIP<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>database<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>db1.haroopress.com<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>already exist<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h5>
-            <a id="2-post-apiaccountlogin" class="anchor" href="#2-post-apiaccountlogin" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. <code>POST</code> /api/account/login</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/account/login</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>soomtong@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>nickname<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>picture<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>},
-        <span class="pl-s1"><span class="pl-pds">"</span>db_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>db1.haroopress.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>621d08ca-1b2c-4e8b-b543-89e85e88fbf2<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>login_expire<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1422973462420<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>tokens<span class="pl-pds">"</span></span>: []
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <p><strong>Receive - invalid</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Unauthorized: none exist<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>wrong-password<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessHost<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessIP<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">401</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Unauthorized<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>none exist<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h5>
-            <a id="3-post-apiaccountforgot-password" class="anchor" href="#3-post-apiaccountforgot-password" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. <code>POST</code> /api/account/forgot-password</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/account/forgot_password</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>nickname<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>picture<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>},
-        <span class="pl-s1"><span class="pl-pds">"</span>db_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>db1.haroopress.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>tokens<span class="pl-pds">"</span></span>: []
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <p><strong>Receive - invalid</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: can't find information<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>wrong-id@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessIP<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>can't find information<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h3>
-            <a id="access-token-required-in-request-header-with-x-access-token" class="anchor" href="#access-token-required-in-request-header-with-x-access-token" aria-hidden="true"><span class="octicon octicon-link"></span></a>Access Token Required in Request Header with <code>X-Access-Token</code>
-        </h3>
-
-        <h4>
-            <a id="common" class="anchor" href="#common" aria-hidden="true"><span class="octicon octicon-link"></span></a>Common</h4>
-
-        <h5>
-            <a id="1-post-apitokenvalidate" class="anchor" href="#1-post-apitokenvalidate" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. <code>POST</code> /api/token/validate</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/token/validate</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>dcbba695-fd91-45f0-987e-1311d8b4b6ca<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>accessToken<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>dcbba695-fd91-45f0-987e-1311d8b4b6ca<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessHost<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessIP<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <p><strong>Receive - invalid</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Bad Request: access deny<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>accessToken<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>wrong-dcbba695-fd91-45f0-987e-1311d8b4b6ca<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessHost<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessIP<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">400</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Bad Request<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>access deny<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/token/validate</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>dcbba695-fd91-45f0-987e-1311d8b4b6ca<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }
-{ <span class="pl-s1"><span class="pl-pds">"</span>keep<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: kept one more<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>keepToken<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessToken<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>dcbba695-fd91-45f0-987e-1311d8b4b6ca<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessHost<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessIP<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>kept one more<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/token/validate</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>dcbba695-fd91-45f0-987e-1311d8b4b6ca<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }
-{ <span class="pl-s1"><span class="pl-pds">"</span>keep<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>keepToken<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessToken<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>0d82f030-8cc1-4c42-a3cf-1938faf40b5b<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessHost<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessIP<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h5>
-            <a id="2-post-apispecversion" class="anchor" href="#2-post-apispecversion" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. <code>POST</code> /api/spec/version</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/spec/version</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>dcbba695-fd91-45f0-987e-1311d8b4b6ca<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: api version<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>ver<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>0.0.1<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>released<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>2015-02-28T15:00:00.000Z<span class="pl-pds">"</span></span>},
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>api version<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h4>
-            <a id="user" class="anchor" href="#user" aria-hidden="true"><span class="octicon octicon-link"></span></a>User</h4>
-
-        <h5>
-            <a id="1-post-apiuserharoo_idinfo" class="anchor" href="#1-post-apiuserharoo_idinfo" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. <code>POST</code> /api/user/:haroo_id/info</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/info</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>8091cc47-ca6e-451e-b91a-b7797aa8a94e<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>nickname<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>picture<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>},
-        <span class="pl-s1"><span class="pl-pds">"</span>db_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>db1.haroopress.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>8091cc47-ca6e-451e-b91a-b7797aa8a94e<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>login_expire<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1422975245862<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>tokens<span class="pl-pds">"</span></span>: []
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <p><strong>Receive - invalid</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Bad Request: access deny<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessToken<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>976ca623-349b-4a3f-91ee-0e3933cca3fd<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessHost<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessIP<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">400</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>Bad Request<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>access deny<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h5>
-            <a id="2-post-apiuserharoo_idchange_password" class="anchor" href="#2-post-apiuserharoo_idchange_password" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. <code>POST</code> /api/user/:haroo_id/change_password</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/change_password</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>8091cc47-ca6e-451e-b91a-b7797aa8a94e<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }
-{ <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>nickname<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>picture<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>},
-        <span class="pl-s1"><span class="pl-pds">"</span>db_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>db1.haroopress.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>8091cc47-ca6e-451e-b91a-b7797aa8a94e<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>login_expire<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1422975245862<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>tokens<span class="pl-pds">"</span></span>: []
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h5>
-            <a id="3-post-apiuserharoo_idupdate_info" class="anchor" href="#3-post-apiuserharoo_idupdate_info" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. <code>POST</code> /api/user/:haroo_id/update_info</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/update_info</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>8091cc47-ca6e-451e-b91a-b7797aa8a94e<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }
-{ <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>nickname<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>screenName<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>nickname<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>screenName<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>picture<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>},
-        <span class="pl-s1"><span class="pl-pds">"</span>db_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>db1.haroopress.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>8091cc47-ca6e-451e-b91a-b7797aa8a94e<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>login_expire<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1422975245862<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>tokens<span class="pl-pds">"</span></span>: []
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h5>
-            <a id="4-post-apiuserharoo_idlogout" class="anchor" href="#4-post-apiuserharoo_idlogout" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. <code>POST</code> /api/user/:haroo_id/logout</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/logout</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>8091cc47-ca6e-451e-b91a-b7797aa8a94e<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }
-{ <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>profile<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>nickname<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>screenName<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>gender<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>location<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>website<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>picture<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>},
-        <span class="pl-s1"><span class="pl-pds">"</span>db_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>db1.haroopress.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>access_token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>8091cc47-ca6e-451e-b91a-b7797aa8a94e<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>login_expire<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1422975245862<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>tokens<span class="pl-pds">"</span></span>: []
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h5>
-            <a id="5-post-apiuserharoo_iddelete" class="anchor" href="#5-post-apiuserharoo_iddelete" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. <code>POST</code> /api/user/:haroo_id/delete</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/spec/version</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>ac4ca287-55d9-4aa1-837b-f3cb85f27278<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }
-{ <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK: done<span class="pl-pds">"</span></span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>: {
-        <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>test@gmail.com<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>clientToken<span class="pl-pds">"</span></span>: {
-            <span class="pl-s1"><span class="pl-pds">"</span>_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>54bd1da48e1b0eeb0ee4c400<span class="pl-pds">"</span></span>,
-            <span class="pl-s1"><span class="pl-pds">"</span>access_ip<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>,
-            <span class="pl-s1"><span class="pl-pds">"</span>access_host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-            <span class="pl-s1"><span class="pl-pds">"</span>access_token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>ac4ca287-55d9-4aa1-837b-f3cb85f27278<span class="pl-pds">"</span></span>,
-            <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span>,
-            <span class="pl-s1"><span class="pl-pds">"</span>login_expire<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>1422976036114<span class="pl-pds">"</span></span>,
-            <span class="pl-s1"><span class="pl-pds">"</span>created_at<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>2015-01-19T15:07:16.114Z<span class="pl-pds">"</span></span>,
-            <span class="pl-s1"><span class="pl-pds">"</span>__v<span class="pl-pds">"</span></span>: <span class="pl-c1">0</span>
-        },
-        <span class="pl-s1"><span class="pl-pds">"</span>accessHost<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span>,
-        <span class="pl-s1"><span class="pl-pds">"</span>accessIP<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>
-    },
-    <span class="pl-s1"><span class="pl-pds">"</span>isResult<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>statusCode<span class="pl-pds">"</span></span>: <span class="pl-c1">200</span>,
-    <span class="pl-s1"><span class="pl-pds">"</span>meta<span class="pl-pds">"</span></span>: {<span class="pl-s1"><span class="pl-pds">"</span>error<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>OK<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>message<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>done<span class="pl-pds">"</span></span>}
-}</pre></div>
-
-        <h4>
-            <a id="document" class="anchor" href="#document" aria-hidden="true"><span class="octicon octicon-link"></span></a>Document</h4>
-
-        <h5>
-            <a id="1-post-apidocumentdocument_idpublic" class="anchor" href="#1-post-apidocumentdocument_idpublic" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. <code>POST</code> /api/document/:document_id/public</h5>
-
-        <p><strong>Send</strong></p>
-
-        <blockquote>
-            <p>localhost:3030/api/document/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419/public</p>
-        </blockquote>
-
-        <div class="highlight highlight-json"><pre>{ <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Token<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>8091cc47-ca6e-451e-b91a-b7797aa8a94e<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>X-Access-Host<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>sven-mac-pro<span class="pl-pds">"</span></span> }
-{ <span class="pl-s1"><span class="pl-pds">"</span>haroo_id<span class="pl-pds">"</span></span>: <span class="pl-s1"><span class="pl-pds">"</span>b4c4ae0692b435427b671649ea30848e7<span class="pl-pds">"</span></span> }</pre></div>
-
-        <p><strong>Receive - done</strong></p>
-
-        <div class="highlight highlight-json"><pre>{
-    <span class="pl-ii">//</span> <span class="pl-ii">not</span> <span class="pl-ii">yet</span>
-}</pre></div>
-    </section>
 </div>
 
 <!-- FOOTER  -->
 <div id="footer_wrap" class="outer">
     <footer class="inner">
-        <p class="copyright">Haroo-api maintained by <a href="https://github.com/Haroo-Studio">Haroo-Studio</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p class="copyright">Haroo Cloud Core maintained by <a href="https://github.com/soomtong">soomtong</a></p>
     </footer>
 </div>
 
 
-
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/kube/js/kube.min.js"></script>
 </body>
 </html>

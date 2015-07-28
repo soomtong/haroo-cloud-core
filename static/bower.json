@@ -1,0 +1,21 @@
+{
+  "name": "haroo-cloud-core-static-page",
+  "version": "0.0.1",
+  "homepage": "https://github.com/soomtong/haroo-cloud-core",
+  "authors": [
+    "soomtong <soomtong@gmail.com>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "kube": "git://github.com/soomtong/kube.git#~4.0.3",
+    "jquery": "~2.1.4"
+  }
+}

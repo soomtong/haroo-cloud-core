@@ -32,9 +32,9 @@ or
 
 ### Public Document Storage Service
 
-open `/tree/index.html` in a browser or bind `/tree` url to `your-public-service.com` and map proxy in nginx or your proxy server.
+first example used haroo cloud core system. it use anonymous document api service of haroo cloud core
  
-example here!
+check out here!
 
 > Public Text Hosting Service [txtree.net](https://txtree.net)
 

@@ -44,7 +44,7 @@
 
 <h2 id="create-document">Create Document</h2>
 <pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/doc'</span>
-  -d <span class="s1">'{ "title": "title of our secret story", "content": "text of content" }'</span>
+  -d <span class="s1">'{ "title": "title of our secret story", "text": "text of content" }'</span>
 </code></pre>
 
 <blockquote>
@@ -122,9 +122,9 @@ but a little district exist here.</p>
 
 <h2 id="read-document">Read Document</h2>
 <pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9'</span>
-
 <span class="o">(</span>todo<span class="o">)</span>
 curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure'</span>
+curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure/monokai'</span>
 </code></pre>
 
 <blockquote>
@@ -201,7 +201,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 
 <ul>
 <li>javascript : code highlight</li>
-<li>solarize : theme</li>
+<li>solarize : theme name</li>
 <li>javascript/monokai : (combination)</li>
 </ul>
 
