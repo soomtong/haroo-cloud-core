@@ -6,6 +6,12 @@ var Document = require('../models/anonymousDocument');
 
 var urlPrefix = '/api/tree/doc/';
 
+var anonymousList = {
+    page: 0,
+    size: 10,
+    defaultOrder: 'newest'
+};
+
 exports.createDocument = function (req, res, next) {
     var params = {
         title: req.params['title'],
@@ -106,14 +112,42 @@ exports.readDocument = function (req, res, next) {
 
 exports.listDocument = function (req, res, next) {
     var params = {
-        order: req.params['order'],
-        page: req.params['p'] || 10,
-        size: req.params['s'] || 1
+        order: req.params['listOrder'] || anonymousList.defaultOrder,
+        page: req.params['p'] || anonymousList.page,
+        size: req.params['s'] || anonymousList.size
     };
 
-    var msg, result;
+    var msg, result, listOrder;
 
-    Document.find({}, { /* all fields */ }, { skip: (params.page * params.size), limit: params.size }, function (error, list) {
+    switch (params.order) {
+        case 'newest':
+            listOrder = { created_at: -1 };
+            break;
+        case 'oldest':
+            listOrder = { created_at: 1 };
+            break;
+        case 'hottest':
+            listOrder = { view_count: 1 };
+            break;
+        case 'coldest':
+            listOrder = { view_count: -1 };
+            break;
+        case 'commended':
+            listOrder = { commend_count: 1 };
+            break;
+        case 'claimed':
+            listOrder = { claim_count: 1 };
+            break;
+        default :
+            listOrder = { created_at: -1 };
+            break;
+    }
+
+    Document.find({}, { /* all fields */ }, {
+        sort: listOrder,
+        skip: (params.page * params.size),
+        limit: params.size
+    }, function (error, list) {
         if (error || !list) {
             msg = i18n.t('anonymous.list.fail');
             result = feedback.badRequest(msg, params);

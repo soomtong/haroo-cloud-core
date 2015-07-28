@@ -13,7 +13,7 @@ describe('Anonymous Document', function () {
 
     it("save one anonymous document", function (done) {
         var document = {
-            text: "test content no title"
+            text: "test content no title. it is the first document"
         };
 
         var expectedResult = {
@@ -49,7 +49,7 @@ describe('Anonymous Document', function () {
     it("save one anonymous document with title", function (done) {
         var document = {
             title: "test title",
-            text: "test content with title"
+            text: "test content with title. \nyeah 2nd document here!"
         };
 
         var expectedResult = {
@@ -93,7 +93,7 @@ describe('Anonymous Document', function () {
         var document = {
             title: "test title",
             author: 'anonymous_101',
-            text: "test content with title and author"
+            text: "test content with title and author. this is third person data..."
         };
 
         var expectedResult = {
@@ -222,10 +222,7 @@ describe('Anonymous Document', function () {
     it("default list of public documents", function (done) {
         var result = {
             message: 'OK: done',
-            data: {
-                list: [],
-                count: 10
-            },
+            data: {},
             isResult: true,
             statusCode: 200,
             meta: { error: 'OK', message: 'done' }
@@ -252,14 +249,13 @@ describe('Anonymous Document', function () {
     it("ordered newest list of public documents", function (done) {
         var result = {
             message: 'OK: done',
-            data: {
-                list: [],
-                count: 10
-            },
+            data: {},
             isResult: true,
             statusCode: 200,
             meta: { error: 'OK', message: 'done' }
         };
+
+        var list;
 
         app.init(app.node_env, function (server) {
             supertest(server)
@@ -269,10 +265,19 @@ describe('Anonymous Document', function () {
                 .end(function (err, res) {
                     assert.ok(!err, err);
 
+                    list = res.body.data.list;
+/*
+                    for (var idx = 1, len = list.length; idx < len; idx++) {
+                        assert.ok(list[idx - 1].created_at >= list[idx].created_at, 'that order sorting failed');
+                    }
+*/
+                    assert.ok(list[0].created_at >= list[list.length - 1].created_at, 'that order sorting failed');
+
                     res.body.data = undefined;
                     result.data = undefined;
 
                     assert.deepEqual(res.body, result);
+
                     done();
 
                 });
@@ -314,7 +319,6 @@ describe('Anonymous Document', function () {
     });
 
     //todo: stats of one document
-    //todo: lists by orders
     //todo: stats of all anonymous documents
 
 });

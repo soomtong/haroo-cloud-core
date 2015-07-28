@@ -5,10 +5,10 @@ var publicDocSchema = new mongoose.Schema({
     text: String,
     type: String,
     author: String,
-    created_at: Date,
-    view_count: Number,
-    commend_count: Number,
-    alert_count: Number
+    created_at: { type: Date, index: true },
+    view_count: { type: Number, index: true },
+    commend_count: { type: Number, index: true },
+    claim_count: { type: Number, index: true }
 });
 
 module.exports = mongoose.model('anonymous_document', publicDocSchema);
