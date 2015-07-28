@@ -284,6 +284,40 @@ describe('Anonymous Document', function () {
         });
     });
 
+    it("ordered oldest list of public documents", function (done) {
+        var result = {
+            message: 'OK: done',
+            data: {},
+            isResult: true,
+            statusCode: 200,
+            meta: { error: 'OK', message: 'done' }
+        };
+
+        var list;
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/api/tree/list?order=oldest')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+
+                    list = res.body.data.list;
+
+                    assert.ok(list[0].created_at <= list[list.length - 1].created_at, 'that order sorting failed');
+
+                    res.body.data = undefined;
+                    result.data = undefined;
+
+                    assert.deepEqual(res.body, result);
+
+                    done();
+
+                });
+        });
+    });
+
     it("ordered wrong parameter list of public documents", function (done) {
         var result = {
             message: 'Not Acceptable: validation failed',

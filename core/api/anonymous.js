@@ -112,7 +112,7 @@ exports.readDocument = function (req, res, next) {
 
 exports.listDocument = function (req, res, next) {
     var params = {
-        order: req.params['listOrder'] || anonymousList.defaultOrder,
+        order: req.params['order'] || anonymousList.defaultOrder,
         page: req.params['p'] || anonymousList.page,
         size: req.params['s'] || anonymousList.size
     };

@@ -24,7 +24,7 @@ Welcome to the Haroo Cloud API!
 
 ```shell
 curl 'localhost:3030/api/tree/doc'
-  -d '{ "title": "title of our secret story", "content": "text of content" }'
+  -d '{ "title": "title of our secret story", "text": "text of content" }'
 ```
 
 > The above command returns JSON structured like this:
@@ -74,9 +74,9 @@ author    | false   | anonymous |
 
 ```shell
 curl 'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9'
-
 (todo)
 curl 'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure'
+curl 'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure/monokai'
 ```
 
 > The above command returns JSON structured like this:
@@ -125,10 +125,10 @@ Parameter | Require | Default   | Description
 --------- | ------- | --------- | -----------
 output    | false   |           | code highlight style and color theme
 
-use like this
+`output` query used like this
 
 - javascript : code highlight
-- solarize : theme
+- solarize : theme name
 - javascript/monokai : (combination)
 
 
@@ -137,8 +137,6 @@ use like this
 
 ```shell
 curl 'localhost:3030/api/tree/list'
-
-(todo)
 curl 'localhost:3030/api/tree/list?order=newest'
 curl 'localhost:3030/api/tree/list?order=hottest'
 ```
@@ -149,9 +147,9 @@ curl 'localhost:3030/api/tree/list?order=hottest'
 {
     "message": "OK: done",
     "data": {
-        list: [],
-        page: 1,        
-        size: 10
+        "list": [ "... list of documents ..." ],
+        "page": 1,        
+        "size": 10
     },
     "isResult": true,
     "statusCode": 200,
@@ -173,9 +171,18 @@ None
 
 Parameter | Require | Default   | Description
 --------- | ------- | --------- | -----------
-order     | false   | hottest   | 
+order     | false   | newest    |  
 p         | false   | 0         | 
 s         | false   | 10        | 
+
+`order` query used like this
+
+- newest : sort by created_at
+- oldest : sort by created_at invert
+- hottest : sort by view_count
+- coldest : sort by view_count invert
+- commend : sort by commend_count
+- claim : sort by claim_count
 
 
 
