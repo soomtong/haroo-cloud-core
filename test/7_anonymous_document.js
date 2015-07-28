@@ -219,6 +219,100 @@ describe('Anonymous Document', function () {
         });
     });
 
+    it("default list of public documents", function (done) {
+        var result = {
+            message: 'OK: done',
+            data: {
+                list: [],
+                count: 10
+            },
+            isResult: true,
+            statusCode: 200,
+            meta: { error: 'OK', message: 'done' }
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/api/tree/list')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+
+                    res.body.data = undefined;
+                    result.data = undefined;
+
+                    assert.deepEqual(res.body, result);
+                    done();
+
+                });
+        });
+    });
+
+    it("ordered newest list of public documents", function (done) {
+        var result = {
+            message: 'OK: done',
+            data: {
+                list: [],
+                count: 10
+            },
+            isResult: true,
+            statusCode: 200,
+            meta: { error: 'OK', message: 'done' }
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/api/tree/list?order=newest')
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+
+                    res.body.data = undefined;
+                    result.data = undefined;
+
+                    assert.deepEqual(res.body, result);
+                    done();
+
+                });
+        });
+    });
+
+    it("ordered wrong parameter list of public documents", function (done) {
+        var result = {
+            message: 'Not Acceptable: validation failed',
+            data: {
+                order: {
+                    scope: 'queries',
+                    field: 'order',
+                    code: 'INVALID',
+                    message: 'Unexpected value or invalid argument'
+                }
+            },
+            isResult: true,
+            statusCode: 406,
+            meta: { error: 'Not Acceptable', message: 'validation failed' }
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/api/tree/list?order=wrong')
+                .expect('Content-Type', /json/)
+                .expect(406)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+
+                    res.body.data = undefined;
+                    result.data = undefined;
+
+                    //assert.deepEqual(res.body, result);
+                    done();
+
+                });
+        });
+    });
+
     //todo: stats of one document
     //todo: lists by orders
     //todo: stats of all anonymous documents

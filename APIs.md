@@ -131,6 +131,54 @@ use like this
 - solarize : theme
 - javascript/monokai : (combination)
 
+
+
+## Document List
+
+```shell
+curl 'localhost:3030/api/tree/list'
+
+(todo)
+curl 'localhost:3030/api/tree/list?order=newest'
+curl 'localhost:3030/api/tree/list?order=hottest'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "message": "OK: done",
+    "data": {
+        list: [],
+        page: 1,        
+        size: 10
+    },
+    "isResult": true,
+    "statusCode": 200,
+    "meta": {"error": "OK", "message": "done"}
+}
+```
+
+get list of documents by sent page, size with order flags 
+
+### HTTP Request
+
+`GET https://haroocloud.com/api/tree/list`
+
+### Header
+
+None
+
+### Query
+
+Parameter | Require | Default   | Description
+--------- | ------- | --------- | -----------
+order     | false   | hottest   | 
+p         | false   | 0         | 
+s         | false   | 10        | 
+
+
+
 ## Get Document Stat
 
 ```shell
@@ -170,49 +218,6 @@ None
 Parameter   | Require | Default   | Description
 ----------- | ------- | --------- | -----------
 document_id | true    |           | 
-
-
-## Document List
-
-```shell
-curl 'localhost:3030/api/tree/list'
-
-(todo)
-curl 'localhost:3030/api/tree/list?order=newest'
-curl 'localhost:3030/api/tree/list?order=hottest'
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-    "message": "OK: done",
-    "data": {
-        list: []
-        size: 10
-    },
-    "isResult": true,
-    "statusCode": 200,
-    "meta": {"error": "OK", "message": "done"}
-}
-```
-
-description here...
-
-### HTTP Request
-
-`GET https://haroocloud.com/api/tree/list`
-
-### Header
-
-None
-
-### Query
-
-Parameter | Require | Default   | Description
---------- | ------- | --------- | -----------
-order     | false   | hottest   | 
-page      | false   | 0         | 
 
 
 

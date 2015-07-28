@@ -19,6 +19,10 @@
             "done": "done",
             "fail": "failed"
         },
+        "list": {
+            "done": "done",
+            "fail": "failed"
+        },
         "delete": {
             "done": "done",
             "fail": "failed"

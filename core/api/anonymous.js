@@ -104,15 +104,39 @@ exports.readDocument = function (req, res, next) {
     next();
 };
 
-exports.statDocument = function (req, res, next) {
-
-    next();
-};
-
 exports.listDocument = function (req, res, next) {
+    var params = {
+        order: req.params['order'],
+        page: req.params['p'] || 10,
+        size: req.params['s'] || 1
+    };
+
+    var msg, result;
+
+    Document.find({}, { /* all fields */ }, { skip: (params.page * params.size), limit: params.size }, function (error, list) {
+        if (error || !list) {
+            msg = i18n.t('anonymous.list.fail');
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        msg = i18n.t('anonymous.list.done');
+
+        result = feedback.done(msg, { list: list, count: list.length });
+
+        res.json(result);
+    });
 
     next();
 };
+
+exports.statDocument = function (req, res, next) {
+    // total view count and view count for daily with feedback stats
+
+    next();
+};
+
 
 exports.feedbackDocument = function (req, res, next) {
     // restrict for IP per 1 day
