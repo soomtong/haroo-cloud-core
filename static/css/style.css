@@ -15,6 +15,28 @@
     padding: 50px 10px 30px 10px;
 }
 
+#header_wrap .wip {
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#header_wrap .info {
+    color: #fff4cc;
+    font-size: 25pt;
+    margin: 25% auto;
+    display: block;
+    border: 1px solid #fafafa;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 20em;
+    height: 10em;
+    text-align: center;
+    padding-top: 4.5em;
+}
+
 .inner {
     position: relative;
     max-width: 1200px;
