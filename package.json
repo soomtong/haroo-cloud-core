@@ -11,7 +11,7 @@
     "rest"
   ],
   "author": "soomtong@gmail.com",
-  "license": "Apache License",
+  "license": "GPL-2.0",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "bunyan": "^1.2.3",
@@ -21,22 +21,23 @@
     "node-restify-validation": "^1.0.4",
     "node-uuid": "^1.4.2",
     "nodemailer": "^1.3.0",
-    "restify": "git://github.com/restify/node-restify.git",
+    "restify": "^4.0.3",
     "restify-cors-middleware": "0.0.5",
-    "socket.io": "^1.2.1",
-    "swig-email-templates": "^1.3.0"
+    "socket.io": "^1.2.1"
   },
   "devDependencies": {
     "mocha": "^2.1.0",
     "supertest": "^0.15.0"
   },
-  "directories": {},
+  "directories": {
+    "test": "test"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/soomtong/haroo-cloud"
+    "url": "git+https://github.com/soomtong/haroo-cloud-core.git"
   },
   "bugs": {
-    "url": "https://github.com/soomtong/haroo-cloud/issues"
+    "url": "https://github.com/soomtong/haroo-cloud-core/issues"
   },
-  "homepage": "https://github.com/soomtong/haroo-cloud"
+  "homepage": "https://github.com/soomtong/haroo-cloud-core"
 }
