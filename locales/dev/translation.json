@@ -21,6 +21,7 @@
         },
         "list": {
             "done": "done",
+            "empty": "list empty",
             "fail": "failed"
         },
         "delete": {

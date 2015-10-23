@@ -117,7 +117,7 @@ exports.listDocument = function (req, res, next) {
         size: req.params['s'] || anonymousList.size
     };
 
-    var msg, result, listOrder;
+    var msg, result, listOrder, listData;
 
     switch (params.order) {
         case 'newest':
@@ -142,24 +142,50 @@ exports.listDocument = function (req, res, next) {
             listOrder = { created_at: -1 };
             break;
     }
+    Document.count({}, function (error, count) {
+        // count all list
+        if (count) {
+            Document.find({}, { /* all fields */ }, {
+                sort: listOrder,
+                skip: (params.page * params.size),
+                limit: params.size
+            }, function (error, list) {
+                if (error || !list) {
+                    msg = i18n.t('anonymous.list.fail');
+                    result = feedback.badRequest(msg, params);
 
-    Document.find({}, { /* all fields */ }, {
-        sort: listOrder,
-        skip: (params.page * params.size),
-        limit: params.size
-    }, function (error, list) {
-        if (error || !list) {
-            msg = i18n.t('anonymous.list.fail');
-            result = feedback.badRequest(msg, params);
+                    return res.json(result.statusCode, result);
+                }
 
-            return res.json(result.statusCode, result);
+                msg = i18n.t('anonymous.list.done');
+
+                listData = {
+                    list: list,
+                    now: params.page,
+                    size: params.size,
+                    count: list.length,
+                    total: count
+                };
+
+                result = feedback.done(msg, listData);
+
+                res.json(result);
+            });
+        } else {
+            msg = i18n.t('anonymous.list.empty');
+
+            listData = {
+                list: [],
+                now: params.page,
+                size: params.size,
+                count: 0,
+                total: 0
+            };
+
+            result = feedback.done(msg, listData);
+
+            res.json(result);
         }
-
-        msg = i18n.t('anonymous.list.done');
-
-        result = feedback.done(msg, { list: list, count: list.length });
-
-        res.json(result);
     });
 
     next();
