@@ -1,5 +1,5 @@
 var i18n = require('i18next');
-var counoun = require('counoun');
+//var counoun = require('counoun');
 
 var feedback = require('../lib/feedback');
 var common = require('../lib/common');

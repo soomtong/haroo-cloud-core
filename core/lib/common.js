@@ -1,5 +1,5 @@
-var InitAccount = require('init-user');
 var uuid = require('node-uuid');
+var uuid_v5 = require('uuidv5');
 
 var util = require('./util');
 
@@ -10,17 +10,25 @@ exports.initHarooID = function (email, database) {
     var nameToken = database.host || "database1";
     var prefix = database.prefix;
 
-    return InitAccount.initHarooID(email, nameToken, prefix);
+    var namespace = uuid_v5('null', nameToken, true);
+    var uuid = uuid_v5(namespace, email);
+
+    //return createNewHarooID(email, nameToken, prefix);
+    return prefix + uuid.replace(/-/g,'');
 };
 
 exports.initAccountDatabase = function (haroo_id, couch, callback) {
     if (!haroo_id) throw new Error('no haroo id assigned');
 
-    var InitUserDB = new InitAccount.initUserDB(couch.host, couch.port, couch.auth[0], couch.auth[1]);
+    //var InitUserDB = new InitAccount.initUserDB(couch.host, couch.port, couch.auth[0], couch.auth[1]);
 
+    /*
     InitUserDB.createNewAccount(haroo_id, function (err, res) {
         callback(err, res);
     });
+    */
+
+    callback({}, {});
 };
 
 exports.getAccessToken = function () {

@@ -63,7 +63,7 @@ exports.createAccount = function (req, res, next) {
         }
 
         // make new account
-        var haroo_id = common.initHarooID(params.email, res.coreDatabase);
+        var haroo_id = common.initHarooID(params.email);
 
         if (!haroo_id) {
             //throw new Error('no exist haroo id!');
@@ -86,7 +86,7 @@ exports.createAccount = function (req, res, next) {
         });
 
         // init couch collection for account
-        common.initAccountDatabase(haroo_id, res.coreDatabase, function (err, response) {
+        common.initAccountDatabase(haroo_id, {}, function (err, result) {
             if (err) {
                 //throw new Error('fail make new account with couch database');
                 msg = i18n.t('account.create.fail');
