@@ -164,7 +164,7 @@ exports.listDocument = function (req, res, next) {
                     now: params.page,
                     size: params.size,
                     count: list.length,
-                    total: count
+                    total: Math.floor(count / params.size) + ((count % params.size) ? 1 : 0)
                 };
 
                 result = feedback.done(msg, listData);
