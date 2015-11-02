@@ -17,6 +17,7 @@ exports.createDocument = function (req, res, next) {
         title: req.params['title'],
         type: req.params['type'] || 'text',
         text: req.params['text'],
+        kept_at: req.params['kept'],
         author: req.params['author'] || 'anonymous'
     };
 
@@ -30,6 +31,8 @@ exports.createDocument = function (req, res, next) {
         view_count: 0,
         commend_count: 0,
         alert_count: 0,
+        kept_at: params.kept_at,
+        updated_at: Date.now(),
         created_at: Date.now()
     });
 
