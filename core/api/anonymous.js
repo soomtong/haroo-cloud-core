@@ -1,6 +1,7 @@
 var i18n = require('i18next');
 
 var feedback = require('../lib/feedback');
+var common = require('../lib/common');
 
 var Document = require('../models/anonymousDocument');
 
@@ -161,6 +162,10 @@ exports.listDocument = function (req, res, next) {
                 }
 
                 msg = i18n.t('anonymous.list.done');
+
+                list.forEach(function (item) {
+                    item.text = common.getHeaderTextFromMarkdown(item.text, 280);
+                });
 
                 listData = {
                     list: list,
