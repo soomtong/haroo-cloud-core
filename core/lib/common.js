@@ -1,5 +1,6 @@
 var uuid = require('node-uuid');
 var uuid_v5 = require('uuidv5');
+var removeMarkdown = require('remove-markdown');
 
 var util = require('./util');
 
@@ -90,4 +91,27 @@ exports.setDataToClient = function (userData, tokenData) {
     if (userData.tokens) result.tokens = userData.tokens;
 
     return result;
+};
+
+exports.getHeaderTextFromMarkdown = function (markdown, limit) {
+    var arr = markdown.split(/\r*\n/), len = arr.length;
+    var text = [];
+
+    limit = limit || 30;
+
+    for (var i = 0; i < len; i++) {
+        var temp = '';
+
+        temp = removeMarkdown(arr[i]);
+
+        if (temp) {
+            text.push(temp);
+        }
+
+        // check count length
+        if (text.join('\n').length > limit) break;
+    }
+
+    return text.join('\n').substr(0, limit).trim();
+
 };

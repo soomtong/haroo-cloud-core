@@ -42,6 +42,28 @@ describe('Common Module', function () {
             done();
         });
     });
+
+    it('stripe markdown token and contract text', function () {
+        var markdown = '# This is a heading\n\n\r\nThis is a paragraph with [a link](http://www.disney.com/) in it.';
+        var text = common.getHeaderTextFromMarkdown(markdown, 10);
+
+        assert.equal(text, 'This is a');
+    });
+
+    it('stripe markdown token and contract text with trim', function () {
+        var markdown = '# This is a heading\n\n\r\nThis is a paragraph with [a link](http://www.disney.com/) in it.';
+        var text = common.getHeaderTextFromMarkdown(markdown, 9);
+
+        assert.equal(text, 'This is a');
+    });
+
+    it('stripe markdown token and contract text long', function () {
+        var markdown = '# This is a heading\n\n\r\nThis is a paragraph with [a link](http://www.disney.com/) in it.';
+        var text = common.getHeaderTextFromMarkdown(markdown, 30);
+
+        assert.equal(text, 'This is a heading\nThis is a pa');
+    });
+
 });
 
 describe('ThirdParty Module', function () {
