@@ -63,16 +63,14 @@
 
 <p>Make a public document by anonymous</p>
 
-<p>Use simple rest call for make new document. 
-call http POST method and send data in a body. no need auth or tokens.
-but a little district exist here.</p>
+<p>Use simple rest call for make new document. call http POST method and send data in a body. no need auth or tokens. but a little district exist here.</p>
 
 <ul>
-<li>throttle for huge call simultaneously in same IP
+<li>  throttle for huge call simultaneously in same IP
 
 <ul>
-<li>5 (number of requests/second to allow)</li>
-<li>1000  (amount of requests)</li>
+<li>  5 (number of requests/second to allow)</li>
+<li>  1000 (amount of requests)</li>
 </ul></li>
 </ul>
 
@@ -107,7 +105,13 @@ but a little district exist here.</p>
 <td></td>
 </tr>
 <tr>
-<td>type</td>
+<td>kept_at</td>
+<td>false</td>
+<td></td>
+<td>date time of document live time to erase</td>
+</tr>
+<tr>
+<td>theme</td>
 <td>false</td>
 <td>text</td>
 <td>normal text or language type for code highlight (todo: javascript/monokai)</td>
@@ -123,8 +127,8 @@ but a little district exist here.</p>
 <h2 id="read-document">Read Document</h2>
 <pre class="highlight shell"><code>curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9'</span>
 <span class="o">(</span>todo<span class="o">)</span>
-curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure'</span>
-curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure/monokai'</span>
+curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?t=clojure'</span>
+curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?t=clojure/monokai'</span>
 </code></pre>
 
 <blockquote>
@@ -141,7 +145,7 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
         </span><span class="nt">"commend_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="nt">"alert_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="nt">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-07-19T10:17:47.730Z"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ab794b4368269fdf9de925"</span><span class="w"> 
+        </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55ab794b4368269fdf9de925"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nt">"isResult"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="nt">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
@@ -190,19 +194,19 @@ curl <span class="s1">'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?outp
 </tr>
 </thead><tbody>
 <tr>
-<td>output</td>
+<td>t</td>
 <td>false</td>
 <td></td>
 <td>code highlight style and color theme</td>
 </tr>
 </tbody></table>
 
-<p><code class="prettyprint">output</code> query used like this</p>
+<p><code class="prettyprint">t</code> query used like this</p>
 
 <ul>
-<li>javascript : code highlight</li>
-<li>solarize : theme name</li>
-<li>javascript/monokai : (combination)</li>
+<li>  javascript : code highlight</li>
+<li>  solarize : theme name</li>
+<li>  javascript/monokai : (combination)</li>
 </ul>
 
 <h2 id="document-list">Document List</h2>
@@ -227,7 +231,7 @@ curl <span class="s1">'localhost:3030/api/tree/list?order=hottest'</span>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>get list of documents by sent page, size with order flags </p>
+<p>get list of documents by sent page, size with order flags</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
@@ -270,12 +274,12 @@ curl <span class="s1">'localhost:3030/api/tree/list?order=hottest'</span>
 <p><code class="prettyprint">order</code> query used like this</p>
 
 <ul>
-<li>newest : sort by created_at</li>
-<li>oldest : sort by created_at invert</li>
-<li>hottest : sort by view_count</li>
-<li>coldest : sort by view_count invert</li>
-<li>commend : sort by commend_count</li>
-<li>claim : sort by claim_count</li>
+<li>  newest : sort by created_at</li>
+<li>  oldest : sort by created_at invert</li>
+<li>  hottest : sort by view_count</li>
+<li>  coldest : sort by view_count invert</li>
+<li>  commend : sort by commend_count</li>
+<li>  claim : sort by claim_count</li>
 </ul>
 
 <h2 id="get-document-stat">Get Document Stat</h2>
