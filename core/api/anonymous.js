@@ -16,7 +16,7 @@ var anonymousList = {
 exports.createDocument = function (req, res, next) {
     var params = {
         title: req.params['title'],
-        type: req.params['type'] || 'text',
+        theme: req.params['theme'] || '',
         text: req.params['text'],
         kept_at: req.params['kept'],
         author: req.params['author'] || 'anonymous'
@@ -27,7 +27,7 @@ exports.createDocument = function (req, res, next) {
     var document = new Document({
         title: params.title,
         text: params.text,
-        type: params.type,
+        theme: params.type,
         author: params.author,
         view_count: 0,
         commend_count: 0,
@@ -70,7 +70,7 @@ exports.createDocument = function (req, res, next) {
 exports.readDocument = function (req, res, next) {
     var params = {
         id: req.params['doc_id'],
-        type: req.params['type']
+        theme: req.params['theme']
     };
 
     var msg, result;

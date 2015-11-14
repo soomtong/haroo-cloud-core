@@ -41,3 +41,11 @@ check out here!
 ## APIs
 
 check out `APIs.md` or open `/dev/doc` url in a browser.
+
+### Documentation
+
+move to slate directory
+
+> rake build
+
+and copy `build` directory to `/static/dev/doc`
