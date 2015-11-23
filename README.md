@@ -36,7 +36,7 @@ first example used haroo cloud core system. it use anonymous document api servic
  
 check out here!
 
-> Public Text Hosting Service [txtree.net](https://txtree.net)
+> Public Text Hosting Service [txtree.xyz](https://txtree.xyz)
 
 ## APIs
 
