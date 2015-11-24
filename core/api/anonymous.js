@@ -18,11 +18,16 @@ exports.createDocument = function (req, res, next) {
         title: req.params['title'],
         theme: req.params['theme'] || '',
         text: req.params['text'],
-        kept_at: req.params['kept'],
+        keptDate: req.params['hasKeep'] ? req.params['keep'] : undefined,
         author: req.params['author'] || 'anonymous'
     };
 
-    var msg, result;
+    var msg, result, keepDate;
+
+    if (params.keptDate) {
+        keepDate = new Date();
+        keepDate.setUTCFullYear(Number(params.keptDate['year']), Number(params.keptDate['month']) - 1, Number(params.keptDate['date']));
+    }
 
     var document = new Document({
         title: params.title,
@@ -32,7 +37,7 @@ exports.createDocument = function (req, res, next) {
         view_count: 0,
         commend_count: 0,
         alert_count: 0,
-        kept_at: params.kept_at,
+        kept_at: keepDate,
         updated_at: Date.now(),
         created_at: Date.now()
     });
