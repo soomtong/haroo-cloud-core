@@ -5,7 +5,7 @@ var common = require('../lib/common');
 var sendmail = require('../lib/sendmail');
 
 var Account = require('../models/account');
-var AccountToken = require('../models/accountToken');
+var AccountToken = require('../models/account_token');
 
 // middleware: check token validate for this account
 exports.getValidateToken = function (req, res, next) {

@@ -5,6 +5,7 @@ var publicDocSchema = new mongoose.Schema({
     text: String,
     theme: String,
     author: String,
+    curate: { type: Boolean, default: false, index: true },
     kept_at: { type: Date },
     updated_at: { type: Date, index: true },
     created_at: { type: Date, index: true },

@@ -120,6 +120,20 @@ function route(mode, callback) {
             s: { isRequired: false, isInt: true }
         }
     }}, anonymous.listDocument);
+    server.get({ path: '/api/tree/curate', validation: {
+        queries: {
+            order: { isRequired: false, isIn: ['newest', 'oldest', 'hottest', 'coldest', 'commended', 'claimed'] },
+            p: { isRequired: false, isInt: true },
+            s: { isRequired: false, isInt: true }
+        }
+    }}, anonymous.curateDocument);
+    server.get({ path: '/api/tree/today', validation: {
+        queries: {
+            order: { isRequired: false, isIn: ['newest', 'oldest', 'hottest', 'coldest', 'commended', 'claimed'] },
+            p: { isRequired: false, isInt: true },
+            s: { isRequired: false, isInt: true }
+        }
+    }}, anonymous.todayDocument);
     server.get({ path: '/api/tree/stat/:doc_id', validation: {
         resources: {
             doc_id: { isRequired: true }

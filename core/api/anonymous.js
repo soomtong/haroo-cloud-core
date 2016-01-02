@@ -3,7 +3,7 @@ var i18n = require('i18next');
 var feedback = require('../lib/feedback');
 var common = require('../lib/common');
 
-var Document = require('../models/anonymousDocument');
+var Document = require('../models/anonymous_document');
 
 var urlPrefix = '/api/tree/doc/';
 
@@ -155,6 +155,187 @@ exports.listDocument = function (req, res, next) {
         // count all list
         if (count) {
             Document.find({}, { /* all fields */ }, {
+                sort: listOrder,
+                skip: (params.page * params.size),
+                limit: params.size
+            }, function (error, list) {
+                if (error || !list) {
+                    msg = i18n.t('anonymous.list.fail');
+                    result = feedback.badRequest(msg, params);
+
+                    return res.json(result.statusCode, result);
+                }
+
+                msg = i18n.t('anonymous.list.done');
+
+                list.forEach(function (item) {
+                    item.text = common.getHeaderTextFromMarkdown(item.text, 280);
+                });
+
+                listData = {
+                    list: list,
+                    now: params.page,
+                    size: params.size,
+                    count: list.length,
+                    total: Math.floor(count / params.size) + ((count % params.size) ? 1 : 0)
+                };
+
+                result = feedback.done(msg, listData);
+
+                res.json(result);
+            });
+        } else {
+            msg = i18n.t('anonymous.list.empty');
+
+            listData = {
+                list: [],
+                now: params.page,
+                size: params.size,
+                count: 0,
+                total: 0
+            };
+
+            result = feedback.done(msg, listData);
+
+            res.json(result);
+        }
+    });
+
+    next();
+};
+
+exports.curateDocument = function (req, res, next) {
+    var params = {
+        order: req.params['order'] || anonymousList.defaultOrder,
+        page: req.params['p'] || anonymousList.page,
+        size: req.params['s'] || anonymousList.size
+    };
+
+    var msg, result, listOrder, listData;
+
+    switch (params.order) {
+        case 'newest':
+            listOrder = { created_at: -1 };
+            break;
+        case 'oldest':
+            listOrder = { created_at: 1 };
+            break;
+        case 'hottest':
+            listOrder = { view_count: -1 };
+            break;
+        case 'coldest':
+            listOrder = { view_count: 1 };
+            break;
+        case 'commended':
+            listOrder = { commend_count: 1 };
+            break;
+        case 'claimed':
+            listOrder = { claim_count: 1 };
+            break;
+        default :
+            listOrder = { created_at: -1 };
+            break;
+    }
+
+    var curateFilter = { curate: true };
+
+    Document.count(curateFilter, function (error, count) {
+        // count all list
+        if (count) {
+            Document.find(curateFilter, { /* all fields */ }, {
+                sort: listOrder,
+                skip: (params.page * params.size),
+                limit: params.size
+            }, function (error, list) {
+                if (error || !list) {
+                    msg = i18n.t('anonymous.list.fail');
+                    result = feedback.badRequest(msg, params);
+
+                    return res.json(result.statusCode, result);
+                }
+
+                msg = i18n.t('anonymous.list.done');
+
+                list.forEach(function (item) {
+                    item.text = common.getHeaderTextFromMarkdown(item.text, 280);
+                });
+
+                listData = {
+                    list: list,
+                    now: params.page,
+                    size: params.size,
+                    count: list.length,
+                    total: Math.floor(count / params.size) + ((count % params.size) ? 1 : 0)
+                };
+
+                result = feedback.done(msg, listData);
+
+                res.json(result);
+            });
+        } else {
+            msg = i18n.t('anonymous.list.empty');
+
+            listData = {
+                list: [],
+                now: params.page,
+                size: params.size,
+                count: 0,
+                total: 0
+            };
+
+            result = feedback.done(msg, listData);
+
+            res.json(result);
+        }
+    });
+
+    next();
+};
+
+exports.todayDocument = function (req, res, next) {
+    var params = {
+        order: req.params['order'] || anonymousList.defaultOrder,
+        page: req.params['p'] || anonymousList.page,
+        size: req.params['s'] || anonymousList.size
+    };
+
+    var msg, result, listOrder, listData;
+
+    switch (params.order) {
+        case 'newest':
+            listOrder = { created_at: -1 };
+            break;
+        case 'oldest':
+            listOrder = { created_at: 1 };
+            break;
+        case 'hottest':
+            listOrder = { view_count: -1 };
+            break;
+        case 'coldest':
+            listOrder = { view_count: 1 };
+            break;
+        case 'commended':
+            listOrder = { commend_count: 1 };
+            break;
+        case 'claimed':
+            listOrder = { claim_count: 1 };
+            break;
+        default :
+            listOrder = { created_at: -1 };
+            break;
+    }
+
+    //var today = new Date();
+    //var yesterday = new Date(today.setDate(today.getDate() - 1));
+    //var someday = new Date();
+    //someday.setDate(someday.getDate() - 1);
+    var yesterday = Date.now() - 86400000;   // 86400000
+    var todayFilter = { created_at: { $gte: yesterday } };
+
+    Document.count(todayFilter, function (error, count) {
+        // count all list
+        if (count) {
+            Document.find(todayFilter, { /* all fields */ }, {
                 sort: listOrder,
                 skip: (params.page * params.size),
                 limit: params.size

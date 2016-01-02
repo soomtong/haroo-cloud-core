@@ -5,7 +5,7 @@ var feedback = require('../lib/feedback');
 var common = require('../lib/common');
 
 var Account = require('../models/account');
-var PublicDocument = require('../models/publicDocument');
+var PublicDocument = require('../models/public_document');
 
 function togglePublicCoreDocument(coreDB, document_id, shareData) {
     coreDB.get(document_id, function (err, document) {
