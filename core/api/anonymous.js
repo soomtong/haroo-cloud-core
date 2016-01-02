@@ -136,10 +136,10 @@ exports.listDocument = function (req, res, next) {
             listOrder = { created_at: 1 };
             break;
         case 'hottest':
-            listOrder = { view_count: 1 };
+            listOrder = { view_count: -1 };
             break;
         case 'coldest':
-            listOrder = { view_count: -1 };
+            listOrder = { view_count: 1 };
             break;
         case 'commended':
             listOrder = { commend_count: 1 };
