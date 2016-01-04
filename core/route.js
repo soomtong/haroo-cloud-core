@@ -113,6 +113,12 @@ function route(mode, callback) {
             doc_id: { isRequired: true }
         }
     }}, anonymous.readDocument);
+    server.post({ path: '/api/tree/list', validation: {
+        content: {
+            list: { isRequired: true },
+            order: { isRequired: false, isIn: ['newest', 'oldest', 'hottest', 'coldest', 'commended', 'claimed'] }
+        }
+    }}, anonymous.selectedListDocument);
     server.get({ path: '/api/tree/list', validation: {
         queries: {
             order: { isRequired: false, isIn: ['newest', 'oldest', 'hottest', 'coldest', 'commended', 'claimed'] },

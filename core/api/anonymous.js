@@ -385,12 +385,105 @@ exports.todayDocument = function (req, res, next) {
     next();
 };
 
+exports.selectedListDocument = function (req, res, next) {
+    var params = {
+        order: req.body['order'] || anonymousList.defaultOrder,
+        list: req.body['list'] || []
+    };
+
+    var msg, result, listOrder, listData;
+
+    switch (params.order) {
+        case 'newest':
+            listOrder = { created_at: -1 };
+            break;
+        case 'oldest':
+            listOrder = { created_at: 1 };
+            break;
+        case 'hottest':
+            listOrder = { view_count: -1 };
+            break;
+        case 'coldest':
+            listOrder = { view_count: 1 };
+            break;
+        case 'commended':
+            listOrder = { commend_count: 1 };
+            break;
+        case 'claimed':
+            listOrder = { claim_count: 1 };
+            break;
+        default :
+            listOrder = { created_at: -1 };
+            break;
+    }
+
+    var selectedFilter = { _id: { $in: params.list } };
+
+    Document.count(selectedFilter, function (error, count) {
+        if (error) {
+            msg = i18n.t('anonymous.list.fail');
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+        // count all list
+        if (count) {
+            Document.find(selectedFilter, { /* all fields */ }, {
+                sort: listOrder,
+                skip: (params.page * params.size),
+                limit: params.size
+            }, function (error, list) {
+                if (error || !list) {
+                    msg = i18n.t('anonymous.list.fail');
+                    result = feedback.badRequest(msg, params);
+
+                    return res.json(result.statusCode, result);
+                }
+
+                msg = i18n.t('anonymous.list.done');
+
+                list.forEach(function (item) {
+                    item.text = common.getHeaderTextFromMarkdown(item.text, 280);
+                });
+
+                listData = {
+                    list: list,
+                    now: params.page,
+                    size: params.size,
+                    count: list.length,
+                    total: Math.floor(count / params.size) + ((count % params.size) ? 1 : 0)
+                };
+
+                result = feedback.done(msg, listData);
+
+                res.json(result);
+            });
+        } else {
+            msg = i18n.t('anonymous.list.empty');
+
+            listData = {
+                list: [],
+                now: params.page,
+                size: params.size,
+                count: 0,
+                total: 0
+            };
+
+            result = feedback.done(msg, listData);
+
+            res.json(result);
+        }
+    });
+
+    next();
+};
+
+
 exports.statDocument = function (req, res, next) {
     // total view count and view count for daily with feedback stats
 
     next();
 };
-
 
 exports.feedbackDocument = function (req, res, next) {
     // restrict for IP per 1 day
