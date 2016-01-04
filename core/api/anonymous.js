@@ -429,9 +429,7 @@ exports.selectedListDocument = function (req, res, next) {
         // count all list
         if (count) {
             Document.find(selectedFilter, { /* all fields */ }, {
-                sort: listOrder,
-                skip: (params.page * params.size),
-                limit: params.size
+                sort: listOrder
             }, function (error, list) {
                 if (error || !list) {
                     msg = i18n.t('anonymous.list.fail');
@@ -448,10 +446,7 @@ exports.selectedListDocument = function (req, res, next) {
 
                 listData = {
                     list: list,
-                    now: params.page,
-                    size: params.size,
-                    count: list.length,
-                    total: Math.floor(count / params.size) + ((count % params.size) ? 1 : 0)
+                    count: list.length
                 };
 
                 result = feedback.done(msg, listData);
@@ -463,10 +458,7 @@ exports.selectedListDocument = function (req, res, next) {
 
             listData = {
                 list: [],
-                now: params.page,
-                size: params.size,
-                count: 0,
-                total: 0
+                count: 0
             };
 
             result = feedback.done(msg, listData);
