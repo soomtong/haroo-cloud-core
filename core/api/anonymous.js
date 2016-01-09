@@ -75,7 +75,7 @@ exports.createDocument = function (req, res, next) {
 exports.readDocument = function (req, res, next) {
     var params = {
         id: req.params['doc_id'],
-        theme: req.params['theme']
+        theme: req.query['t']
     };
 
     var msg, result;

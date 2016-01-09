@@ -111,6 +111,9 @@ function route(mode, callback) {
     server.get({ path: '/api/tree/doc/:doc_id', validation: {
         resources: {
             doc_id: { isRequired: true }
+        },
+        queries: {
+            t: { isRequired: false }
         }
     }}, anonymous.readDocument);
     server.post({ path: '/api/tree/list', validation: {

@@ -166,7 +166,7 @@ describe('Anonymous Document', function () {
         });
     });
 
-    it("read a public document with specified hash", function (done) {
+    it("read a anonymous document with specified hash", function (done) {
         var result = {
             message: 'OK: done',
             data: {
@@ -195,7 +195,7 @@ describe('Anonymous Document', function () {
         });
     });
 
-    it("read a public document with wrong hash", function (done) {
+    it("read a anonymous document with wrong hash", function (done) {
         var result = {
             message: 'Bad Request: failed',
             data: { id: 'wrong_hash_here' },
@@ -219,7 +219,7 @@ describe('Anonymous Document', function () {
         });
     });
 
-    it("default list of public documents", function (done) {
+    it("default list of anonymous documents", function (done) {
         var result = {
             message: 'OK: done',
             data: {},
@@ -246,7 +246,7 @@ describe('Anonymous Document', function () {
         });
     });
 
-    it("ordered newest list of public documents", function (done) {
+    it("ordered newest list of anonymous documents", function (done) {
         var result = {
             message: 'OK: done',
             data: {},
@@ -284,7 +284,7 @@ describe('Anonymous Document', function () {
         });
     });
 
-    it("ordered oldest list of public documents", function (done) {
+    it("ordered oldest list of anonymous documents", function (done) {
         var result = {
             message: 'OK: done',
             data: {},
@@ -318,7 +318,7 @@ describe('Anonymous Document', function () {
         });
     });
 
-    it("ordered wrong parameter list of public documents", function (done) {
+    it("ordered wrong parameter list of anonymous documents", function (done) {
         var result = {
             message: 'Not Acceptable: validation failed',
             data: {
