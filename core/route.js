@@ -152,6 +152,9 @@ function route(mode, callback) {
         resources: {
             doc_id: { isRequired: true },
             feedback: { isRequired: true, isIn: ['commend', 'claim'] }
+        },
+        queries: {
+            acc: { isRequired: true, isBoolean: true }
         }
     }}, anonymous.feedbackDocument);
 
