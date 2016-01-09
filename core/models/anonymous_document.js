@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var publicDocSchema = new mongoose.Schema({
+var anonymousDocSchema = new mongoose.Schema({
     title: String,
     text: String,
     theme: String,
@@ -14,4 +14,4 @@ var publicDocSchema = new mongoose.Schema({
     claim_count: { type: Number, index: true }
 });
 
-module.exports = mongoose.model('anonymous_document', publicDocSchema);
+module.exports = mongoose.model('anonymous_document', anonymousDocSchema);

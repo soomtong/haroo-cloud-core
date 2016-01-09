@@ -4,6 +4,7 @@ var feedback = require('../lib/feedback');
 var common = require('../lib/common');
 
 var Document = require('../models/anonymous_document');
+var FeedbackDocument = require('../models/anonymous_feedback');
 
 var urlPrefix = '/api/tree/doc/';
 
@@ -75,7 +76,7 @@ exports.createDocument = function (req, res, next) {
 exports.readDocument = function (req, res, next) {
     var params = {
         id: req.params['doc_id'],
-        theme: req.query['t']
+        theme: req.params['t']
     };
 
     var msg, result;
@@ -387,8 +388,8 @@ exports.todayDocument = function (req, res, next) {
 
 exports.selectedListDocument = function (req, res, next) {
     var params = {
-        order: req.body['order'] || anonymousList.defaultOrder,
-        list: req.body['list'] || []
+        order: req.params['order'] || anonymousList.defaultOrder,
+        list: req.params['list'] || []
     };
 
     var msg, result, listOrder, listData;
@@ -479,6 +480,108 @@ exports.statDocument = function (req, res, next) {
 
 exports.feedbackDocument = function (req, res, next) {
     // restrict for IP per 1 day
+    var params = {
+        id: req.params['doc_id'],
+        type: req.params['type'],
+        acc: req.params['acc'],
+        ip: res.accessIP
+    };
+
+    var msg, result;
+
+    // retrieve and update stat document
+    FeedbackDocument.findOne({ doc_id: params.id, ip: params.ip, type: params.type }, function (error, feedbackDocument) {
+        if (error) {
+            msg = i18n.t('anonymous.feedback.fail');
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        /* FeedbackDocument Conditions
+        * +1 and exist: pass
+        * +1 and not exist: insert and update
+        * -1 and exist: remove and update
+        * -1 and not exist: pass
+        * */
+
+        if (params.acc == '+1' && !feedbackDocument) {
+            var feedbackDoc = new FeedbackDocument({
+                doc_id: params.id,
+                comment: '',
+                type: params.type,
+                ip: params.ip,
+                created_at: Date.now()
+            });
+
+            // save feedbackDocument
+            feedbackDoc.save(function (error) {
+                if (error) {
+                    msg = i18n.t('anonymous.feedback.fail');
+                    result = feedback.badRequest(msg, params);
+
+                    return res.json(result.statusCode, result);
+                }
+
+                // update document
+                Document.findById(params.id, function (error, document) {
+                    var type = params.type + '_count';
+
+                    document[type] = document[type] ? document[type] + 1 : 1;
+
+                    document.save(function (error) {
+                        if (error) {
+                            msg = i18n.t('anonymous.update.fail');
+                            result = feedback.badRequest(msg, params);
+
+                            return res.json(result.statusCode, result);
+                        }
+
+                        msg = i18n.t('anonymous.feedback.done');
+                        result = feedback.done(msg, document);
+
+                        return res.json(result);
+                    });
+                });
+            });
+        } else if (params.acc == '-1' && feedbackDocument) {
+            // remove feedback
+            feedbackDocument.remove(function (error) {
+                if (error) {
+                    msg = i18n.t('anonymous.feedback.fail');
+                    result = feedback.badRequest(msg, params);
+
+                    return res.json(result.statusCode, result);
+                }
+
+                // update document
+                Document.findById(params.id, function (error, document) {
+                    var type = params.type + '_count';
+
+                    document[type] = document[type] ? document[type] - 1 : 0;
+
+                    document.save(function (error) {
+                        if (error) {
+                            msg = i18n.t('anonymous.update.fail');
+                            result = feedback.badRequest(msg, params);
+
+                            return res.json(result.statusCode, result);
+                        }
+
+                        msg = i18n.t('anonymous.feedback.done');
+                        result = feedback.done(msg, document);
+
+                        return res.json(result);
+                    });
+                });
+            });
+        } else {
+            msg = i18n.t('anonymous.feedback.pass');
+            result = feedback.done(msg, params);
+
+            res.json(result);
+        }
+    });
 
     next();
 };

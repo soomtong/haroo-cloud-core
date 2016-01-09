@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var publicDocSchema = new mongoose.Schema({
+var anonymousDocSchema = new mongoose.Schema({
     doc_id: Schema.Types.ObjectId,
     created_at: Date,
     view_count: Number,
@@ -8,4 +8,4 @@ var publicDocSchema = new mongoose.Schema({
     claim_count: Number
 });
 
-module.exports = mongoose.model('anonymous_stat', publicDocSchema);
+module.exports = mongoose.model('anonymous_stat', anonymousDocSchema);

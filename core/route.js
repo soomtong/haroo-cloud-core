@@ -148,13 +148,14 @@ function route(mode, callback) {
             doc_id: { isRequired: true }
         }
     }}, anonymous.statDocument);
-    server.get({ path: '/api/tree/doc/:doc_id/:feedback', validation: {
+    server.post({ path: '/api/tree/feedback/:doc_id', validation: {
         resources: {
-            doc_id: { isRequired: true },
-            feedback: { isRequired: true, isIn: ['commend', 'claim'] }
+            doc_id: { isRequired: true }
         },
-        queries: {
-            acc: { isRequired: true, isBoolean: true }
+        content: {
+            type: { isRequired: true, isIn: ['commend', 'claim'] },
+            acc: { isRequired: true, isIn: ['+1', '-1'] }
+            //acc: { isRequired: true, isBoolean: true }
         }
     }}, anonymous.feedbackDocument);
 

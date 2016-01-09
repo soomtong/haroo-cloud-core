@@ -27,7 +27,16 @@
         "delete": {
             "done": "done",
             "fail": "failed"
-        }
+        },
+        "feedback": {
+            "done": "done",
+            "pass": "pass",
+            "fail": "failed"
+        },
+        "update": {
+            "done": "done",
+            "fail": "failed"
+        },
     },
     "account": {
         "create": {
