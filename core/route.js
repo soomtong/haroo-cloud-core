@@ -158,6 +158,14 @@ function route(mode, callback) {
             //acc: { isRequired: true, isBoolean: true }
         }
     }}, anonymous.feedbackDocument);
+    server.post({ path: '/api/tree/search', validation: {
+        content: {
+            query: { isRequired: true },
+            order: { isRequired: false, isIn: ['newest', 'oldest', 'hottest', 'coldest', 'commended', 'claimed'] },
+            p: { isRequired: false, isInt: true },
+            s: { isRequired: false, isInt: true }
+        }
+    }}, anonymous.searchDocument);
 
 
     // for account

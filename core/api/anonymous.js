@@ -471,6 +471,124 @@ exports.selectedListDocument = function (req, res, next) {
     next();
 };
 
+exports.searchDocument = function (req, res, next) {
+    var params = {
+        order: req.params['order'] || anonymousList.defaultOrder,
+        query: req.params['query'] || ''
+    };
+
+    var msg, result, listOrder, listData;
+
+    switch (params.order) {
+        case 'newest':
+            listOrder = { created_at: -1 };
+            break;
+        case 'oldest':
+            listOrder = { created_at: 1 };
+            break;
+        case 'hottest':
+            listOrder = { view_count: -1 };
+            break;
+        case 'coldest':
+            listOrder = { view_count: 1 };
+            break;
+        case 'commended':
+            listOrder = { commend_count: 1 };
+            break;
+        case 'claimed':
+            listOrder = { claim_count: 1 };
+            break;
+        default :
+            listOrder = { created_at: -1 };
+            break;
+    }
+
+    var selectedFilter = {
+        $or: [
+            { text: new RegExp(params.query, 'gi') },
+            { title: new RegExp(params.query, 'gi') }
+        ]
+    };
+
+    Document.find(selectedFilter, { /* all fields */ }, {
+        sort: listOrder
+    }, function (error, list) {
+        if (error || !list) {
+            msg = i18n.t('anonymous.list.fail');
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+
+        msg = i18n.t('anonymous.list.done');
+
+        list.forEach(function (item) {
+            item.text = common.getHeaderTextFromMarkdown(item.text, 280);
+        });
+
+        listData = {
+            list: list,
+            count: list.length
+        };
+
+        result = feedback.done(msg, listData);
+
+        res.json(result);
+    });
+
+
+/*
+    Document.count(selectedFilter, function (error, count) {
+        if (error) {
+            msg = i18n.t('anonymous.list.fail');
+            result = feedback.badRequest(msg, params);
+
+            return res.json(result.statusCode, result);
+        }
+        // count all list
+        if (count) {
+            Document.find(selectedFilter, { /!* all fields *!/ }, {
+                sort: listOrder
+            }, function (error, list) {
+                if (error || !list) {
+                    msg = i18n.t('anonymous.list.fail');
+                    result = feedback.badRequest(msg, params);
+
+                    return res.json(result.statusCode, result);
+                }
+
+                msg = i18n.t('anonymous.list.done');
+
+                list.forEach(function (item) {
+                    item.text = common.getHeaderTextFromMarkdown(item.text, 280);
+                });
+
+                listData = {
+                    list: list,
+                    count: list.length
+                };
+
+                result = feedback.done(msg, listData);
+
+                res.json(result);
+            });
+        } else {
+            msg = i18n.t('anonymous.list.empty');
+
+            listData = {
+                list: [],
+                count: 0
+            };
+
+            result = feedback.done(msg, listData);
+
+            res.json(result);
+        }
+    });
+*/
+
+    next();
+};
 
 exports.statDocument = function (req, res, next) {
     // total view count and view count for daily with feedback stats
