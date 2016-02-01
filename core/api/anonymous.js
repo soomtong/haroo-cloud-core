@@ -17,7 +17,7 @@ var anonymousList = {
 exports.createDocument = function (req, res, next) {
     var params = {
         title: req.params['title'],
-        theme: req.params['theme'] || '',
+        theme: req.params['theme'] || '',   // follow this order 'type of document like markdown, default is text'/'type of color scheme like monokai, it's optional'
         text: req.params['text'],
         keptDate: req.params['hasKeep'] ? req.params['keep'] : undefined,
         author: req.params['author'] || 'anonymous'
@@ -33,7 +33,7 @@ exports.createDocument = function (req, res, next) {
     var document = new Document({
         title: params.title,
         text: params.text,
-        theme: params.type,
+        theme: params.theme,
         author: params.author,
         view_count: 0,
         commend_count: 0,
