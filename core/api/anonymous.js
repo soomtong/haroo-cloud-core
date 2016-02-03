@@ -157,8 +157,8 @@ exports.listDocument = function (req, res, next) {
         if (count) {
             Document.find({}, { /* all fields */ }, {
                 sort: listOrder,
-                skip: (params.page * params.size),
-                limit: params.size
+                skip: Number(params.page * params.size),
+                limit: Number(params.size)
             }, function (error, list) {
                 if (error || !list) {
                     msg = i18n.t('anonymous.list.fail');
@@ -245,8 +245,8 @@ exports.curateDocument = function (req, res, next) {
         if (count) {
             Document.find(curateFilter, { /* all fields */ }, {
                 sort: listOrder,
-                skip: (params.page * params.size),
-                limit: params.size
+                skip: Number(params.page * params.size),
+                limit: Number(params.size)
             }, function (error, list) {
                 if (error || !list) {
                     msg = i18n.t('anonymous.list.fail');
@@ -338,8 +338,8 @@ exports.todayDocument = function (req, res, next) {
         if (count) {
             Document.find(todayFilter, { /* all fields */ }, {
                 sort: listOrder,
-                skip: (params.page * params.size),
-                limit: params.size
+                skip: Number(params.page * params.size),
+                limit: Number(params.size)
             }, function (error, list) {
                 if (error || !list) {
                     msg = i18n.t('anonymous.list.fail');
