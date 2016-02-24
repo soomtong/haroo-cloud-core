@@ -7,9 +7,9 @@ var util = require('./util');
 var HOUR = 3600000;
 var DAY = HOUR * 24;
 
-exports.initHarooID = function (email, database) {
-    var nameToken = database.host || "database1";
-    var prefix = database.prefix;
+exports.initHarooID = function (email) {
+    var nameToken = "haroocloud";
+    var prefix = "ko";
 
     var namespace = uuid_v5('null', nameToken, true);
     var uuid = uuid_v5(namespace, email);
@@ -18,19 +18,21 @@ exports.initHarooID = function (email, database) {
     return prefix + uuid.replace(/-/g,'');
 };
 
+/*
 exports.initAccountDatabase = function (haroo_id, couch, callback) {
     if (!haroo_id) throw new Error('no haroo id assigned');
 
     //var InitUserDB = new InitAccount.initUserDB(couch.host, couch.port, couch.auth[0], couch.auth[1]);
 
-    /*
+    /!*
     InitUserDB.createNewAccount(haroo_id, function (err, res) {
         callback(err, res);
     });
-    */
+    *!/
 
     callback({}, {});
 };
+*/
 
 exports.getAccessToken = function () {
     return uuid.v4();
@@ -77,7 +79,7 @@ exports.setDataToClient = function (userData, tokenData) {
     result.email = userData.email;
     result.haroo_id = userData.haroo_id;
     result.profile = userData.profile;
-    result.db_host = userData.db_host || 'default_database.haroopress.com';
+    //result.db_host = userData.db_host || 'default_database.haroopress.com';
 
     if (tokenData) {
         if (tokenData.access_host) result.access_host = tokenData.access_host;

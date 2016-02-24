@@ -29,12 +29,21 @@ describe('Account', function () {
         };
         */
         var result = {
-            status: 'validation failed',
-            errors: [{
-                field: 'email',
-                code: 'MISSING',
-                message: 'Field is required'
-            }]
+            "data": {
+                "email": {
+                    "code": "MISSING",
+                    "field": "email",
+                    "message": "Field is required",
+                    "scope": "content"
+                }
+            },
+            "isResult": true,
+            "message": "Not Acceptable: validation failed",
+            "meta": {
+                "error": "Not Acceptable",
+                "message": "validation failed"
+            },
+            "statusCode": 406
         };
 
         app.init(app.node_env, function (server) {
@@ -42,7 +51,7 @@ describe('Account', function () {
                 .post('/api/account/create')
                 .send({password: 'new_password'})
                 .expect('Content-Type', /json/)
-                .expect(400)
+                .expect(406)
                 .end(function (err, res) {
                     assert.ok(!err, err);
                     assert.deepEqual(res.body, result);
@@ -73,12 +82,21 @@ describe('Account', function () {
         */
 
         var result = {
-            status: 'validation failed',
-            errors: [{
-                field: 'password',
-                code: 'MISSING',
-                message: 'Field is required'
-            }]
+            "data": {
+                "password": {
+                    "code": "MISSING",
+                    "field": "password",
+                    "message": "Field is required",
+                    "scope": "content"
+                }
+            },
+            "isResult": true,
+            "message": "Not Acceptable: validation failed",
+            "meta": {
+                "error": "Not Acceptable",
+                "message": "validation failed"
+            },
+            "statusCode": 406
         };
 
         app.init(app.node_env, function (server) {
@@ -86,7 +104,7 @@ describe('Account', function () {
                 .post('/api/account/create')
                 .send({email: 'test@email.net'})
                 .expect('Content-Type', /json/)
-                .expect(400)
+                .expect(406)
                 .end(function (err, res) {
                     assert.ok(!err, err);
                     assert.deepEqual(res.body, result);
@@ -100,10 +118,11 @@ describe('Account', function () {
 
     before(function(done){
         var Account = require('../core/models/account');
-        var AccountToken = require('../core/models/accountToken');
+        var AccountToken = require('../core/models/account_token');
 
         if (temp) {
             Account.remove({ email: 'test@email.net'}, function (err, result) {
+                console.log(err, result);
                 done();
             });
         } else {
@@ -120,7 +139,7 @@ describe('Account', function () {
                 "access_token": "e8e58304-dd29-4c03-8791-673e96a7f34e",
                 "db_host": "localhost:5984",
                 "email": "test@email.net",
-                "haroo_id": "tfdf073f8d9915f9191ea73edef12f85b",
+                "haroo_id": "ko5d146ee4ac3f5274a6ce3e3467915482",
                 "login_expire": "1422208905667",
                 "profile": {
                     "gender": "",
@@ -145,7 +164,7 @@ describe('Account', function () {
                 .end(function (err, res) {
                     assert.ok(!err, err);
                     //assert.deepEqual(res.body, result);
-                    assert.deepEqual(res.body.data.db_host, result.data.db_host);
+                    //assert.deepEqual(res.body.data.db_host, result.data.db_host);
                     assert.deepEqual(res.body.data.haroo_id, result.data.haroo_id);
                     //assert.deepEqual(res.body.message, result.message);
 
@@ -165,8 +184,7 @@ describe('Account', function () {
                 email: 'test@email.net',
                 password: 'new_password',
                 accessHost: 'supertest',
-                accessIP: '127.0.0.1',
-                database: 'localhost:5984'
+                accessIP: '127.0.0.1'
             },
             isResult: true,
             statusCode: 412,
@@ -230,7 +248,7 @@ describe('Account', function () {
             message: 'OK: done',
             data: {
                 email: 'test@email.net',
-                haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
+                haroo_id: 'ko5d146ee4ac3f5274a6ce3e3467915482',
                 profile: {
                     nickname: '',
                     gender: '',
@@ -270,7 +288,7 @@ describe('Account', function () {
             message: 'OK: done',
             data: {
                 email: 'test@email.net',
-                haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
+                haroo_id: 'ko5d146ee4ac3f5274a6ce3e3467915482',
                 profile: {
                     nickname: '',
                     gender: '',
@@ -278,7 +296,7 @@ describe('Account', function () {
                     website: '',
                     picture: ''
                 },
-                db_host: 'localhost:5984',
+                //db_host: 'localhost:5984',
                 tokens: []
             },
             isResult: true,
@@ -356,7 +374,7 @@ describe('Account', function () {
     it('get api service spec version', function (done) {
         var result = {
             message: 'OK: api version',
-            data: {ver: '0.0.1', released: '2015-02-28T15:00:00.000Z'},
+            data: {ver: '0.1.0', released: '2015-02-28T15:00:00.000Z'},
             isResult: true,
             statusCode: 200,
             meta: {error: 'OK', message: 'api version'}
@@ -483,7 +501,7 @@ describe('Account', function () {
             var result = {
                 message: 'Bad Request: failed',
                 data: {
-                    haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
+                    haroo_id: 'ko5d146ee4ac3f5274a6ce3e3467915482',
                     email: 'invalid@email.net',
                     password: 'anotherPassword',
                     accessHost: 'supertest',
@@ -607,7 +625,7 @@ describe('Account', function () {
             var result = {
                 message: 'Unauthorized: invalid password',
                 data: {
-                    haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
+                    haroo_id: 'ko5d146ee4ac3f5274a6ce3e3467915482',
                     email: 'test@email.net',
                     password: 'invalidPassword',
                     clientToken: {
@@ -615,7 +633,7 @@ describe('Account', function () {
                         access_ip: '127.0.0.1',
                         access_host: 'supertest',
                         access_token: 'f8500a8d-7173-4980-8597-fefe600a4b7a',
-                        haroo_id: 'tfdf073f8d9915f9191ea73edef12f85b',
+                        haroo_id: 'ko5d146ee4ac3f5274a6ce3e3467915482',
                         login_expire: '1422523653990',
                         created_at: '2015-01-14T09:27:33.990Z',
                         __v: 0

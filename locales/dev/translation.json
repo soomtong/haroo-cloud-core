@@ -36,7 +36,7 @@
         "update": {
             "done": "done",
             "fail": "failed"
-        },
+        }
     },
     "account": {
         "create": {

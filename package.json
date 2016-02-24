@@ -16,7 +16,7 @@
     "bcrypt-nodejs": "0.0.3",
     "bunyan": "^1.2.3",
     "crypto": "0.0.3",
-    "i18next": "^2.0.22",
+    "i18next": "^1.7.8",
     "mongoose": "^4.0.7",
     "node-restify-validation": "^1.0.4",
     "node-uuid": "^1.4.2",

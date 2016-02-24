@@ -10,16 +10,13 @@ app.node_env = 'testing';
 describe('Common Module', function () {
 
     it('haroo id generation', function () {
-        var database = app.config({mode: 'testing'})['database']['couch'][0];
         var email = 'soomtong@gmail.com';
-        var validHarooID = common.initHarooID(email, database);
+        var validHarooID = common.initHarooID(email);
 
-        assert.deepEqual(validHarooID, common.initHarooID(email, database));
+        assert.deepEqual(validHarooID, common.initHarooID(email));
     });
-
+/*
     it('should exist base collection for replication', function (done) {
-        var nano = require('nano');
-        var database = app.config({mode: 'testing'})['database']['couch'][0];
         var url = 'http://'+ database.auth[0] +':'+ database.auth[1] +'@'+ database.host +':'+ database.port;
 
         var couch = nano(url);
@@ -33,15 +30,15 @@ describe('Common Module', function () {
     });
 
     it('copy new couch collection to new account', function (done) {
-        var database = app.config({mode: 'testing'})['database']['couch'][0];
         var email = "test@email.net";
-        var validHarooID = common.initHarooID(email, database);
+        var validHarooID = common.initHarooID(email);
 
-        common.initAccountDatabase(validHarooID, database, function (err, res) {
+        common.initAccountDatabase(validHarooID, function (err, res) {
             assert.ok(res.ok);
             done();
         });
     });
+*/
 
     it('stripe markdown token and contract text', function () {
         var markdown = '# This is a heading\n\n\r\nThis is a paragraph with [a link](http://www.disney.com/) in it.';

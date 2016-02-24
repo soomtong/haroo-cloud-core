@@ -48,8 +48,7 @@ exports.createAccount = function (req, res, next) {
         nickname: req.params['nickname'],
         joinFrom: req.params['client_id'],
         accessHost: res.accessHost,
-        accessIP: res.accessIP,
-        database: res.coreDatabase['host'] + (res.coreDatabase['port'] ? ':' + res.coreDatabase['port'] : '')
+        accessIP: res.accessIP
     };
 
     var msg, client, result;
@@ -64,6 +63,7 @@ exports.createAccount = function (req, res, next) {
 
         // make new account
         var haroo_id = common.initHarooID(params.email);
+        console.log(haroo_id);
 
         if (!haroo_id) {
             //throw new Error('no exist haroo id!');
@@ -78,13 +78,13 @@ exports.createAccount = function (req, res, next) {
             password: params.password,
             haroo_id: haroo_id,
             join_from: params.joinFrom,
-            db_host: params.database,
             created_at: Date.now(),
             profile: {
                 nickname: params.nickname
             }
         });
 
+/*
         // init couch collection for account
         common.initAccountDatabase(haroo_id, {}, function (err, result) {
             if (err) {
@@ -95,44 +95,47 @@ exports.createAccount = function (req, res, next) {
                 return res.json(result.statusCode, result);
             }
 
-            // save account to mongo
-            user.save(function (err) {
+        });
+*/
+
+        // save account to mongo
+        user.save(function (err) {
+            if (err) {
+                msg = i18n.t('account.create.fail');
+                result = feedback.badImplementation(msg, err);
+
+                return res.json(result.statusCode, result);
+            }
+
+            // make new account token
+            var token = new AccountToken({
+                access_ip: params.accessIP,
+                access_host: params.accessHost,
+                access_token: common.getAccessToken(),
+                haroo_id: haroo_id,
+                login_expire: common.getLoginExpireDate(),
+                created_at: Date.now()
+            });
+
+            token.save(function (err) {
                 if (err) {
-                    msg = i18n.t('account.create.fail');
+                    msg = i18n.t('token.create.fail');
                     result = feedback.badImplementation(msg, err);
 
                     return res.json(result.statusCode, result);
                 }
+                //AccountLog.signUp({email: params['email']});
 
-                // make new account token
-                var token = new AccountToken({
-                    access_ip: params.accessIP,
-                    access_host: params.accessHost,
-                    access_token: common.getAccessToken(),
-                    haroo_id: haroo_id,
-                    login_expire: common.getLoginExpireDate(),
-                    created_at: Date.now()
-                });
+                // done right
+                msg = i18n.t('account.create.done');
+                client = common.setDataToClient(user, token);
 
-                token.save(function (err) {
-                    if (err) {
-                        msg = i18n.t('token.create.fail');
-                        result = feedback.badImplementation(msg, err);
+                result = feedback.done(msg, client);
 
-                        return res.json(result.statusCode, result);
-                    }
-                    //AccountLog.signUp({email: params['email']});
-
-                    // done right
-                    msg = i18n.t('account.create.done');
-                    client = common.setDataToClient(user, token);
-
-                    result = feedback.done(msg, client);
-
-                    res.json(result);
-                });
+                res.json(result);
             });
         });
+
     });
 
     next();

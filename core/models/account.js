@@ -6,7 +6,6 @@ var accountSchema = new mongoose.Schema({
     haroo_id: { type: String, unique: true, index: true },
     email: { type: String, unique: true, index: true, lowercase: true },
     password: String,
-    db_host: String,
 
     created_at: Date,
     updated_at: Date,
