@@ -266,28 +266,52 @@ function route(mode, callback) {
         }
     }}, account.getValidateToken, account.removeAccount);
 
-    // for documents, sync process are using a proxy just.
+    // for documents
     server.post({ path: '/api/documents/:haroo_id', validation: {
         resources: {
             haroo_id: { isRequired: true }
         }
-    }}, account.getValidateToken, document.put);
+    }}, account.getValidateToken, document.createMulti);
     server.get({ path: '/api/documents/:haroo_id', validation: {
         resources: {
             haroo_id: { isRequired: true }
         }
-    }}, account.getValidateToken, document.get);
+    }}, account.getValidateToken, document.readMulti);
+    server.put({ path: '/api/documents/:haroo_id', validation: {
+        resources: {
+            haroo_id: { isRequired: true }
+        }
+    }}, account.getValidateToken, document.updateMulti);
+    server.del({ path: '/api/documents/:haroo_id', validation: {
+        resources: {
+            haroo_id: { isRequired: true }
+        }
+    }}, account.getValidateToken, document.deleteMulti);
+
+    // for one document
     server.post({ path: '/api/document/:haroo_id', validation: {
         resources: {
             haroo_id: { isRequired: true }
         }
-    }}, account.getValidateToken, document.save);
+    }}, account.getValidateToken, document.createOne);
     server.get({ path: '/api/document/:haroo_id/:document_id', validation: {
         resources: {
             haroo_id: { isRequired: true },
             document_id: { isRequired: true }
         }
-    }}, account.getValidateToken, document.read);
+    }}, account.getValidateToken, document.readOne);
+    server.put({ path: '/api/document/:haroo_id', validation: {
+        resources: {
+            haroo_id: { isRequired: true }
+        }
+    }}, account.getValidateToken, document.updateOne);
+    server.del({ path: '/api/document/:haroo_id', validation: {
+        resources: {
+            haroo_id: { isRequired: true }
+        }
+    }}, account.getValidateToken, document.deleteOne);
+
+    // dupe public
     server.get({ path: '/api/document/:haroo_id/:document_id/public', validation: {
         resources: {
             haroo_id: { isRequired: true },
