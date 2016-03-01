@@ -225,7 +225,7 @@ exports.createOne = function (req, res, next) {
         accessIP: res.accessIP
     };
 
-    AccountToken.findOne({ access_token: params.clientToken }, function (err, token) {
+    AccountToken.findOne({ access_token: params.clientToken.access_token, haroo_id: params.haroo_id }, function (err, token) {
         if (err) {
             msg = i18n.t('token.find.fail');
             result = feedback.badImplementation(msg, err);
@@ -263,7 +263,7 @@ exports.createOne = function (req, res, next) {
             });
         } else {
             msg = i18n.t('document.create.fail');
-            result = feedback.badData(msg, document);
+            result = feedback.badData(msg, req.params);
 
             res.json(result);
         }

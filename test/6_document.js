@@ -42,7 +42,7 @@ describe('Document', function () {
         var expectedResult = {
             message: 'OK: done',
             data: {
-                url: ''
+                text: "normal text here"
             },
             isResult: true,
             statusCode: 200,
@@ -59,8 +59,9 @@ describe('Document', function () {
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
-                    console.log(res.body);
                     assert.ok(!err, err);
+
+                    assert.equal(res.body.data.text, expectedResult.data.text);
 
                     res.body.data = undefined;
                     expectedResult.data = undefined;
@@ -74,10 +75,21 @@ describe('Document', function () {
 
     it("save a user's one document with title", function (done) {
         var document = {
-            title: "new title",
-            name: "robert",
-            age: 43
+            title: "titled document",
+            text: "another normal text here"
         };
+
+        var expectedResult = {
+            message: 'OK: done',
+            data: {
+                title: "titled document",
+                text: "another normal text here"
+            },
+            isResult: true,
+            statusCode: 200,
+            meta: { error: 'OK', message: 'done' }
+        };
+
 
         app.init(app.node_env, function (server) {
             supertest(server)
@@ -89,7 +101,133 @@ describe('Document', function () {
                 .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
-                    assert.deepEqual(res.body, result);
+
+                    assert.equal(res.body.data.title, expectedResult.data.title);
+                    assert.equal(res.body.data.text, expectedResult.data.text);
+
+                    res.body.data = undefined;
+                    expectedResult.data = undefined;
+
+                    assert.deepEqual(res.body, expectedResult);
+
+                    done();
+                });
+        });
+    });
+
+    it("save a user's one document no text", function (done) {
+        var document = {
+        };
+
+        var expectedResult = {
+            message: 'Not Acceptable: validation failed',
+            data: {
+                token_name: 'supertest',
+                haroo_id: dummyAccount.haroo_id
+            },
+            isResult: true,
+            statusCode: 406,
+            meta: { error: 'Not Acceptable', message: 'validation failed' }
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/api/document/' + dummyAccount.haroo_id)
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', dummyAccount.access_token)
+                .send(document)
+                .expect('Content-Type', /json/)
+                .expect(406)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+
+                    res.body.data = undefined;
+                    expectedResult.data = undefined;
+
+                    assert.deepEqual(res.body, expectedResult);
+
+                    done();
+                });
+        });
+    });
+
+    it("save a user's one document no haroo id", function (done) {
+        var document = {
+            text: 'no haroo id document'
+        };
+
+        var expectedResult = {
+            message: 'Bad Request: access deny',
+            data: {
+                token_name: 'supertest',
+                haroo_id: 'wrong haroo id'
+            },
+            isResult: true,
+            statusCode: 400,
+            meta: { error: 'Bad Request', message: 'access deny' }
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/api/document/' + 'wrong haroo id')
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', dummyAccount.access_token)
+                .send(document)
+                .expect('Content-Type', /json/)
+                .expect(400)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+
+                    assert.equal(res.body.data.accessHost, expectedResult.data.token_name);
+                    assert.equal(res.body.data.haroo_id, expectedResult.data.haroo_id);
+
+                    res.body.data = undefined;
+                    expectedResult.data = undefined;
+
+                    assert.deepEqual(res.body, expectedResult);
+
+                    done();
+                });
+        });
+    });
+
+    it("save a user's one document wrong access token", function (done) {
+        var document = {
+            title: 'wrong access token document',
+            text: 'wrong access token document'
+        };
+
+        var expectedResult = {
+            message: 'Bad Request: access deny',
+            data: {
+                token_name: 'supertest',
+                haroo_id: dummyAccount.haroo_id
+            },
+            isResult: true,
+            statusCode: 400,
+            meta: { error: 'Bad Request', message: 'access deny' }
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/api/document/' + dummyAccount.haroo_id)
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', 'wrong-access-token')
+                .send(document)
+                .expect('Content-Type', /json/)
+                .expect(400)
+                .end(function (err, res) {
+                    console.log(res.body);
+
+                    assert.ok(!err, err);
+
+                    assert.equal(res.body.data.accessHost, expectedResult.data.token_name);
+                    assert.equal(res.body.data.haroo_id, expectedResult.data.haroo_id);
+
+                    res.body.data = undefined;
+                    expectedResult.data = undefined;
+
+                    assert.deepEqual(res.body, expectedResult);
 
                     done();
                 });

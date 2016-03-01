@@ -292,6 +292,9 @@ function route(mode, callback) {
     server.post({ path: '/api/document/:haroo_id', validation: {
         resources: {
             haroo_id: { isRequired: true }
+        },
+        content: {
+            text: { isRequired: true }
         }
     }}, account.getValidateToken, document.createOne);
     server.get({ path: '/api/document/:haroo_id/:document_id', validation: {
