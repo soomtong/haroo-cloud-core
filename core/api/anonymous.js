@@ -65,7 +65,7 @@ exports.createDocument = function (req, res, next) {
         });
     } else {
         msg = i18n.t('anonymous.create.fail');
-        result = feedback.badData(msg, document);
+        result = feedback.badData(msg, req.params);
 
         res.json(result);
     }
