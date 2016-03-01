@@ -76,8 +76,12 @@
             "fail": "failed"
         },
         "delete": {
-            "done": "done",
-            "fail": "failed"
+            "done": "delete done",
+            "fail": "delete failed"
+        },
+        "find": {
+            "done": "find done",
+            "fail": "find failed"
         }
     },
     "user": {
@@ -104,6 +108,32 @@
         }
     },
     "document": {
+        "create": {
+            "done": "done",
+            "fail": "failed"
+        },
+        "read": {
+            "done": "done",
+            "fail": "failed"
+        },
+        "list": {
+            "done": "done",
+            "empty": "list empty",
+            "fail": "failed"
+        },
+        "delete": {
+            "done": "done",
+            "fail": "failed"
+        },
+        "feedback": {
+            "done": "done",
+            "pass": "pass",
+            "fail": "failed"
+        },
+        "update": {
+            "done": "done",
+            "fail": "failed"
+        },
         "togglePublic": {
             "done": "togglePublic done",
             "fail": "togglePublic failed"

@@ -34,8 +34,47 @@ describe('Document', function () {
         // dump core documents
     });
 
-    it("save one document for user's", function (done) {
+    it("save a user's one document", function (done) {
         var document = {
+            text: "normal text here"
+        };
+
+        var expectedResult = {
+            message: 'OK: done',
+            data: {
+                url: ''
+            },
+            isResult: true,
+            statusCode: 200,
+            meta: { error: 'OK', message: 'done' }
+        };
+
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .post('/api/document/' + dummyAccount.haroo_id)
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', dummyAccount.access_token)
+                .send(document)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    console.log(res.body);
+                    assert.ok(!err, err);
+
+                    res.body.data = undefined;
+                    expectedResult.data = undefined;
+
+                    assert.deepEqual(res.body, expectedResult);
+
+                    done();
+                });
+        });
+    });
+
+    it("save a user's one document with title", function (done) {
+        var document = {
+            title: "new title",
             name: "robert",
             age: 43
         };
@@ -46,6 +85,31 @@ describe('Document', function () {
                 .set('x-access-host', 'supertest')
                 .set('x-access-token', dummyAccount.access_token)
                 .send(document)
+                .expect('Content-Type', /json/)
+                .expect(200)
+                .end(function (err, res) {
+                    assert.ok(!err, err);
+                    assert.deepEqual(res.body, result);
+
+                    done();
+                });
+        });
+    });
+
+    it("read a user's one document", function (done) {
+        var result = {
+            message: 'OK: retrieve done',
+            data: [],
+            isResult: true,
+            statusCode: 200,
+            meta: {error: 'OK', message: 'retrieve done'}
+        };
+
+        app.init(app.node_env, function (server) {
+            supertest(server)
+                .get('/api/document/' + dummyAccount.haroo_id + '/' + '')
+                .set('x-access-host', 'supertest')
+                .set('x-access-token', dummyAccount.access_token)
                 .expect('Content-Type', /json/)
                 .expect(200)
                 .end(function (err, res) {
@@ -179,31 +243,6 @@ describe('Document', function () {
                 .send({date: '20150210', counter: '1', counted: false})
                 .expect('Content-Type', /json/)
                 .expect(500)
-                .end(function (err, res) {
-                    assert.ok(!err, err);
-                    assert.deepEqual(res.body, result);
-
-                    done();
-                });
-        });
-    });
-
-    it("read a user's one document", function (done) {
-        var result = {
-            message: 'OK: retrieve done',
-            data: [],
-            isResult: true,
-            statusCode: 200,
-            meta: {error: 'OK', message: 'retrieve done'}
-        };
-
-        app.init(app.node_env, function (server) {
-            supertest(server)
-                .get('/api/document/' + dummyAccount.haroo_id + '/' + '')
-                .set('x-access-host', 'supertest')
-                .set('x-access-token', dummyAccount.access_token)
-                .expect('Content-Type', /json/)
-                .expect(200)
                 .end(function (err, res) {
                     assert.ok(!err, err);
                     assert.deepEqual(res.body, result);

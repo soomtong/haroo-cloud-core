@@ -5,6 +5,8 @@ var feedback = require('../lib/feedback');
 var common = require('../lib/common');
 
 var Account = require('../models/account');
+var Document = require('../models/document');
+var AccountToken = require('../models/account_token');
 var PublicDocument = require('../models/public_document');
 
 function togglePublicCoreDocument(coreDB, document_id, shareData) {
@@ -117,6 +119,7 @@ exports.togglePublic = function (req, res, next) {
     next();
 };
 
+/* multi */
 exports.createMulti = function (req, res, next) {
 
     next();
@@ -210,7 +213,61 @@ exports.deleteMulti = function (req, res, next) {
     next();
 };
 
+/* single */
 exports.createOne = function (req, res, next) {
+    var params = {
+        title: req.params['title'],
+        theme: req.params['theme'] || '',   // follow this order 'type of document like markdown, default is text'/'type of color scheme like monokai, it's optional'
+        text: req.params['text'],
+        haroo_id: req.params['haroo_id'],
+        clientToken: res.clientToken,
+        accessHost: res.accessHost,
+        accessIP: res.accessIP
+    };
+
+    AccountToken.findOne({ access_token: params.clientToken }, function (err, token) {
+        if (err) {
+            msg = i18n.t('token.find.fail');
+            result = feedback.badImplementation(msg, err);
+
+            return res.json(result.statusCode, result);
+        }
+
+        var msg, result;
+
+        var document = new Document({
+            title: params.title,
+            text: params.text,
+            theme: params.theme,
+            haroo_id: params.haroo_id,
+            token_id: token.access_token,
+            token_name: token.access_host,
+            accessed_at: Date.now(),
+            updated_at: Date.now(),
+            created_at: Date.now()
+        });
+
+        if (params.text) {
+            document.save(function (error) {
+                if (error) {
+                    msg = i18n.t('document.create.fail');
+                    result = feedback.badImplementation(msg, error);
+
+                    return res.json(result.statusCode, result);
+                }
+
+                msg = i18n.t('document.create.done');
+                result = feedback.done(msg, document);
+
+                res.json(result);
+            });
+        } else {
+            msg = i18n.t('document.create.fail');
+            result = feedback.badData(msg, document);
+
+            res.json(result);
+        }
+    });
 
     next();
 };
