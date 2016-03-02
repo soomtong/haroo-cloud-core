@@ -43,7 +43,7 @@ curl 'localhost:3030/api/tree/doc'
 
 Make a public document by anonymous
 
-Use simple rest call for make new document. 
+Use simple rest call for make new document.
 call http POST method and send data in a body. no need auth or tokens.
 but a little district exist here.
 
@@ -63,7 +63,7 @@ None
 
 Parameter | Require | Default   | Description
 --------- | ------- | --------- | -----------
-title     | false   | null      | 
+title     | false   | null      |
 text      | true    |           |
 type      | false   | text      | normal text or language type for code highlight (todo: javascript/monokai)
 author    | false   | anonymous |
@@ -93,7 +93,7 @@ curl 'localhost:3030/api/tree/doc/55aba11a13693fc1e166eba9?output=clojure/monoka
         "commend_count": 0,
         "alert_count": 0,
         "created_at": "2015-07-19T10:17:47.730Z",
-        "_id": "55ab794b4368269fdf9de925" 
+        "_id": "55ab794b4368269fdf9de925"
     },
     "isResult": true,
     "statusCode": 200,
@@ -117,7 +117,7 @@ None
 
 Parameter   | Require | Default   | Description
 ----------- | ------- | --------- | -----------
-document_id | true    |           | 
+document_id | true    |           |
 
 ### Query
 
@@ -148,7 +148,7 @@ curl 'localhost:3030/api/tree/list?order=hottest'
     "message": "OK: done",
     "data": {
         "list": [ "... list of documents ..." ],
-        "page": 1,        
+        "page": 1,
         "size": 10
     },
     "isResult": true,
@@ -157,7 +157,7 @@ curl 'localhost:3030/api/tree/list?order=hottest'
 }
 ```
 
-get list of documents by sent page, size with order flags 
+get list of documents by sent page, size with order flags
 
 ### HTTP Request
 
@@ -171,9 +171,9 @@ None
 
 Parameter | Require | Default   | Description
 --------- | ------- | --------- | -----------
-order     | false   | newest    |  
-p         | false   | 0         | 
-s         | false   | 10        | 
+order     | false   | newest    |
+p         | false   | 0         |
+s         | false   | 10        |
 
 `order` query used like this
 
@@ -224,7 +224,7 @@ None
 
 Parameter   | Require | Default   | Description
 ----------- | ------- | --------- | -----------
-document_id | true    |           | 
+document_id | true    |           |
 
 
 
@@ -235,35 +235,32 @@ document_id | true    |           |
 
 
 
-# Developer Account
+# Account
 
+## Create Account
 
-## Account
-
-### 1. `POST` /api/account/create
-
-**Send**
-
-> localhost:3030/api/account/create
-
-```json
-{ "email": "test@gmail.com", "password": "password" }
+```shell
+curl 'localhost:3030/api/account/create'
+  -d '{ "email": "test@gmail.com", "password": "password" }'
 ```
 
-**Receive - done**
+> Make new account for haroo cloud core. Returns below
 
 ```json
 {
     "message": "OK: done",
     "data": {
-        "email": "soomtong@gmail.com",
-        "haroo_id": "b4c4ae0692b435427b671649ea30848e7",
-        "profile": {"gender": "", "location": "", "website": "", "picture": ""},
-        "db_host": "db1.haroopress.com",
-        "access_host": "sven-mac-pro",
-        "access_token": "29478ae2-4c19-457e-aaac-74fef36d208e",
-        "login_expire": "1422973044455",
-        "tokens": []
+        "access_token": "e8e58304-dd29-4c03-8791-673e96a7f34e",
+        "db_host": "localhost:5984",
+        "email": "test@email.net",
+        "haroo_id": "ko5d146ee4ac3f5274a6ce3e3467915482",
+        "login_expire": "1422208905667",
+        "profile": {
+            "gender": "",
+            "location": "",
+            "picture": "",
+            "website": ""
+        }, "tokens": []
     },
     "isResult": true,
     "statusCode": 200,
@@ -271,35 +268,56 @@ document_id | true    |           |
 }
 ```
 
-**Receive - exist**
+> already account exist
 
 ```json
 {
-    "message": "OK: already exist",
+    "message": "Precondition Failed: already exist",
     "data": {
-        "email": "soomtong@gmail.com",
+        "email": "test@email.net",
         "password": "password",
         "accessHost": "sven-mac-pro",
-        "accessIP": "localhost",
-        "database": "db1.haroopress.com"
+        "accessIP": "localhost"
     },
     "isResult": true,
-    "statusCode": 200,
-    "meta": {"error": "OK", "message": "already exist"}
+    "statusCode": 412,
+    "meta": {"error": "Precondition Failed", "message": "already exist"}
 }
 ```
 
-### 2. `POST` /api/account/login
+Make new user account
 
-**Send**
+Use simple rest call for make new account.
+call http POST method and send data in a body. no need auth or token in this process
+this API returns new access token. use this token for next access
 
-> localhost:3030/api/account/login
+### HTTP Request
 
-```json
-{ "email": "test@gmail.com", "password": "password" }
+`POST https://haroocloud.com/api/account/create`
+
+### Header
+
+None
+
+### Content
+
+Parameter | Require | Default   | Description
+--------- | ------- | --------- | -----------
+email     | true    | null      |
+password  | true    |           |
+nickname  | false   |           |
+client_id | false   |           | sign in device
+
+
+
+## Sign in Account
+
+```shell
+curl 'localhost:3030/api/account/login'
+  -d '{ "email": "test@gmail.com", "password": "password" }'
 ```
 
-**Receive - done**
+> Sign in process
 
 ```json
 {
@@ -320,7 +338,7 @@ document_id | true    |           |
 }
 ```
 
-**Receive - invalid**
+> Wrong account information
 
 ```json
 {
@@ -337,17 +355,36 @@ document_id | true    |           |
 }
 ```
 
-### 3. `POST` /api/account/forgot-password
+Sign in user account
 
-**Send**
+process login. and get new access token
 
-> localhost:3030/api/account/forgot_password
+### HTTP Request
 
-```json
-{ "email": "test@gmail.com" }
+`POST https://haroocloud.com/api/account/forgot-password`
+
+### Header
+
+None
+
+### Content
+
+Parameter | Require | Default   | Description
+--------- | ------- | --------- | -----------
+email     | true    |           |
+password  | true    |           |
+
+
+
+
+## User Information
+
+```shell
+curl 'localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/info'
+  -H '{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }'
 ```
 
-**Receive - done**
+> get user information
 
 ```json
 {
@@ -356,171 +393,6 @@ document_id | true    |           |
         "email": "test@gmail.com",
         "haroo_id": "b4c4ae0692b435427b671649ea30848e7",
         "profile": {"nickname": "", "gender": "", "location": "", "website": "", "picture": ""},
-        "db_host": "db1.haroopress.com",
-        "tokens": []
-    },
-    "isResult": true,
-    "statusCode": 200,
-    "meta": {"error": "OK", "message": "done"}
-}
-```
-
-**Receive - invalid**
-
-```json
-{
-    "message": "OK: can't find information",
-    "data": {
-        "email": "wrong-id@gmail.com",
-        "accessIP": "localhost"
-    },
-    "isResult": true,
-    "statusCode": 200,
-    "meta": {"error": "OK", "message": "can't find information"}
-}
-```
-
-
-## Common
-
-### 1. `POST` /api/token/validate
-
-**Send**
-
-> localhost:3030/api/token/validate
-
-```json
-{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }
-```
-
-**Receive - done**
-
-```json
-{
-    "message": "OK: done",
-    "data": {
-        "accessToken": "dcbba695-fd91-45f0-987e-1311d8b4b6ca",
-        "accessHost": "sven-mac-pro",
-        "accessIP": "localhost"
-    },
-    "isResult": true,
-    "statusCode": 200,
-    "meta": {"error": "OK", "message": "done"}
-}
-```
-
-**Receive - invalid**
-
-```json
-{
-    "message": "Bad Request: access deny",
-    "data": {
-        "accessToken": "wrong-dcbba695-fd91-45f0-987e-1311d8b4b6ca",
-        "accessHost": "sven-mac-pro",
-        "accessIP": "localhost"
-    },
-    "isResult": true,
-    "statusCode": 400,
-    "meta": {"error": "Bad Request", "message": "access deny"}
-}
-```
-
-**Send**
-
-> localhost:3030/api/token/validate
-
-```json
-{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }
-{ "keep": "1" }
-```
-
-**Receive - done**
-
-```json
-{
-    "message": "OK: kept one more",
-    "data": {
-        "keepToken": "1",
-        "accessToken": "dcbba695-fd91-45f0-987e-1311d8b4b6ca",
-        "accessHost": "sven-mac-pro",
-        "accessIP": "localhost"
-    },
-    "isResult": true,
-    "statusCode": 200,
-    "meta": {"error": "OK", "message": "kept one more"}
-}
-```
-
-**Send**
-
-> localhost:3030/api/token/validate
-
-```json
-{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }
-{ "keep": "0" }
-```
-
-**Receive - done**
-
-```json
-{
-    "message": "OK: done",
-    "data": {
-        "keepToken": "0",
-        "accessToken": "0d82f030-8cc1-4c42-a3cf-1938faf40b5b",
-        "accessHost": "sven-mac-pro",
-        "accessIP": "localhost"
-    },
-    "isResult": true,
-    "statusCode": 200,
-    "meta": {"error": "OK", "message": "done"}
-}
-```
-
-### 2. `POST` /api/spec/version
-
-**Send**
-
-> localhost:3030/api/spec/version
-
-```json
-{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }
-```
-
-**Receive - done**
-
-```json
-{
-    "message": "OK: api version",
-    "data": {"ver": "0.0.1", "released": "2015-02-28T15:00:00.000Z"},
-    "isResult": true,
-    "statusCode": 200,
-    "meta": {"error": "OK", "message": "api version"}
-}
-```
-
-## User
-
-### 1. `POST` /api/user/:haroo_id/info
-
-**Send**
-
-> localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/info
-
-```json
-{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
-```
-
-**Receive - done**
-
-```json
-{
-    "message": "OK: done",
-    "data": {
-        "email": "test@gmail.com",
-        "haroo_id": "b4c4ae0692b435427b671649ea30848e7",
-        "profile": {"nickname": "", "gender": "", "location": "", "website": "", "picture": ""},
-        "db_host": "db1.haroopress.com",
         "access_host": "sven-mac-pro",
         "access_token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e",
         "login_expire": "1422975245862",
@@ -532,7 +404,7 @@ document_id | true    |           |
 }
 ```
 
-**Receive - invalid**
+> get invalid user account
 
 ```json
 {
@@ -548,19 +420,17 @@ document_id | true    |           |
     "meta": {"error": "Bad Request", "message": "access deny"}
 }
 ```
+## Change Password
 
 ### 2. `POST` /api/user/:haroo_id/change_password
 
-**Send**
-
-> localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/change_password
-
-```json
-{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
-{ "email": "test@gmail.com", "password": "password" }
+```shell
+curl 'localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/change_password'
+  -d '{ "email": "test@gmail.com", "password": "password" }'
+  -H '{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }'
 ```
 
-**Receive - done**
+> Password changed
 
 ```json
 {
@@ -569,7 +439,6 @@ document_id | true    |           |
         "email": "test@gmail.com",
         "haroo_id": "b4c4ae0692b435427b671649ea30848e7",
         "profile": {"nickname": "", "gender": "", "location": "", "website": "", "picture": ""},
-        "db_host": "db1.haroopress.com",
         "access_host": "sven-mac-pro",
         "access_token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e",
         "login_expire": "1422975245862",
@@ -581,18 +450,15 @@ document_id | true    |           |
 }
 ```
 
-### 3. `POST` /api/user/:haroo_id/update_info
+## Update User Information
 
-**Send**
-
-> localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/update_info
-
-```json
-{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
-{ "email": "test@gmail.com", "nickname": "screenName" }
+```shell
+curl 'localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/update_info'
+  -d '{ "email": "test@gmail.com", "nickname": "screenName" }'
+  -H '{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }'
 ```
 
-**Receive - done**
+> Receive updated user information
 
 ```json
 {
@@ -601,7 +467,6 @@ document_id | true    |           |
         "email": "test@gmail.com",
         "haroo_id": "b4c4ae0692b435427b671649ea30848e7",
         "profile": {"nickname": "screenName", "gender": "", "location": "", "website": "", "picture": ""},
-        "db_host": "db1.haroopress.com",
         "access_host": "sven-mac-pro",
         "access_token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e",
         "login_expire": "1422975245862",
@@ -613,18 +478,15 @@ document_id | true    |           |
 }
 ```
 
-### 4. `POST` /api/user/:haroo_id/logout
+## Logout Account
 
-**Send**
-
-> localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/logout
-
-```json
-{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
-{ "email": "test@gmail.com" }
+```shell
+curl 'localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/logout'
+  -d '{ "email": "test@gmail.com" }'
+  -H '{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }'
 ```
 
-**Receive - done**
+> logout user account and expire access token
 
 ```json
 {
@@ -633,7 +495,6 @@ document_id | true    |           |
         "email": "test@gmail.com",
         "haroo_id": "b4c4ae0692b435427b671649ea30848e7",
         "profile": {"nickname": "screenName", "gender": "", "location": "", "website": "", "picture": ""},
-        "db_host": "db1.haroopress.com",
         "access_host": "sven-mac-pro",
         "access_token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e",
         "login_expire": "1422975245862",
@@ -645,18 +506,15 @@ document_id | true    |           |
 }
 ```
 
-### 5. `POST` /api/user/:haroo_id/delete
+## Delete Account
 
-**Send**
-
-> localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/delete
-
-```json
-{ "X-Access-Token": "ac4ca287-55d9-4aa1-837b-f3cb85f27278", "X-Access-Host": "sven-mac-pro" }
-{ "email": "test@gmail.com", "password": "password" }
+```shell
+curl 'localhost:3030/api/user/b4c4ae0692b435427b671649ea30848e7/delete'
+  -d '{ "email": "test@gmail.com", "password": "password" }'
+  -H '{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }'
 ```
 
-**Receive - done**
+> delete account
 
 ```json
 {
@@ -684,96 +542,122 @@ document_id | true    |           |
 }
 ```
 
-## Document
 
-### 1. `POST` /api/documents/:haroo_id
 
-**Send**
+# Access Token
 
-> localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7
+## Validate
 
-```json
-{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
-{ "bulk" : [bulk set] }
+```shell
+curl 'localhost:3030/api/token/validate'
+  -H '{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }'
 ```
 
-**Receive - done**
+> return valid token validation
 
 ```json
 {
-    // to do
+    "message": "OK: done",
+    "data": {
+        "accessToken": "dcbba695-fd91-45f0-987e-1311d8b4b6ca",
+        "accessHost": "sven-mac-pro",
+        "accessIP": "localhost"
+    },
+    "isResult": true,
+    "statusCode": 200,
+    "meta": {"error": "OK", "message": "done"}
 }
 ```
 
-### 2. `GET` /api/documents/:haroo_id
-
-**Send**
-
-> localhost:3030/api/documents/b4c4ae0692b435427b671649ea30848e7
-
-```json
-{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
-```
-
-**Receive - done**
+> return invalid token validation
 
 ```json
 {
-    // to do
+    "message": "Bad Request: access deny",
+    "data": {
+        "accessToken": "wrong-dcbba695-fd91-45f0-987e-1311d8b4b6ca",
+        "accessHost": "sven-mac-pro",
+        "accessIP": "localhost"
+    },
+    "isResult": true,
+    "statusCode": 400,
+    "meta": {"error": "Bad Request", "message": "access deny"}
 }
 ```
 
-### 3. `POST` /api/document/:haroo_id
-
-**Send**
-
-> localhost:3030/api/document/b4c4ae0692b435427b671649ea30848e7
-
-```json
-{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
-{ "doc": [document set] }
-```
-
-**Receive - done**
+> re-new access token more
 
 ```json
 {
-    // to do
+    "message": "OK: kept one more",
+    "data": {
+        "keepToken": "1",
+        "accessToken": "dcbba695-fd91-45f0-987e-1311d8b4b6ca",
+        "accessHost": "sven-mac-pro",
+        "accessIP": "localhost"
+    },
+    "isResult": true,
+    "statusCode": 200,
+    "meta": {"error": "OK", "message": "kept one more"}
 }
 ```
 
-### 4. `GET` /api/document/:haroo_id/:document_id
-
-**Send**
-
-> localhost:3030/api/document/b4c4ae0692b435427b671649ea30848e7/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419
-
-```json
-{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
-```
-
-**Receive - done**
+> expire access token
 
 ```json
 {
-    // to do
+    "message": "OK: done",
+    "data": {
+        "keepToken": "0",
+        "accessToken": "0d82f030-8cc1-4c42-a3cf-1938faf40b5b",
+        "accessHost": "sven-mac-pro",
+        "accessIP": "localhost"
+    },
+    "isResult": true,
+    "statusCode": 200,
+    "meta": {"error": "OK", "message": "done"}
 }
 ```
 
-### 5. `GET` /api/document/:haroo_id/:document_id/public
+Validate or manipulate token information
 
-**Send**
+### HTTP Request
 
-> localhost:3030/api/document/b4c4ae0692b435427b671649ea30848e7/1A99E3B9-B6DE-7D2B-B394-0A47E4FD9419/public
+`POST https://localhost:3030/api/token/validate`
 
-```json
-{ "X-Access-Token": "8091cc47-ca6e-451e-b91a-b7797aa8a94e", "X-Access-Host": "sven-mac-pro" }
+### Header
+
+"X-Access-Token" for access token and "X-Access-Host"
+
+### Content
+
+Parameter | Require | Default   | Description
+--------- | ------- | --------- | -----------
+keep      | false   | 1         | token expire or keep more
+
+
+
+# Common
+
+## API version
+
+```shell
+curl 'localhost:3030/api/spec/version'
+  -H '{ "X-Access-Token": "dcbba695-fd91-45f0-987e-1311d8b4b6ca", "X-Access-Host": "sven-mac-pro" }'
 ```
 
-**Receive - done**
+> check API version
 
 ```json
 {
-    // not yet
+    "message": "OK: api version",
+    "data": {"ver": "0.0.1", "released": "2015-02-28T15:00:00.000Z"},
+    "isResult": true,
+    "statusCode": 200,
+    "meta": {"error": "OK", "message": "api version"}
 }
 ```
+
+
+
+# Document
